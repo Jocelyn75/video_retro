@@ -5,6 +5,7 @@ namespace App\Form;
 use App\Entity\User;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
+use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -43,6 +44,20 @@ class RegistrationFormType extends AbstractType
                     ]),
                 ],
             ])
+            ->add('nom')
+            ->add('prenom')
+            ->add('date_naiss', DateType::class, [
+                //'widget' => 'choice',
+                // 'format' => 'dd/MM/yyyy', 
+                'years' => range(date('Y') - 120, date('Y')),
+                //'html5' => false,
+            ])
+            ->add('adr_user')
+            ->add('complement_adr')
+            ->add('code_postal')
+            ->add('ville')
+            ->add('tel_user')
+
         ;
     }
 
