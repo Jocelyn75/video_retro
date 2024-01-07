@@ -2,12 +2,12 @@
 
 namespace App\Entity;
 
-use App\Repository\CommandeRepository;
+use App\Repository\CommandesRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
-#[ORM\Entity(repositoryClass: CommandeRepository::class)]
-class Commande
+#[ORM\Entity(repositoryClass: CommandesRepository::class)]
+class Commandes
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
@@ -21,10 +21,10 @@ class Commande
     private ?float $montant_total = null;
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: true)]
-    private ?\DateTimeInterface $date_commande = null;
+    private ?\DateTimeInterface $date_cmd = null;
 
     #[ORM\Column(length: 255, nullable: true)]
-    private ?string $statut_commande = null;
+    private ?string $statut_cmd = null;
 
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $stripe_id = null;
@@ -61,26 +61,26 @@ class Commande
         return $this;
     }
 
-    public function getDateCommande(): ?\DateTimeInterface
+    public function getDateCmd(): ?\DateTimeInterface
     {
-        return $this->date_commande;
+        return $this->date_cmd;
     }
 
-    public function setDateCommande(?\DateTimeInterface $date_commande): static
+    public function setDateCmd(?\DateTimeInterface $date_cmd): static
     {
-        $this->date_commande = $date_commande;
+        $this->date_cmd = $date_cmd;
 
         return $this;
     }
 
-    public function getStatutCommande(): ?string
+    public function getStatutCmd(): ?string
     {
-        return $this->statut_commande;
+        return $this->statut_cmd;
     }
 
-    public function setStatutCommande(?string $statut_commande): static
+    public function setStatutCmd(?string $statut_cmd): static
     {
-        $this->statut_commande = $statut_commande;
+        $this->statut_cmd = $statut_cmd;
 
         return $this;
     }
