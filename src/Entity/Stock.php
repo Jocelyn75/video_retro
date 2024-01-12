@@ -22,6 +22,9 @@ class Stock
     #[ORM\Column(nullable: true)]
     private ?int $quantite_stock = null;
 
+    #[ORM\Column(nullable: true)]
+    private ?int $films_id = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -59,6 +62,18 @@ class Stock
     public function setQuantiteStock(?int $quantite_stock): static
     {
         $this->quantite_stock = $quantite_stock;
+
+        return $this;
+    }
+
+    public function getFilmsId(): ?int
+    {
+        return $this->films_id;
+    }
+
+    public function setFilmsId(?int $films_id): static
+    {
+        $this->films_id = $films_id;
 
         return $this;
     }
