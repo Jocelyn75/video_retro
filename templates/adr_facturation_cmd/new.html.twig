@@ -1,0 +1,11 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}New AdrFacturationCmd{% endblock %}
+
+{% block body %}
+    <h1>Create new AdrFacturationCmd</h1>
+
+    {{ include('adr_facturation_cmd/_form.html.twig') }}
+
+    <a href="{{ path('app_adr_facturation_cmd_index') }}">back to list</a>
+{% endblock %}

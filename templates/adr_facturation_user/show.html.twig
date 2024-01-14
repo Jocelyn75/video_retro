@@ -1,0 +1,26 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}AdrFacturationUser{% endblock %}
+
+{% block body %}
+    <h1>AdrFacturationUser</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ adr_facturation_user.id }}</td>
+            </tr>
+            <tr>
+                <th>Adr_fact_user</th>
+                <td>{{ adr_facturation_user.adrFactUser }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_adr_facturation_user_index') }}">back to list</a>
+
+    <a href="{{ path('app_adr_facturation_user_edit', {'id': adr_facturation_user.id}) }}">edit</a>
+
+    {{ include('adr_facturation_user/_delete_form.html.twig') }}
+{% endblock %}

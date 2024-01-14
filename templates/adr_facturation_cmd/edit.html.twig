@@ -1,0 +1,13 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Edit AdrFacturationCmd{% endblock %}
+
+{% block body %}
+    <h1>Edit AdrFacturationCmd</h1>
+
+    {{ include('adr_facturation_cmd/_form.html.twig', {'button_label': 'Update'}) }}
+
+    <a href="{{ path('app_adr_facturation_cmd_index') }}">back to list</a>
+
+    {{ include('adr_facturation_cmd/_delete_form.html.twig') }}
+{% endblock %}

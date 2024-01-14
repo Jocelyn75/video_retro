@@ -1,0 +1,35 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}AdrFacturationUser index{% endblock %}
+
+{% block body %}
+    <h1>AdrFacturationUser index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Adr_fact_user</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for adr_facturation_user in adr_facturation_users %}
+            <tr>
+                <td>{{ adr_facturation_user.id }}</td>
+                <td>{{ adr_facturation_user.adrFactUser }}</td>
+                <td>
+                    <a href="{{ path('app_adr_facturation_user_show', {'id': adr_facturation_user.id}) }}">show</a>
+                    <a href="{{ path('app_adr_facturation_user_edit', {'id': adr_facturation_user.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="3">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_adr_facturation_user_new') }}">Create new</a>
+{% endblock %}

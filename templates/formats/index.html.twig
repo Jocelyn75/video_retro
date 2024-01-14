@@ -1,0 +1,37 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Formats index{% endblock %}
+
+{% block body %}
+    <h1>Formats index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Nom_format</th>
+                <th>Prix_rachat_defaut</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for format in formats %}
+            <tr>
+                <td>{{ format.id }}</td>
+                <td>{{ format.nomFormat }}</td>
+                <td>{{ format.prixRachatDefaut }}</td>
+                <td>
+                    <a href="{{ path('app_formats_show', {'id': format.id}) }}">show</a>
+                    <a href="{{ path('app_formats_edit', {'id': format.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="4">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_formats_new') }}">Create new</a>
+{% endblock %}

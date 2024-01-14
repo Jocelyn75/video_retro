@@ -1,0 +1,41 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}DetailsCommandes index{% endblock %}
+
+{% block body %}
+    <h1>DetailsCommandes index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Commandes_id</th>
+                <th>Stock_id</th>
+                <th>Quantite_cmd</th>
+                <th>Prix_unitaire</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for details_commande in details_commandes %}
+            <tr>
+                <td>{{ details_commande.id }}</td>
+                <td>{{ details_commande.commandesId }}</td>
+                <td>{{ details_commande.stockId }}</td>
+                <td>{{ details_commande.quantiteCmd }}</td>
+                <td>{{ details_commande.prixUnitaire }}</td>
+                <td>
+                    <a href="{{ path('app_details_commandes_show', {'id': details_commande.id}) }}">show</a>
+                    <a href="{{ path('app_details_commandes_edit', {'id': details_commande.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="6">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_details_commandes_new') }}">Create new</a>
+{% endblock %}

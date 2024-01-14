@@ -1,0 +1,35 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}AdrFacturationCmd index{% endblock %}
+
+{% block body %}
+    <h1>AdrFacturationCmd index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Adr_fact_cmd</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for adr_facturation_cmd in adr_facturation_cmds %}
+            <tr>
+                <td>{{ adr_facturation_cmd.id }}</td>
+                <td>{{ adr_facturation_cmd.adrFactCmd }}</td>
+                <td>
+                    <a href="{{ path('app_adr_facturation_cmd_show', {'id': adr_facturation_cmd.id}) }}">show</a>
+                    <a href="{{ path('app_adr_facturation_cmd_edit', {'id': adr_facturation_cmd.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="3">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_adr_facturation_cmd_new') }}">Create new</a>
+{% endblock %}
