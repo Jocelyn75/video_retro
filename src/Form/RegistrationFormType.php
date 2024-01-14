@@ -48,7 +48,7 @@ class RegistrationFormType extends AbstractType
                 'type' => PasswordType::class,
                 'mapped' => false,
                 'attr' => ['autocomplete' => 'new-password'],
-                'first_options'  => ['label' => 'Mot de Passe'],
+                'first_options'  => ['label' => 'Mot de passe'],
                 'second_options' => ['label' => 'Répéter votre mot de passe'],
                 'invalid_message' => 'Le mot de passe ne correspond pas',
                 'constraints' => [

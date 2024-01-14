@@ -10,7 +10,7 @@
 
     {% if app.user %}
         <div class="mb-3">
-            Vous êtes connectés en tant que : {{ app.user.userIdentifier }}. <a href="{{ path('app_logout') }}">Déconnexion</a>
+            Vous êtes connectés en tant que : {{ app.user.prenom}} {{ app.user.nom}}.
         </div>
     {% endif %}
 
@@ -24,7 +24,7 @@
             value="{{ csrf_token('authenticate') }}"
     >
 
-    <button class="btn btn-lg btn-primary w-100" type="submit">
+    <button class="btn btn-lg btn-secondary w-100" type="submit">
         Connexion
     </button>
 </form>
