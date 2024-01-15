@@ -3,12 +3,12 @@
 namespace App\Form;
 
 use App\Entity\Formats;
-use Doctrine\DBAL\Types\FloatType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\MoneyType;
 
 class FormatsType extends AbstractType
 {
@@ -18,9 +18,9 @@ class FormatsType extends AbstractType
             ->add('nom_format', ChoiceType::class, [
                 // Confirmer la rédaction /!\
                 'choices' => [
-                    'VHS' => 'Vhs',
-                    'DVD' => 'Dvd',
-                    'BLU-RAY' => 'Blu-Ray'
+                    'VHS' => 'VHS',
+                    'DVD' => 'DVD',
+                    'BLU-RAY' => 'BLU-RAY'
                 ],
                 'constraints' => [
                     new NotBlank([
@@ -28,7 +28,7 @@ class FormatsType extends AbstractType
                     ])
                 ]
             ])
-            ->add('prix_rachat_defaut', FloatType::class, [
+            ->add('prix_rachat_defaut', MoneyType::class, [
                 'constraints' => [
                     new NotBlank([
                         'message' => 'Veuillez renseigner un prix de rachat par défaut',

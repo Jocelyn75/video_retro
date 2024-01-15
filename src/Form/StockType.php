@@ -3,12 +3,12 @@
 namespace App\Form;
 
 use App\Entity\Stock;
-use Doctrine\DBAL\Types\FloatType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
+use Symfony\Component\Form\Extension\Core\Type\MoneyType;
 
 class StockType extends AbstractType
 {
@@ -22,7 +22,7 @@ class StockType extends AbstractType
                     ])
                 ]
             ])
-            ->add('prix_revente_defaut', FloatType::class, [
+            ->add('prix_revente_defaut', MoneyType::class, [
                 'constraints' => [
                     new NotBlank([
                         'message' => 'Veuillez renseigner un prix de revente par défaut',
