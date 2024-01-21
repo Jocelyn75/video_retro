@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\UserRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
@@ -56,6 +58,21 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     #[ORM\Column(nullable: true)]
     private ?float $cagnotte = null;
+
+    #[ORM\ManyToOne(inversedBy: 'users')]
+    private ?AdrFacturationUser $adr_facturation_user = null;
+
+    #[ORM\ManyToMany(targetEntity: AdrLivraisonUser::class, inversedBy: 'users')]
+    private Collection $adr_livraison_user;
+
+    #[ORM\OneToMany(mappedBy: 'user', targetEntity: Commandes::class)]
+    private Collection $commandes;
+
+    public function __construct()
+    {
+        $this->adr_livraison_user = new ArrayCollection();
+        $this->commandes = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -231,6 +248,72 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setCagnotte(?float $cagnotte): static
     {
         $this->cagnotte = $cagnotte;
+
+        return $this;
+    }
+
+    public function getAdrFacturationUser(): ?AdrFacturationUser
+    {
+        return $this->adr_facturation_user;
+    }
+
+    public function setAdrFacturationUser(?AdrFacturationUser $adr_facturation_user): static
+    {
+        $this->adr_facturation_user = $adr_facturation_user;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, AdrLivraisonUser>
+     */
+    public function getAdrLivraisonUser(): Collection
+    {
+        return $this->adr_livraison_user;
+    }
+
+    public function addAdrLivraisonUser(AdrLivraisonUser $adrLivraisonUser): static
+    {
+        if (!$this->adr_livraison_user->contains($adrLivraisonUser)) {
+            $this->adr_livraison_user->add($adrLivraisonUser);
+        }
+
+        return $this;
+    }
+
+    public function removeAdrLivraisonUser(AdrLivraisonUser $adrLivraisonUser): static
+    {
+        $this->adr_livraison_user->removeElement($adrLivraisonUser);
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Commandes>
+     */
+    public function getCommandes(): Collection
+    {
+        return $this->commandes;
+    }
+
+    public function addCommande(Commandes $commande): static
+    {
+        if (!$this->commandes->contains($commande)) {
+            $this->commandes->add($commande);
+            $commande->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeCommande(Commandes $commande): static
+    {
+        if ($this->commandes->removeElement($commande)) {
+            // set the owning side to null (unless already changed)
+            if ($commande->getUser() === $this) {
+                $commande->setUser(null);
+            }
+        }
 
         return $this;
     }

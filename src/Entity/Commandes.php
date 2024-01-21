@@ -32,6 +32,9 @@ class Commandes
     #[ORM\Column(nullable: true)]
     private ?bool $achat_ou_vente = null;
 
+    #[ORM\ManyToOne(inversedBy: 'commandes')]
+    private ?User $user = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -105,6 +108,18 @@ class Commandes
     public function setAchatOuVente(?bool $achat_ou_vente): static
     {
         $this->achat_ou_vente = $achat_ou_vente;
+
+        return $this;
+    }
+
+    public function getUser(): ?User
+    {
+        return $this->user;
+    }
+
+    public function setUser(?User $user): static
+    {
+        $this->user = $user;
 
         return $this;
     }
