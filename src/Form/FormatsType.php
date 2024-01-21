@@ -16,7 +16,6 @@ class FormatsType extends AbstractType
     {
         $builder
             ->add('nom_format', ChoiceType::class, [
-                // Confirmer la rédaction /!\
                 'choices' => [
                     'VHS' => 'VHS',
                     'DVD' => 'DVD',
