@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\DetailsCommandesRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: DetailsCommandesRepository::class)]
@@ -27,6 +29,14 @@ class DetailsCommandes
 
     #[ORM\ManyToOne(inversedBy: 'details_commandes')]
     private ?Commandes $commandes = null;
+
+    #[ORM\ManyToMany(targetEntity: Stock::class, inversedBy: 'detailsCommandes')]
+    private Collection $stock;
+
+    public function __construct()
+    {
+        $this->stock = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -89,6 +99,30 @@ class DetailsCommandes
     public function setCommandes(?Commandes $commandes): static
     {
         $this->commandes = $commandes;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Stock>
+     */
+    public function getStock(): Collection
+    {
+        return $this->stock;
+    }
+
+    public function addStock(Stock $stock): static
+    {
+        if (!$this->stock->contains($stock)) {
+            $this->stock->add($stock);
+        }
+
+        return $this;
+    }
+
+    public function removeStock(Stock $stock): static
+    {
+        $this->stock->removeElement($stock);
 
         return $this;
     }

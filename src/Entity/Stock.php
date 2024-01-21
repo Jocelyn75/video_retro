@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\StockRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: StockRepository::class)]
@@ -24,6 +26,20 @@ class Stock
 
     #[ORM\Column(nullable: true)]
     private ?int $films_id = null;
+
+    #[ORM\ManyToMany(targetEntity: DetailsCommandes::class, mappedBy: 'stock')]
+    private Collection $detailsCommandes;
+
+    #[ORM\ManyToOne(inversedBy: 'stocks')]
+    private ?Films $films = null;
+
+    #[ORM\ManyToOne(inversedBy: 'stocks')]
+    private ?Formats $formats = null;
+
+    public function __construct()
+    {
+        $this->detailsCommandes = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -74,6 +90,57 @@ class Stock
     public function setFilmsId(?int $films_id): static
     {
         $this->films_id = $films_id;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, DetailsCommandes>
+     */
+    public function getDetailsCommandes(): Collection
+    {
+        return $this->detailsCommandes;
+    }
+
+    public function addDetailsCommande(DetailsCommandes $detailsCommande): static
+    {
+        if (!$this->detailsCommandes->contains($detailsCommande)) {
+            $this->detailsCommandes->add($detailsCommande);
+            $detailsCommande->addStock($this);
+        }
+
+        return $this;
+    }
+
+    public function removeDetailsCommande(DetailsCommandes $detailsCommande): static
+    {
+        if ($this->detailsCommandes->removeElement($detailsCommande)) {
+            $detailsCommande->removeStock($this);
+        }
+
+        return $this;
+    }
+
+    public function getFilms(): ?Films
+    {
+        return $this->films;
+    }
+
+    public function setFilms(?Films $films): static
+    {
+        $this->films = $films;
+
+        return $this;
+    }
+
+    public function getFormats(): ?Formats
+    {
+        return $this->formats;
+    }
+
+    public function setFormats(?Formats $formats): static
+    {
+        $this->formats = $formats;
 
         return $this;
     }
