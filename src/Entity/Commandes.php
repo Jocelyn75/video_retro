@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\CommandesRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -34,6 +36,23 @@ class Commandes
 
     #[ORM\ManyToOne(inversedBy: 'commandes')]
     private ?User $user = null;
+
+    #[ORM\ManyToOne(inversedBy: 'commandes')]
+    private ?AdrFacturationCmd $adr_facturation_cmd = null;
+
+    #[ORM\ManyToOne(inversedBy: 'commandes')]
+    private ?AdrLivraisonCmd $adr_livraison_cmd = null;
+
+    #[ORM\ManyToOne(inversedBy: 'commandes')]
+    private ?Livreur $livreur = null;
+
+    #[ORM\OneToMany(mappedBy: 'commandes', targetEntity: DetailsCommandes::class)]
+    private Collection $details_commandes;
+
+    public function __construct()
+    {
+        $this->details_commandes = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -120,6 +139,72 @@ class Commandes
     public function setUser(?User $user): static
     {
         $this->user = $user;
+
+        return $this;
+    }
+
+    public function getAdrFacturationCmd(): ?AdrFacturationCmd
+    {
+        return $this->adr_facturation_cmd;
+    }
+
+    public function setAdrFacturationCmd(?AdrFacturationCmd $adr_facturation_cmd): static
+    {
+        $this->adr_facturation_cmd = $adr_facturation_cmd;
+
+        return $this;
+    }
+
+    public function getAdrLivraisonCmd(): ?AdrLivraisonCmd
+    {
+        return $this->adr_livraison_cmd;
+    }
+
+    public function setAdrLivraisonCmd(?AdrLivraisonCmd $adr_livraison_cmd): static
+    {
+        $this->adr_livraison_cmd = $adr_livraison_cmd;
+
+        return $this;
+    }
+
+    public function getLivreur(): ?Livreur
+    {
+        return $this->livreur;
+    }
+
+    public function setLivreur(?Livreur $livreur): static
+    {
+        $this->livreur = $livreur;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, DetailsCommandes>
+     */
+    public function getDetailsCommandes(): Collection
+    {
+        return $this->details_commandes;
+    }
+
+    public function addDetailsCommande(DetailsCommandes $detailsCommande): static
+    {
+        if (!$this->details_commandes->contains($detailsCommande)) {
+            $this->details_commandes->add($detailsCommande);
+            $detailsCommande->setCommandes($this);
+        }
+
+        return $this;
+    }
+
+    public function removeDetailsCommande(DetailsCommandes $detailsCommande): static
+    {
+        if ($this->details_commandes->removeElement($detailsCommande)) {
+            // set the owning side to null (unless already changed)
+            if ($detailsCommande->getCommandes() === $this) {
+                $detailsCommande->setCommandes(null);
+            }
+        }
 
         return $this;
     }

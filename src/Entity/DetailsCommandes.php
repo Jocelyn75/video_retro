@@ -25,6 +25,9 @@ class DetailsCommandes
     #[ORM\Column(nullable: true)]
     private ?float $prix_unitaire = null;
 
+    #[ORM\ManyToOne(inversedBy: 'details_commandes')]
+    private ?Commandes $commandes = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -74,6 +77,18 @@ class DetailsCommandes
     public function setPrixUnitaire(?float $prix_unitaire): static
     {
         $this->prix_unitaire = $prix_unitaire;
+
+        return $this;
+    }
+
+    public function getCommandes(): ?Commandes
+    {
+        return $this->commandes;
+    }
+
+    public function setCommandes(?Commandes $commandes): static
+    {
+        $this->commandes = $commandes;
 
         return $this;
     }
