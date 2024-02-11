@@ -24,10 +24,10 @@ security:
 
             remember_me:
                 secret: '%kernel.secret%'
-                lifetime: 604800
+                lifetime: 604800 #durée de vie du cookie qui maintient la connexion, en secondes.
                 path: /
-                always_remember_me: true
-
+                #always_remember_me: true 
+                #on peut aussi choisir cette option : durée de vie indéfinie du cookie qui maintient la connexion.
             # activate different ways to authenticate
             # https://symfony.com/doc/current/security.html#the-firewall
 
