@@ -4,21 +4,23 @@ namespace App\Form;
 
 use App\Entity\User;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
-use Symfony\Component\Form\Extension\Core\Type\DateType;
-use Symfony\Component\Form\Extension\Core\Type\EmailType;
-use Symfony\Component\Form\Extension\Core\Type\IntegerType;
-use Symfony\Component\Form\Extension\Core\Type\NumberType;
-use Symfony\Component\Form\Extension\Core\Type\PasswordType;
-use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
-use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\IsTrue;
 use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\Constraints\Positive;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\Form\Extension\Core\Type\DateType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Extension\Core\Type\EmailType;
+use Symfony\Component\Form\Extension\Core\Type\NumberType;
+use Symfony\Component\Form\Extension\Core\Type\IntegerType;
+use Symfony\Component\Form\Extension\Core\Type\BirthdayType;
+use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
+use Symfony\Component\Form\Extension\Core\Type\PasswordType;
+use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
+
 class RegistrationFormType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
@@ -27,7 +29,7 @@ class RegistrationFormType extends AbstractType
             ->add('email', EmailType::class, [
                 'constraints' => [
                     new NotBlank([
-                        'message' => 'Veuillez saisir une adresse mail',
+                        'message' => 'Veuillez saisir votre adresse mail',
                     ])
                 ]
             ])
@@ -59,48 +61,48 @@ class RegistrationFormType extends AbstractType
                         'min' => 12,
                         'minMessage' => 'Votre mot de passe doit comporter au moins 12 caractères',
                         // max length allowed by Symfony for security reasons
-                        'max' => 4096,
-                        'maxMessage' => 'Votre mot de passe doit comporter au maximum 4096 caractères',
+                        'max' => 255,
+                        'maxMessage' => 'Votre mot de passe doit comporter au maximum 255 caractères',
                     ]),
 
                     new Assert\Regex([
-                        'pattern' => '/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W\_])[A-Za-z\d\W\_]{12,}$/',
+                        'pattern' => '/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W\_])[A-Za-z\d\W\_]$/',
                         'message' => 'Votre mot de passe doit comporter au moins 1 chiffre, 1 majuscule, 1 minuscule et 1 caractère spécial.',
                     ]),
+                    new Assert\NotCompromisedPassword([
+                        'message' => "Ce mot de passe est faible"
+                    ])
                 ],
             ])
 
             ->add('nom', TextType::class, [
                 'constraints' => [
                     new NotBlank([
-                        'message' => 'Veuillez saisir un nom de famille',
+                        'message' => 'Veuillez saisir votre nom de famille',
                     ])
                 ]
             ])
             ->add('prenom', TextType::class, [
                 'constraints' => [
                     new NotBlank([
-                        'message' => 'Veuillez saisir un prénom',
+                        'message' => 'Veuillez saisir votre prénom',
                     ])
                 ]
             ])
-
-            ->add('date_naiss', DateType::class, [
+            ->add('date_naiss', BirthdayType::class, [
                 'widget' => 'choice',
-                //'format' => 'dd/MM/yyyy', 
-                'years' => range(date('Y') - 120, date('Y')),
+                'years' => range(date('Y'), date('Y') - 120),                
                 'constraints' => [
                     new NotBlank([
-                        'message' => 'Veuillez saisir une date de naissance'
+                        'message' => 'Veuillez saisir votre date de naissance'
                     ])
-                ]
-                
+                ],                
             ])
             
             ->add('adr_user', TextType::class, [
                 'constraints' => [
                     new NotBlank([
-                        'message' => 'Veuillez saisir une adresse',
+                        'message' => 'Veuillez saisir votre adresse',
                     ])
                 ]
             ])
@@ -109,7 +111,7 @@ class RegistrationFormType extends AbstractType
             ->add('code_postal', NumberType::class, [
                 'constraints' => [
                     new NotBlank([
-                        'message' => 'Veuillez saisir un code postal',
+                        'message' => 'Veuillez saisir votre code postal',
                     ]),
                     new Positive ([
                         'message' => 'Le code postal doit être un nombre positif',
@@ -126,14 +128,14 @@ class RegistrationFormType extends AbstractType
             ->add('ville', TextType::class, [
                 'constraints' => [
                     new NotBlank([
-                        'message' => 'Veuillez saisir une ville',
+                        'message' => 'Veuillez saisir votre ville',
                     ])
                 ]
             ])
             ->add('tel_user', IntegerType::class, [
                 'constraints' => [
                     new NotBlank([
-                        'message' => 'Veuillez saisir un numéro de téléphone',
+                        'message' => 'Veuillez saisir votre numéro de téléphone',
                     ])
                 ]
             ])
