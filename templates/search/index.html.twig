@@ -1,0 +1,14 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Page de recherche{% endblock %}
+
+
+{% block body %}
+    <h1 class="text-center my-3">Résultat de la recherche</h1>
+
+    {% for film in data %}
+        {% if film.media_type == "movie" %}
+            <p>{{film.title}}</p>
+        {% endif %}
+    {% endfor %}
+{% endblock %}

@@ -27,17 +27,17 @@ class ChangePasswordFormType extends AbstractType
                 'first_options' => [
                     'constraints' => [
                         new NotBlank([
-                            'message' => 'Veuillez entrer votre nouveau mot de passe',
+                            'message' => 'Veuillez entrer votre nouveau mot de passe.',
                         ]),
-                        new Length([
-                            'min' => 12,
-                            'minMessage' => 'Votre mot de passe doit contenir au moins 12 caractères',
-                            // max length allowed by Symfony for security reasons
-                            'max' => 255,
-                            'maxMessage' => 'Votre mot de passe doit contenir 255 caractères au maximum'
-                        ]),
+                        // new Length([
+                        //     'min' => 12,
+                        //     'minMessage' => 'Votre mot de passe doit contenir au moins 12 caractères',
+                        //     // max length allowed by Symfony for security reasons
+                        //     'max' => 255,
+                        //     'maxMessage' => 'Votre mot de passe doit contenir 255 caractères au maximum'
+                        // ]),
                         new Assert\Regex([
-                            'pattern' => '/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W\_])[A-Za-z\d\W\_]$/',
+                            'pattern' => '/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W\_])[A-Za-z\d\W\_]{12,255}$/',
                             'message' => 'Votre mot de passe doit comporter au moins 1 chiffre, 1 majuscule, 1 minuscule et 1 caractère spécial.',
                         ]),
                     ],

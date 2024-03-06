@@ -1,0 +1,4 @@
+{{form_start(form, {'action': path('app_search')})}}
+    {{form_widget(form.keyword, {'attr': {'class': 'form-control me-auto', 'placeholder': 'Rechercher', 'aria-label':'Search'}})}}
+    <button class="btn btn-outline-light me-auto" type="submit">Rechercher</button>
+{{form_end(form)}}

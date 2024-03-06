@@ -8,13 +8,13 @@
         <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
     {% endif %}
 
-    {% if app.user %}
+    {# {% if app.user %}
         <div class="mb-3">
             Vous êtes connectés en tant que : {{ app.user.prenom}} {{ app.user.nom}}.
         </div>
-    {% endif %}
+    {% endif %} #}
 
-    {# Message d'alerte indiquant le changement réussi de mot de passe #}
+    {# Message flash indiquant le changement réussi de mot de passe #}
     {% for message in app.flashes("success")%}
         <div class="text-center alert alert-success" role="alert">
             {{message}}
