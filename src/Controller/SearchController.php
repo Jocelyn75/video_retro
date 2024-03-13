@@ -12,64 +12,39 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 class SearchController extends AbstractController
 {
     #[Route('/search', name: 'app_search', methods:['GET'])]
+    // On utilise HttpclientInterface pour se connecter à l'API, on lui demande d'écouter  $client. On injecte à Request l'objet $request. 
     public function index(Request $request, HttpClientInterface $client): Response
     {
         $data = $request->query->all();
-        // $keyword = $data['keyword'];
 
+        // La variable $multi contient le contenu de la recherche effectuée. Search correspond à la recherche et keyword aux mots-clés recherchés.
         $multi = $data['search']['keyword'];
 
-        // dd( $response1 = $client->request(
-        //     'GET',
-        //     'https://api.themoviedb.org/3/movie/122917?api_key=3a95b6e18efaa9f408509a7748094742'
-        // ));
-
+        // $client fait une requête vers l'API. $multi est utilisée pour rendre la requête dynamique. $apiResponse stocke le contenu de la réponse.
         $apiResponse = $client->request('GET', "https://api.themoviedb.org/3/search/multi?query={$multi}&api_key=3a95b6e18efaa9f408509a7748094742");
-        // https://api.themoviedb.org/3/search/multi?query=cameron&include_adult=false&language=en-US&page=1' \
-        // $apiResponse = $client->request('GET', "https://api.themoviedb.org/3/search/multi/{$multi}?include_adult=false&language=en-US&page=1?api_key=3a95b6e18efaa9f408509a7748094742");
 
+        // La réponse est convertie en tableau pour récupérer la réponse sous forme de tableau.
         $apiResponseArray = $apiResponse->toArray();
         
+        // Dans $data, on récupère la valeur associée à la clé results dans $apiResponseArray. 
         $data = $apiResponseArray['results'];
 
-        // dd($data);
-
-        // $films = [];
-
-        // foreach ($data as $film) 
-        // {
-
-        //     if () {
-        //         # code...
-        //     }
-        //     $filmFilter = [];
-
-        //     $filmFilter[] = $film['title'];
-        //     $filmFilter[] = $film['overview'];
-        //     $filmFilter[] = $film['media_type'];
-
-        //     // dd($filmFilter);
-
-        //     $films[] = $filmFilter;
-        // }
-
-        // dd($films);
-
-        // dd($data[0]['title']);
-
+        //on passe le tableau à la vue.
         return $this->render('search/index.html.twig', [
             'data' => $data,
         ]);
     }
 
-
+    //La méthode getSearchBar ne va pas retourner de réponse.
     public function getSearchBar() : Response
     {
+        //On demande à SearchController de créer un formulaire de type Search. On indique null le paramètre qui correspond à l'entité, puisqu'il n'y a pas d'entité, puis on indique dans le 3e paramètre qui est un tableau qu'on utilise la méthode GET, car la méthode par défaut est POST. 
         $form = $this->createForm(SearchType::class, null, [
             "method" => "GET",
+            // Désactivation du token cross site request forgery.
             "csrf_protection" => false
         ]);
-
+        //Appelée, cette méthode retourne le contenu du formulaire du fichier _search_bar.html.twig. Le formulaire s'affiche dans le fichier _search_bar.html.
         return $this->render('search/_search_bar.html.twig', [
             'form' => $form->createView()
         ]);

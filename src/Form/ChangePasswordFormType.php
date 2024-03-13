@@ -38,7 +38,7 @@ class ChangePasswordFormType extends AbstractType
                         // ]),
                         new Assert\Regex([
                             'pattern' => '/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W\_])[A-Za-z\d\W\_]{12,255}$/',
-                            'message' => 'Votre mot de passe doit comporter au moins 1 chiffre, 1 majuscule, 1 minuscule et 1 caractère spécial.',
+                            'message' => 'Votre mot de passe doit être composé d\'au moins 12 caractères et contenir au moins 1 chiffre, 1 majuscule, 1 minuscule et 1 caractère spécial.',
                         ]),
                     ],
                     'label' => 'Nouveau mot de passe',

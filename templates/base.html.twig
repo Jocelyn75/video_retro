@@ -17,6 +17,7 @@
             <div class="container-fluid">
                 <a class="logo" class="navbar-brand text-white" href="{{ path('home')}}">Video Retro</a>
                 <p class="slogan text-light align-self-items-center">Tout le cinéma en VHS, DVD et Blu-Ray<p>  
+                {# On rend la méthode GetSearchBar du controller SearchController. Les :: permettent d'appeler getSearchBar de manière statique. Les deux \\ sont une convention, cela ne fonctionne pas avec un seul \ #}
                 {{ render(controller("App\\Controller\\SearchController::getSearchBar")) }}              
                 {# <form class="d-flex" role="search">
                 <input class="form-control me-auto" type="search" placeholder="Rechercher" aria-label="Search">
@@ -31,7 +32,10 @@
                 </button>
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-
+                    {# Si tel nom de route est celui de la route actuelle, alors on applique la classe ongletActif pour mettre cet onglet en évidence  #}
+                    <li class="nav-item {% if app.request.attributes.get('_route') == 'home' %} ongletActif {% endif %}">
+                            <a class="nav-link text-white " href="{{ path('home') }}">Accueil</a>
+                    </li>
                     {# Si l'utilisateur est connecté, seul le bouton Déconnexion s'affiche #}
                     {% if app.user %}
                         <li class="nav-item">
@@ -40,10 +44,11 @@
                         
                     {# S'il n'y a pas d'utilisateur connecté, les boutons Inscription et Connexion s'affichent #}
                     {% else %}
-                        <li class="nav-item">
-                            <a class="nav-link text-white" href="{{ path('app_register') }}">Inscription</a>
+                        
+                        <li class="nav-item {% if app.request.attributes.get('_route') == 'app_register' %} ongletActif {% endif %}">
+                            <a class="nav-link text-white " href="{{ path('app_register') }}">Inscription</a>
                         </li>
-                        <li class="nav-item">
+                        <li class="nav-item {% if app.request.attributes.get('_route') == 'app_login' %} ongletActif {% endif %}">
                             <a class="nav-link text-white" href="{{ path('app_login') }}">Connexion</a>
                         </li>
                     {% endif %}

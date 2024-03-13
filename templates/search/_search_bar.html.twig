@@ -1,4 +1,9 @@
+{# action est utilisée pour que lorsqu'on clique pour envoyer les données du formulaire, la destination soit la page search dont le nom est app_search, tels  que définis dans SearchController.php #}
 {{form_start(form, {'action': path('app_search')})}}
-    {{form_widget(form.keyword, {'attr': {'class': 'form-control me-auto', 'placeholder': 'Rechercher', 'aria-label':'Search'}})}}
+    {# Cette div permet de placer le widget (champ de saisie) et le bouton de recherche en ligne #}
+    <div class="d-flex">
+    {# On génère le widget pour le champ keyword du formulaire, et on le style. #}
+    {{form_widget(form.keyword, {'attr': {'class': 'form-control me-2', 'placeholder': 'Votre recherche', 'aria-label':'Recherche'}})}}
     <button class="btn btn-outline-light me-auto" type="submit">Rechercher</button>
+    </div>
 {{form_end(form)}}

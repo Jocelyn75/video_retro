@@ -67,7 +67,7 @@ class RegistrationFormType extends AbstractType
                     //Le regex ci-dessous permet de respecter les contraintes de mots de passe selon les recommandations de la CNIL.
                     new Assert\Regex([
                         'pattern' => '/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W])[A-Za-z\d\W]{12,255}$/',
-                        'message' => 'Votre mot de passe doit comporter au moins 1 chiffre, 1 majuscule, 1 minuscule et 1 caractère spécial.',
+                        'message' => 'Votre mot de passe doit être composé d\'au moins 12 caractères et contenir au moins 1 chiffre, 1 majuscule, 1 minuscule et 1 caractère spécial.',
                     ]),
 
                     // NotCompromisedPassword permet de vérifier sur "Have I Been Pwned" que le mot de passe n'a pas été compromis. S'il a été compromis, le message "Ce mot de passe est faible s'affiche".

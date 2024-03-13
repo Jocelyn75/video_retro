@@ -5,7 +5,7 @@
 
 {% block body %}
     <h1 class="text-center my-3">Résultat de la recherche</h1>
-
+    {# On parcourt le tableau des films (data) et pour chaque film, on affiche le titre (title) à condition qu'il s'agisse d'un film et pas d'une série. (Les films ont des title, les séries ont des name). #}
     {% for film in data %}
         {% if film.media_type == "movie" %}
             <p>{{film.title}}</p>

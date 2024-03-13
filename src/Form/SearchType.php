@@ -12,6 +12,7 @@ class SearchType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
+            //Définition du mot-clé, de type Search
             ->add('keyword', TypeSearchType::class)
         ;
     }
