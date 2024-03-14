@@ -15,13 +15,21 @@
     text-decoration: none;
     color:white;
     font-size: 2.5rem;
+    /* text-shadow utilisé pour créer un contour sur le texte : */
+    text-shadow:
+    3px 3px 2px #000,
+    -3px 3px 2px #000,
+    -3px -3px 0 #000,
+    3px -3px 0 #000;
 }
 
 .slogan{
     align-items: center;
+    font-style: italic;
     margin: 0;
+
 }
 
 .ongletActif{
-    text-shadow: 2px 2px 3px black;
+    text-shadow: 2px 2px 3px white
 }
