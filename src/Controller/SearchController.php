@@ -21,7 +21,7 @@ class SearchController extends AbstractController
         $multi = $data['search']['keyword'];
 
         // $client fait une requête vers l'API. $multi est utilisée pour rendre la requête dynamique. $apiResponse stocke le contenu de la réponse.
-        $apiResponse = $client->request('GET', "https://api.themoviedb.org/3/search/multi?query={$multi}&api_key=3a95b6e18efaa9f408509a7748094742");
+        $apiResponse = $client->request('GET', "https://api.themoviedb.org/3/search/multi?query={$multi}&api_key={$_ENV['TMDB_API']}");
 
         // La réponse est convertie en tableau pour récupérer la réponse sous forme de tableau.
         $apiResponseArray = $apiResponse->toArray();

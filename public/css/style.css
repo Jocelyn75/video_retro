@@ -1,14 +1,3 @@
-.homephoto{
-    width: 90%;
-    display: block;
-    margin: 0 auto;
-}
-
-@font-face {
-    font-family: "Lazer84";
-    src:
-        url("/fonts/Lazer84.ttf") format("truetype");
-}
 
 .logo{
     font-family: "Lazer84";
@@ -32,4 +21,27 @@
 
 .ongletActif{
     text-shadow: 2px 2px 3px white
+}
+
+body{
+    margin-bottom: 100px;
+}
+
+.homephoto{
+    width: 90%;
+    display: block;
+    margin: 0 auto;
+}
+
+@font-face {
+    font-family: "Lazer84";
+    src:
+        url("/fonts/Lazer84.ttf") format("truetype");
+}
+
+.footer{
+    height: 100px;
+    width: 100%;
+    margin-top: 10px;
+    line-height: 100px;
 }
