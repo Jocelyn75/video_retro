@@ -1,4 +1,13 @@
+html, body {
+    height: 100%;
+}
 
+body {
+    display: grid;
+    grid-template-rows: auto 1fr auto;
+}
+
+/* CSS de base.html.twig */
 .logo{
     font-family: "Lazer84";
     text-decoration: none;
@@ -12,6 +21,12 @@
     3px -3px 0 #000;
 }
 
+@font-face {
+    font-family: "Lazer84";
+    src:
+        url("/fonts/Lazer84.ttf") format("truetype");
+}
+
 .slogan{
     align-items: center;
     font-style: italic;
@@ -23,25 +38,8 @@
     text-shadow: 2px 2px 3px white
 }
 
-body{
-    margin-bottom: 100px;
-}
-
 .homephoto{
     width: 90%;
     display: block;
     margin: 0 auto;
-}
-
-@font-face {
-    font-family: "Lazer84";
-    src:
-        url("/fonts/Lazer84.ttf") format("truetype");
-}
-
-.footer{
-    height: 100px;
-    width: 100%;
-    margin-top: 10px;
-    line-height: 100px;
 }

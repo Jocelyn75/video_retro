@@ -11,68 +11,77 @@
 
 
     <body>
+        <header>
+            {# Première navbar pour contenir le logo, la baseline et la barre de recherche #}
+            <nav class="navbar navbar-expand-lg bg-secondary">
+                <div class="container-fluid">
+                    <a class="logo" class="navbar-brand text-white" href="{{ path('home')}}">Video Retro</a>
+                    <p class="slogan text-light align-self-items-center">Tout le cinéma en VHS, DVD et Blu-Ray<p>  
+                    {# On rend la méthode GetSearchBar du controller SearchController. Les :: permettent d'appeler getSearchBar de manière statique. Les deux \\ sont une convention, cela ne fonctionne pas avec un seul \ #}
+                    {{ render(controller("App\\Controller\\SearchController::getSearchBar")) }}              
+                    {# <form class="d-flex" role="search">
+                    <input class="form-control me-auto" type="search" placeholder="Rechercher" aria-label="Search">
+                    <button class="btn btn-outline-light me-auto" type="submit">Rechercher</button>
+                </form> #}
+                </div>
+            </nav>
 
-        {# Première navbar pour contenir le logo, la baseline et la barre de recherche #}
-        <nav class="navbar navbar-expand-lg bg-secondary">
-            <div class="container-fluid">
-                <a class="logo" class="navbar-brand text-white" href="{{ path('home')}}">Video Retro</a>
-                <p class="slogan text-light align-self-items-center">Tout le cinéma en VHS, DVD et Blu-Ray<p>  
-                {# On rend la méthode GetSearchBar du controller SearchController. Les :: permettent d'appeler getSearchBar de manière statique. Les deux \\ sont une convention, cela ne fonctionne pas avec un seul \ #}
-                {{ render(controller("App\\Controller\\SearchController::getSearchBar")) }}              
-                {# <form class="d-flex" role="search">
-                <input class="form-control me-auto" type="search" placeholder="Rechercher" aria-label="Search">
-                <button class="btn btn-outline-light me-auto" type="submit">Rechercher</button>
-            </form> #}
-            </div>
-        </nav>
-
-        {# Deuxième navbar pour contenir les onglets Accueil, Inscription, Connexion, Déconnexion et produits qui sera à rajouter. #}
-        <nav class="navbar navbar-expand-lg bg-secondary">
-            {# Mise en place du bouton de navigation qui remplace le menu pour les écrans tablettes et mobiles. #}
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
+            {# Deuxième navbar pour contenir les onglets Accueil, Inscription, Connexion, Déconnexion et produits qui sera à rajouter. #}
+            <nav class="navbar navbar-expand-lg bg-secondary">
+                {# Mise en place du bouton de navigation qui remplace le menu pour les écrans tablettes et mobiles. #}
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                    {# Si tel nom de route est celui de la route actuelle, alors on applique la classe ongletActif pour mettre cet onglet en évidence  #}
-                    <li class="nav-item {% if app.request.attributes.get('_route') == 'home' %} ongletActif {% endif %}">
+                    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                        {# Si tel nom de route est celui de la route actuelle, alors on applique la classe ongletActif pour mettre cet onglet en évidence  #}
+                        <li class="nav-item {% if app.request.attributes.get('_route') == 'home' %} ongletActif {% endif %}">
                             <a class="nav-link text-white " href="{{ path('home') }}">Accueil</a>
-                    </li>
-                    {# Si l'utilisateur est connecté, seul le bouton Déconnexion s'affiche #}
-                    {% if app.user %}
-                        <li class="nav-item">
-                            <a class="nav-link text-white" href="{{ path('app_logout') }}">Déconnexion</a>
                         </li>
-                        
-                    {# S'il n'y a pas d'utilisateur connecté, les boutons Inscription et Connexion s'affichent #}
-                    {% else %}
-                        
-                        <li class="nav-item {% if app.request.attributes.get('_route') == 'app_register' %} ongletActif {% endif %}">
-                            <a class="nav-link text-white " href="{{ path('app_register') }}">Inscription</a>
-                        </li>
-                        <li class="nav-item {% if app.request.attributes.get('_route') == 'app_login' %} ongletActif {% endif %}">
-                            <a class="nav-link text-white" href="{{ path('app_login') }}">Connexion</a>
-                        </li>
-                    {% endif %}
-                </ul>
+                        {# Si l'utilisateur est connecté, seul le bouton Déconnexion s'affiche #}
+                        {% if app.user %}
+                            <li class="nav-item">
+                                <a class="nav-link text-white" href="{{ path('app_logout') }}">Déconnexion</a>
+                            </li>
+                            
+                        {# S'il n'y a pas d'utilisateur connecté, les boutons Inscription et Connexion s'affichent #}
+                        {% else %}
+                            
+                            <li class="nav-item {% if app.request.attributes.get('_route') == 'app_register' %} ongletActif {% endif %}">
+                                <a class="nav-link text-white " href="{{ path('app_register') }}">Inscription</a>
+                            </li>
+                            <li class="nav-item {% if app.request.attributes.get('_route') == 'app_login' %} ongletActif {% endif %}">
+                                <a class="nav-link text-white" href="{{ path('app_login') }}">Connexion</a>
+                            </li>
+                        {% endif %}
+                    </ul>
                 </div>
-        </nav>
-    
-        <h1 class="text-center text-secondary">{% block h1 %}{% endblock %}</h1>
+            </nav>
+        </header>
 
-        <div class="container">
+        <main class="container">
+            <h1 class="text-center text-secondary">{% block h1 %}{% endblock %}</h1>
         {% block body %}{% endblock %}
-        </div>
+        </main>
 
-        <footer class="footer bg-secondary fixed-bottom">
-        {# Insérer le contenu du footer. Peaufiner le CSS. #}
+        <footer class="footer bg-secondary mt-3">
+            <div class="container">
+                <p class="text-white">Contenu du footer</p>
+                <p class="text-white">Contenu du footer</p>
+                <p class="text-white">Contenu du footer</p>
+                <p class="text-white">Contenu du footer</p>
+            </div>
+        </footer>
+
+
+        {# <footer class="footer bg-secondary fixed-bottom">
         <div>
             <p>Nous contacter</p>
-            {# Ajouter le lien actif vers le mail de contact #}
+            Ajouter ci-dessous le lien actif vers le mail de contact
             <p>contact@videoretro.fr</p>
             <p>Tél : +33612345678</p>
         </div>
-        </footer>
+        </footer> #}
 
 
 
