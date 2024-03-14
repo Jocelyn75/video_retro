@@ -29,6 +29,8 @@ class SearchController extends AbstractController
         // Dans $data, on récupère la valeur associée à la clé results dans $apiResponseArray. 
         $data = $apiResponseArray['results'];
 
+        // Hello
+
         //on passe le tableau à la vue.
         return $this->render('search/index.html.twig', [
             'data' => $data,
