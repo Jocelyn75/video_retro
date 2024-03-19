@@ -1,7 +1,9 @@
+/* Pour mettre en place le footer, il faut définir une hauteur de 100% pour le body */
 html, body {
     height: 100%;
 }
 
+/* Ensuite, il faut utiliser les grid. On découpe la page en 3 zones : le header à auto, le body à une fraction et le footer à auto. Ainsi, la hauteur du header et du footer s'ajuste en fonction de la hauteur du body (qui dépend de son contenu. */
 body {
     display: grid;
     grid-template-rows: auto 1fr auto;
@@ -31,9 +33,7 @@ body {
     align-items: center;
     font-style: italic;
     margin: 0;
-
 }
-/* fsgdfr */
 
 .ongletActif{
     text-shadow: 2px 2px 3px white
@@ -43,4 +43,8 @@ body {
     width: 90%;
     display: block;
     margin: 0 auto;
+}
+
+h2{
+    font-weight: bold;
 }

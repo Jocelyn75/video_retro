@@ -18,20 +18,24 @@ class SearchController extends AbstractController
         $data = $request->query->all();
 
         // La variable $multi contient le contenu de la recherche effectuée. Search correspond à la recherche et keyword aux mots-clés recherchés.
-        $multi = $data['search']['keyword'];
+        $search = $data['search']['keyword'];
 
-        // $client fait une requête vers l'API. $multi est utilisée pour rendre la requête dynamique. $apiResponse stocke le contenu de la réponse.
-        $apiResponse = $client->request('GET', "https://api.themoviedb.org/3/search/multi?query={$multi}&api_key={$_ENV['TMDB_API']}");
+        // $client fait une requête vers l'API. $search est utilisée pour rendre la requête dynamique. $apiResponse stocke le contenu de la réponse. Pour garder privée la clé API, elle est renseignée dans le fichier .env.local
+        $apiResponse = $client->request('GET', "https://api.themoviedb.org/3/search/movie?query={$search}&language=fr&api_key={$_ENV['TMDB_API']}");
 
-        // La réponse est convertie en tableau pour récupérer la réponse sous forme de tableau.
+        // La réponse est convertie pour la récupérer sous forme de tableau.
         $apiResponseArray = $apiResponse->toArray();
         
         // Dans $data, on récupère la valeur associée à la clé results dans $apiResponseArray. 
         $data = $apiResponseArray['results'];
 
+        // On déclare une variable qui contient le chemin de base pour toutes les requêtes concernant les images sur l'API 
+        $imageUrl = 'https://image.tmdb.org/t/p/';
+
         // On retourne le résultat de la recherche sur la page qui affiche le résultat de la recherche : index.html.twig.
         return $this->render('search/index.html.twig', [
             'data' => $data,
+            'imageUrl' => $imageUrl,
         ]);
     }
 
