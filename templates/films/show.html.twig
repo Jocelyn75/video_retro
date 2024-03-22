@@ -3,6 +3,43 @@
 {% block title %}Films{% endblock %}
 
 {% block body %}
+<div class="container d-flex">
+    <div>
+        <img src="{{ imageUrl ~ 'w500' ~ filmsShow.poster_path }}" alt="{{ filmsShow.title }} Poster">
+    </div>
+
+    <div class="flex-grow-1 p-3">
+        <h1>{{filmsShow.title}}</h1>
+        <p>{{filmsShow.overview}}</p>
+        {% set directors = [] %}
+        {% for person in director %}
+            {% if person.job == 'Director' %}
+                {% set directors = directors|merge([person.name]) %}
+            {% endif %}
+            {% endfor %}
+
+        {% if directors|length > 1 %}
+            <h2>Réalisation :</h2>
+            <p>{{ directors|join(', ') }}</p>
+        {% else %}
+            <h2>Réalisation :</h2>
+            <p>{{ directors[0] }}</p>
+        {% endif %}
+
+
+        <h2>Acteurs principaux :</h2>
+        <ul class="list-unstyled">
+            {% for actor in cast %}
+                <li>{{ actor.name }}</li>
+            {% endfor %}
+        </ul>
+    </div>
+</div>
+
+{% endblock %}
+
+
+{# {% block body %}
     <h1>Films</h1>
 
     <table class="table">
@@ -23,4 +60,4 @@
     <a href="{{ path('app_films_edit', {'id': film.id}) }}">edit</a>
 
     {{ include('films/_delete_form.html.twig') }}
-{% endblock %}
+{% endblock %} #}

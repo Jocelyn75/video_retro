@@ -16,7 +16,7 @@
             {# Navbar 1 pour contenir le logo, la baseline et la barre de recherche #}
             <nav class="navbar navbar-expand-lg bg-secondary">
                 <div class="container-fluid">
-                    <a class="logo" class="navbar-brand text-white" href="{{ path('home')}}">Video Retro</a>
+                    <a class="font-lazer" class="navbar-brand text-white" href="{{ path('home')}}">Video Retro</a>
                     <p class="slogan text-light align-self-items-center">Tout le cinéma en VHS, DVD et Blu-Ray<p>  
                     {# On rend la méthode GetSearchBar du controller SearchController. Les :: permettent d'appeler getSearchBar de manière statique. Les \\ sont une convention, cela ne fonctionne pas avec un seul \ #}
                     {{ render(controller("App\\Controller\\SearchController::getSearchBar")) }}              

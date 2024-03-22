@@ -4,10 +4,51 @@
 
 
 {% block body %}
-    <h1 class="text-center my-3 fw-bold">Résultats de la recherche</h1>
+    <h1 class="text-center my-5 fw-bold text-secondary">Résultats de la recherche</h1>
     {# results in data : On parcourt le tableau des films (data) et pour chaque film, on affiche le titre (title) à condition qu'il s'agisse d'un film et pas d'une série. (Les films ont des title, les séries ont des name). #}
 
-    {# Dans le cas où on utilise la requête multi (qui retourne des personnes) au lieu de movie (qui ne retourne que des films), on différencie les résultats entre les personnes et les films :
+    
+<section class="d-flex justify-content-center">
+    <div style="width: 80%;">
+        {% for results in data %}
+        <div class="card mb-3 bg-light" style="max-width: 100%;">
+            <div class="row g-3 align-items-center">
+                <div class="col-md-4 text-center mb-3 mb-md-0">
+                    {% if results.poster_path is not empty %}
+                        <a href="{{ path('app_films_show', {'id': results.id}) }}">
+                        <img src="{{ imageUrl ~ 'w185' ~ results.poster_path }}" class="img-fluid rounded-start" alt="{{ results.title }} Poster">
+                        </a>
+                    {% else %}
+                        <img src="{{asset('images/no_image_available_w185_h278.png')}}" class="img-fluid rounded-start" alt="No image available">
+                    {% endif %}
+                </div>
+                <div class="col-md-8 text-center"> {# Ajout de la classe text-center ici #}
+                    <div class="card-body">
+                        <h5 class="card-title mb-2 fw-bold">{{ results.title|upper }}</h5>
+                        <p class="card-text mb-2 pb-3">{{results.release_date|slice(0,4)}}</p>
+                        <div class="overview-text">
+                            {% if results.overview is not empty %}
+                                <p class="card-text mb-2">{{ results.overview|slice(0, 200) }}...</p>
+                            {% else %}
+                                <p class="card-text font-italic mb-2">Pas de synopsis disponible</p>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</section>
+
+{% endblock %}
+
+
+
+
+{# ALTERNATIVE -- Dans le cas où on utilise la requête multi (qui retourne des personnes) au lieu de movie (qui ne retourne que des films), on différencie les résultats entre les personnes et les films :
+
+
     <section>
         <h2 class="fw-bold">Personnes</h2>
         {% for results in data %}
@@ -23,32 +64,33 @@
         {% endfor %}
     </section> #}
 
-    <section>
-        {# <h2>Films</h2> #}
+    {#<section>
+        <h2>Films</h2>
         {% for results in data %}
-            {# {% if results.media_type == "movie" %} #}
+            {% if results.media_type == "movie" %} 
                 <h3>{{results.title}}</h3>
-                {# Si une photo est disponible pour une personne donnée, on l'affiche... #}
+                {# Si une photo est disponible pour une personne donnée, on l'affiche... 
                 {% if results.poster_path is not empty %}
-                {# Pour récupérer une image, on concatène la variable qui correspond à l'url de base pour les requêtes sur les images, avec la taille de l'image choisie, et le KV correspondant à l'image. #}
+                {# Pour récupérer une image, on concatène la variable qui correspond à l'url de base pour les requêtes sur les images, avec la taille de l'image choisie, et le KV correspondant à l'image. 
+                <a href="{{ path('app_films_show', {'id': results.id}) }}">
                     <img src="{{ imageUrl ~ 'w92' ~ results.poster_path }}" alt="{{ results.title }} Poster">
-                {# ... sinon on affiche une image générique #}
+                </a>
+                {# ... sinon on affiche une image générique 
                 {% else %}
-                    <img src="{{asset('images/no_image_available_w92_h138.png')}}" alt="">
+                    <img src="{{asset('images/no_image_available_w92_h138.png')}}" alt="No image available">
                 {% endif %}
                 {% if results.overview is not empty %}
                     <p>{{results.overview}}</p>
                 {% else %}
                     <p class="font-italic">Pas de synopsis disponible</p>
                 {% endif %}
-            {# {% endif %}
+            {% endif %}
             {% if results.media_type == "person" %}
                 {% for knownFor in results.known_for %}
                     <h3>{{knownFor.title}}</h3>
                     <img src="{{ imageUrl ~ 'w92' ~ knownFor.poster_path }}" alt="{{ knownFor.title }} Poster">
                     <p>{{knownFor.overview}}</p>
                 {% endfor %}            
-            {% endif %} #}
+            {% endif %}
         {% endfor %}
-    </section>
-{% endblock %}
+    </section>#}

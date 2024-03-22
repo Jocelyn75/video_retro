@@ -10,6 +10,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Contracts\HttpClient\HttpClientInterface;
 
 #[Route('/films')]
 class FilmsController extends AbstractController
@@ -42,11 +43,38 @@ class FilmsController extends AbstractController
         ]);
     }
 
+    // #[Route('/{id}', name: 'app_films_show', methods: ['GET'])]
+    // public function show(Films $film): Response
+    // {
+    //     return $this->render('films/show.html.twig', [
+    //         'film' => $film,
+    //     ]);
+    // }
+
     #[Route('/{id}', name: 'app_films_show', methods: ['GET'])]
-    public function show(Films $film): Response
+    public function show(string $id, HttpClientInterface $client): Response
     {
+        $apiResponse = $client->request('GET', "https://api.themoviedb.org/3/movie/{$id}?&language=fr&api_key={$_ENV['TMDB_API']}");
+
+        $apiResponse2 = $client->request('GET', "https://api.themoviedb.org/3/movie/{$id}/credits?language=fr&api_key={$_ENV['TMDB_API']}");
+
+        $filmsShow = $apiResponse->toArray();
+        $credits = $apiResponse2->toArray();
+
+        // $creditsShow = $credits['cast'];
+        $imageUrl = 'https://image.tmdb.org/t/p/';
+
+        $director = array_filter($credits['crew'], function ($castMember) {
+            return $castMember['job'] === 'Director';
+        });
+        
+        $cast = array_slice($credits['cast'], 0, 10);
+
         return $this->render('films/show.html.twig', [
-            'film' => $film,
+            'filmsShow' => $filmsShow,
+            'imageUrl' => $imageUrl,
+            'director' => $director,
+            'cast' => $cast
         ]);
     }
 
