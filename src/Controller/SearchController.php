@@ -15,9 +15,10 @@ class SearchController extends AbstractController
     // On utilise HttpclientInterface pour se connecter à l'API, on lui demande d'écouter  $client. On injecte à Request l'objet $request. 
     public function index(Request $request, HttpClientInterface $client): Response
     {
+        // $data contient toutes les données envoyées dans la requête.
         $data = $request->query->all();
 
-        // La variable $multi contient le contenu de la recherche effectuée. Search correspond à la recherche et keyword aux mots-clés recherchés.
+        // La variable $search contient le contenu de la recherche effectuée. 'search' correspond à la recherche et 'keyword' aux mots-clés recherchés.
         $search = $data['search']['keyword'];
 
         // $client fait une requête vers l'API. $search est utilisée pour rendre la requête dynamique. $apiResponse stocke le contenu de la réponse. Pour garder privée la clé API, elle est renseignée dans le fichier .env.local

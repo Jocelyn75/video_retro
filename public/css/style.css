@@ -10,7 +10,7 @@ body {
 }
 
 /* CSS de base.html.twig */
-.logo{
+.font-lazer{
     font-family: "Lazer84";
     text-decoration: none;
     color:white;
@@ -45,6 +45,8 @@ body {
     margin: 0 auto;
 }
 
-h2{
+/* h1{
     font-weight: bold;
-}
+    color: #6c757d; 
+    /* couleur correspondant à text-secondary de Bootstrap
+} */
