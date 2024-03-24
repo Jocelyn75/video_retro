@@ -6,7 +6,7 @@
 {% block body %}
     {# Si un utlisateur est connecté, le message de bienvenue s'affiche #}
     {% if app.user %}
-        <h1 class = "text-center">
+        <h1>
             Bienvenue {{ app.user.prenom}} {{ app.user.nom}} !
         </h1>
     {% endif %}

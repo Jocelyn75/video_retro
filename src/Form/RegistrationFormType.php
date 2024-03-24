@@ -45,6 +45,7 @@ class RegistrationFormType extends AbstractType
                                 // instead of being set onto the object directly,
                 // this is read and encoded in the controller
                 'type' => PasswordType::class,
+                // Si mapped est à false, le champ plainPassword n'est pas lié à une propriété de l'entité. La valeur du champ est alors manipulée dans le contrôleur pour l'encoder. Ici, l'information contenue dans le champ 'Confirmez votre mot de passe n'est pas stockée dans la BDD. En Symfony, le mapping, c'est lier un champ de formulaire à une colonne dans une table en BDD.
                 'mapped' => false,
                 'attr' => ['autocomplete' => 'new-password'],
                 'first_options'  => ['label' => 'Mot de passe'],

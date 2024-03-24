@@ -3,12 +3,9 @@
 {% block title %}Inscription{% endblock %}
 
 {% block body %}
-    <h1 class="h3 mb-3 font-weight-normal">Inscription</h1>
+    <h1>Inscription</h1>
 
     {{ form_errors(registrationForm) }}
-
-
-    {# QUESTION :Comment modifier l'espacement entre le label et son champ de formulaire ? #}
     {{ form_start(registrationForm) }}
         {{ form_row(registrationForm.email,{'label_attr': {'class': 'mb-2'}})}}
         {{ form_row(registrationForm.plainPassword,{'label_attr': {'class': 'mb-3'}})}}

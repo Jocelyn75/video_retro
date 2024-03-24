@@ -10,12 +10,18 @@ body {
 }
 
 /* CSS de base.html.twig */
+
+.imgLogo{
+    width:100px;
+    height: auto;
+}
+
 .font-lazer{
     font-family: "Lazer84";
     text-decoration: none;
     color:white;
     font-size: 2.5rem;
-    /* text-shadow utilisé pour créer un contour sur le texte : */
+    /* text-shadow est utilisé pour créer un contour sur le texte : */
     text-shadow:
     3px 3px 2px #000,
     -3px 3px 2px #000,
@@ -35,18 +41,40 @@ body {
     margin: 0;
 }
 
-.ongletActif{
-    text-shadow: 2px 2px 3px white
-}
-
 .homephoto{
     width: 90%;
     display: block;
     margin: 0 auto;
 }
 
-/* h1{
+
+h1{
     font-weight: bold;
+    text-align: center;
     color: #6c757d; 
-    /* couleur correspondant à text-secondary de Bootstrap
-} */
+    /* couleur correspondant à text-secondary de Bootstrap */
+    padding-bottom: 1rem;
+} 
+
+
+@media screen and (max-width: 768px) 
+{
+    .searchBar-container {
+        width: 100%;
+    } 
+    .slogan-sm {
+        display: none;
+    }
+
+    .search-sm {
+        width: 100%;
+    }
+}
+
+@media screen and (max-width: 576px)
+{
+    .imgLogo{
+        display: none;
+    }
+
+}

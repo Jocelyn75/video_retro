@@ -1,5 +1,5 @@
 {# action est utilisée pour que lorsqu'on clique pour envoyer les données du formulaire, la destination soit la page search dont le nom est app_search, tel  que définis dans SearchController.php #}
-{{form_start(form, {'action': path('app_search')})}}
+{{form_start(form, {'attr': {'action': path('app_search'), 'class':'search-sm'}})}}
     {# Cette div permet de placer le widget (champ de saisie) et le bouton de recherche en ligne #}
     <div class="d-flex">
     {# On génère le widget pour le champ keyword du formulaire, et on le style. #}
