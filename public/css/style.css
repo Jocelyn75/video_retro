@@ -56,6 +56,11 @@ h1{
     padding-bottom: 1rem;
 } 
 
+.links{
+    text-decoration: underline;
+    color: white;
+}
+
 
 @media screen and (max-width: 768px) 
 {

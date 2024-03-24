@@ -61,11 +61,10 @@ class FilmsController extends AbstractController
         $filmsShow = $apiResponse->toArray();
         $credits = $apiResponse2->toArray();
 
-        // $creditsShow = $credits['cast'];
         $imageUrl = 'https://image.tmdb.org/t/p/';
 
-        $director = array_filter($credits['crew'], function ($castMember) {
-            return $castMember['job'] === 'Director';
+        $director = array_filter($credits['crew'], function ($crewMember) {
+            return $crewMember['job'] === 'Director';
         });
         
         $cast = array_slice($credits['cast'], 0, 10);

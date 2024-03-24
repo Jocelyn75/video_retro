@@ -5,7 +5,11 @@
 {% block body %}
 <div class="container d-flex">
     <div>
-        <img src="{{ imageUrl ~ 'w500' ~ filmsShow.poster_path }}" alt="{{ filmsShow.title }} Poster">
+        {% if filmsShow.poster_path is not empty %}
+            <img src="{{ imageUrl ~ 'w500' ~ filmsShow.poster_path }}" alt="{{ filmsShow.title }} Poster">
+        {% else %}
+            <img src="{{asset('images/no_image_available_w185_h278.png')}}" class="img-fluid rounded-start" alt="No image available">
+        {% endif %}
     </div>
 
     <div class="flex-grow-1 p-3">

@@ -5,30 +5,31 @@
 
 {% block body %}
     <h1 class="text-center my-5 fw-bold text-secondary">Résultats de la recherche</h1>
-    {# results in data : On parcourt le tableau des films (data) et pour chaque film, on affiche le titre (title) à condition qu'il s'agisse d'un film et pas d'une série. (Les films ont des title, les séries ont des name). #}
+
 
     
-<section class="d-flex justify-content-center">
-    <div style="width: 80%;">
-        {% for results in data %}
-        <div class="card mb-3 bg-light" style="max-width: 100%;">
-            <div class="row g-3 align-items-center">
-                <div class="col-md-4 text-center mb-3 mb-md-0">
-                    {% if results.poster_path is not empty %}
-                        <a href="{{ path('app_films_show', {'id': results.id}) }}">
-                        <img src="{{ imageUrl ~ 'w185' ~ results.poster_path }}" class="img-fluid rounded-start" alt="{{ results.title }} Poster">
-                        </a>
-                    {% else %}
-                        <img src="{{asset('images/no_image_available_w185_h278.png')}}" class="img-fluid rounded-start" alt="No image available">
-                    {% endif %}
-                </div>
-                <div class="col-md-8 text-center"> {# Ajout de la classe text-center ici #}
-                    <div class="card-body">
+    <section class="d-flex justify-content-center">
+        <div style="width: 80%;">
+            {% for results in films %}
+            <div class="card mb-3 bg-light" style="max-width: 100%;">
+                <div class="row g-3 align-items-center">
+                    <div class="col-md-4 text-center mb-3 mb-md-0">
+                        {% if results.poster_path is not empty %}
+                            <a href="{{ path('app_films_show', {'id': results.id}) }}">
+                            <img src="{{ imageUrl ~ 'w185' ~ results.poster_path }}" class="img-fluid rounded-start" alt="{{ results.title }} Poster">
+                            </a>
+                        {% else %}
+                            <a href="{{ path('app_films_show', {'id': results.id}) }}">
+                            <img src="{{asset('images/no_image_available_w185_h278.png')}}" class="img-fluid rounded-start" alt="No image available">
+                            </a>
+                        {% endif %}
+                    </div>
+                    <div class="card-body col-md-8 text-center">
                         <h5 class="card-title mb-2 fw-bold">{{ results.title|upper }}</h5>
                         <p class="card-text mb-2 pb-3">{{results.release_date|slice(0,4)}}</p>
                         <div class="overview-text">
                             {% if results.overview is not empty %}
-                                <p class="card-text mb-2">{{ results.overview|slice(0, 200) }}...</p>
+                                <p class="card-text mb-2 pe-3">{{ results.overview|slice(0, 200) }}...</p>
                             {% else %}
                                 <p class="card-text font-italic mb-2">Pas de synopsis disponible</p>
                             {% endif %}
@@ -36,10 +37,9 @@
                     </div>
                 </div>
             </div>
+            {% endfor %}
         </div>
-        {% endfor %}
-    </div>
-</section>
+    </section>
 
 {% endblock %}
 
