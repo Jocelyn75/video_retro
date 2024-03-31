@@ -58,22 +58,38 @@ class FilmsController extends AbstractController
 
         $apiResponse2 = $client->request('GET', "https://api.themoviedb.org/3/movie/{$id}/credits?language=fr&api_key={$_ENV['TMDB_API']}");
 
+        $apiResponse3= $client->request('GET', "https://api.themoviedb.org/3/movie/{$id}/watch/providers?language=fr&api_key={$_ENV['TMDB_API']}");
+
         $filmsShow = $apiResponse->toArray();
         $credits = $apiResponse2->toArray();
+        $data = $apiResponse3->toArray();
+
 
         $imageUrl = 'https://image.tmdb.org/t/p/';
 
+        //Crédits
         $director = array_filter($credits['crew'], function ($crewMember) {
             return $crewMember['job'] === 'Director';
         });
         
         $cast = array_slice($credits['cast'], 0, 10);
 
+        //Providers
+        $providers = $data['results']['FR'];
+
+        $rent = $providers['rent'];
+        // $buy = $providers['buy'];
+        // $flatRate = $providers['flatRate'];
+
+
         return $this->render('films/show.html.twig', [
             'filmsShow' => $filmsShow,
             'imageUrl' => $imageUrl,
             'director' => $director,
-            'cast' => $cast
+            'cast' => $cast,
+            'rent' => $rent,
+            // 'buy' => $buy,
+            // 'flatRate' => $flatRate
         ]);
     }
 

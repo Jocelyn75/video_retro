@@ -3,18 +3,99 @@
 {% block title %}{{filmsShow.title}}{% endblock %}
 
 {% block body %}
-<div class="container d-flex">
+<div class="container">
+    <div class="card bg-light">
+        <div class="card-body">
+            <div class="row mt-4">
+                <div class="col-md-4 text-center">
+                    {% if filmsShow.poster_path is not empty %}
+                        <img src="{{ imageUrl ~ 'w342' ~ filmsShow.poster_path }}" alt="{{ filmsShow.title }} Poster" class=" imgFilm img-fluid rounded mb-3">
+                    {% else %}
+                        <img src="{{ asset('images/no_image_available_w342_h513.png') }}" class="img-fluid rounded mb-3" alt="No image available">
+                    {% endif %}
+                </div>
+
+                <div class="col-md-8">
+                    <h1 class="text-start">{{ filmsShow.title }}</h1>
+
+                    <p class="mb-0">
+                        {% set directors = [] %}
+                        {% for person in director %}
+                            {% if person.job == 'Director' %}
+                                {% set directors = directors|merge([person.name]) %}
+                            {% endif %}
+                        {% endfor %}
+
+                        {% if directors|length > 1 %}
+                            <strong>Réalisation :</strong> {{ directors|join(', ') }}<br>
+                        {% else %}
+                            <strong>Réalisation :</strong> {{ directors[0] }}<br>
+                        {% endif %}
+                        </p>
+                        
+                        <p class="mb-0">
+                        <strong>Durée :</strong> {{ filmsShow.runtime }} mn
+                        </p>
+                        <p class="mb-0">                        <strong>Année de sortie :</strong> {{ filmsShow.release_date|slice(0,4) }}
+                        </p>
+                        <p class="mb-0 overview">{{ filmsShow.overview }}</p>
+
+                    <strong>Têtes d'affiche :</strong>
+                    <div class="d-flex text-wrap">
+                        {% for actor in cast|slice(0, 5) %}
+                            <div class="text-center me-1 mb-0">
+                                <p>{{ actor.name }}{% if not loop.last %}, {% endif %}</p>
+                            </div>
+                        {% endfor %}
+                    </div>
+                    <div>
+                        <strong>Acheter ce film</strong>
+                        <div class="d-flex justify-content-around">
+                            <img src="{{asset('images/vhs_logo_w100.png')}}" alt="Logo VHS">
+                            <img src="{{asset('images/dvd_logo_w100.png')}}" alt="Logo DVD">
+                            <img src="{{asset('images/bluray_logo_w100.png')}}" alt="Logo Blu-Ray">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
+
+
+
+
+
+
+
+
+
+{# {% block body %}
+<div class="container d-flex flex-column">
+    <div class="justify-content-center">
+        {% if filmsShow.backdrop_path is not empty %}
+            <img src="{{ imageUrl ~ 'w780' ~ filmsShow.backdrop_path }}" alt="{{ filmsShow.title }} Poster">
+        {% else %}
+            <img src="{{asset('images/no_image_available_w185_h278.png')}}" class="img-fluid rounded-start" alt="No image available">
+        {% endif %}
+    </div>
+    
+    <h1>{{filmsShow.title}}</h1>
+    <p>Durée : {{filmsShow.runtime}} mn</p>
+    <p>Année de sortie : {{filmsShow.release_date|slice(0,4)}}</p>
+
+
     <div>
         {% if filmsShow.poster_path is not empty %}
-            <img src="{{ imageUrl ~ 'w500' ~ filmsShow.poster_path }}" alt="{{ filmsShow.title }} Poster">
+            <img src="{{ imageUrl ~ 'w185' ~ filmsShow.poster_path }}" alt="{{ filmsShow.title }} Poster">
         {% else %}
             <img src="{{asset('images/no_image_available_w185_h278.png')}}" class="img-fluid rounded-start" alt="No image available">
         {% endif %}
     </div>
 
     <div class="flex-grow-1 p-3">
-        <h1>{{filmsShow.title}}</h1>
-        <p>{{filmsShow.overview}}</p>
         {% set directors = [] %}
         {% for person in director %}
             {% if person.job == 'Director' %}
@@ -31,16 +112,29 @@
         {% endif %}
 
 
-        <h2>Acteurs principaux :</h2>
+        <h2>Têtes d'affiche :</h2>
         <ul class="list-unstyled">
             {% for actor in cast %}
+                <li><img src="{{ imageUrl ~ 'w45' ~ actor.profile_path }}" alt="{{ actor.name }} profile pic"></li>
                 <li>{{ actor.name }}</li>
+                <li>{{actor.character}}</li>
             {% endfor %}
         </ul>
+        
+        <p>{{filmsShow.overview}}</p>
+
+        <div class="providers">
+            {% if rent.provider_name is not empty %}
+            <p>{{rent.provider_name}}</p>
+            {% else %}
+            <p>Pas de titre</p>
+            {% endif %}
+        </div>
+
     </div>
 </div>
 
-{% endblock %}
+{% endblock %} #}
 
 
 {# {% block body %}

@@ -49,6 +49,7 @@ body {
 
 
 h1{
+    font-size: 2rem;
     font-weight: bold;
     text-align: center;
     color: #6c757d; 
@@ -56,11 +57,21 @@ h1{
     padding-bottom: 1rem;
 } 
 
+h2{
+    font-size : 1.5rem; 
+    font-weight : bold;
+}
+
 .links{
     text-decoration: underline;
     color: white;
 }
 
+@media screen and (max-width: 992px) {
+    .overview {
+        display: none;
+    }
+}
 
 @media screen and (max-width: 768px) 
 {
@@ -73,6 +84,13 @@ h1{
 
     .search-sm {
         width: 100%;
+    }
+    .imgFilm{
+        max-width: 196px;
+    }
+
+    h1{
+        text-align: center !important;
     }
 }
 

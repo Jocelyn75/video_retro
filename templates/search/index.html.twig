@@ -4,10 +4,8 @@
 
 
 {% block body %}
-    <h1 class="text-center my-5 fw-bold text-secondary">Résultats de la recherche</h1>
+    <h1 class="text-center mb-3 fw-bold text-secondary">Résultats de la recherche</h1>
 
-
-    
     <section class="d-flex justify-content-center">
         <div style="width: 80%;">
             {% for results in films %}
@@ -25,7 +23,7 @@
                         {% endif %}
                     </div>
                     <div class="card-body col-md-8 text-center">
-                        <h5 class="card-title mb-2 fw-bold">{{ results.title|upper }}</h5>
+                        <h2 class="card-title mb-2 fw-bold">{{ results.title|upper }}</h2>
                         <p class="card-text mb-2 pb-3">{{results.release_date|slice(0,4)}}</p>
                         <div class="overview-text">
                             {% if results.overview is not empty %}

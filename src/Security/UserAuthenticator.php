@@ -47,6 +47,11 @@ class UserAuthenticator extends AbstractLoginFormAuthenticator
         if ($targetPath = $this->getTargetPath($request->getSession(), $firewallName)) {
             return new RedirectResponse($targetPath);
         }
+            // Redirection à la connexion selon le rôle de l'utilisateur. A mettre en place quand la route admin sera définie.  
+            // $user = $token->getUser();
+            // if(in_array('ROLE_ADMIN', $user->getRoles())){
+            //     return new RedirectResponse($this->urlGenerator->generate('nom_route'));
+            // }
 
         // For example:
         return new RedirectResponse($this->urlGenerator->generate('app_login'));
