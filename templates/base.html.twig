@@ -31,13 +31,13 @@
                             {% if app.user %}
                                 {% if is_granted('ROLE_ADMIN') %}
                                     <li class="nav-item">
-                                        <a class="nav-link text-end" href="">Back office</a>
+                                        <a class="nav-link text-end" href="{{path('app_admin_home')}}">Back office</a>
                                     </li>
                                 {% endif %}
 
                                 {% if is_granted('ROLE_USER') %}
                                     <li class="nav-item">
-                                        <a class="nav-link text-end" href="">Mon profil</a>
+                                        <a class="nav-link text-end" href="{{path('app_profil')}}">Mon profil</a>
                                     </li>
                                 {% endif %}
                                 
