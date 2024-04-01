@@ -5,6 +5,11 @@
 {% block h1 %}Mon Profil{% endblock %}
 
 {% block body %}
+    {% for message in app.flashes('success') %}
+        <div class="alert alert-success">
+            <p class="p-bold mb-3">{{ message }}</p>
+        <div>
+    {% endfor %}
     <div class="d-flex">
         <p class ="mb-3 p-bold">Nom :&nbsp;</p> {{app.user.nom}} 
     </div>
@@ -29,11 +34,6 @@
     <div class="d-flex">
         <p class ="mb-3 p-bold">Téléphone:&nbsp;</p>{{app.user.telUser}}
     </div>
-
-
-
-
-
 
     <a class="btn btn-secondary" href="{{ path("app_profil_edit")}}">Modifier mes informations</a>
 {% endblock %}
