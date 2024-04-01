@@ -75,12 +75,15 @@ class FilmsController extends AbstractController
         $cast = array_slice($credits['cast'], 0, 10);
 
         //Providers
-        $providers = $data['results']['FR'];
+        $providers = $data['results']['FR'] ?? "";
 
-        $rent = $providers['rent'];
-        // $buy = $providers['buy'];
-        // $flatRate = $providers['flatRate'];
-
+        if ($providers === null){
+                
+        }else{
+            $rent = $providers['rent'] ?? "";
+            $buy = $providers['buy'] ?? "";
+            $flatrate = $providers['flatrate'] ?? "";
+        }
 
         return $this->render('films/show.html.twig', [
             'filmsShow' => $filmsShow,
@@ -88,8 +91,8 @@ class FilmsController extends AbstractController
             'director' => $director,
             'cast' => $cast,
             'rent' => $rent,
-            // 'buy' => $buy,
-            // 'flatRate' => $flatRate
+            'buy' => $buy,
+            'flatrate' => $flatrate
         ]);
     }
 
