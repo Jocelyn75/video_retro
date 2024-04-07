@@ -127,4 +127,24 @@ h2{
         -2.4px -2.4px 0 #000,
         2.4px -2.4px 0 #000;
     }
+
+    /* Ces classes sont présentes sur la fiche film. Elle permettent d'afficher tout le contenu à l'intérieur des plus petits écrans. */
+    .movieCard{
+        max-width: 300px;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    .logoFormatsContainer{
+        display: flex;
+        flex-direction: column;
+        align-items : center;
+    }
+    
+    .logoFormats{
+        width: 100px;
+        height: 100px;
+    }
+
+
 }
