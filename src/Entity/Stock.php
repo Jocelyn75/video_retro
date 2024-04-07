@@ -36,6 +36,9 @@ class Stock
     #[ORM\ManyToOne(inversedBy: 'stocks')]
     private ?Formats $formats = null;
 
+    #[ORM\Column(nullable: true)]
+    private ?bool $status = null;
+
     public function __construct()
     {
         $this->detailsCommandes = new ArrayCollection();
@@ -141,6 +144,18 @@ class Stock
     public function setFormats(?Formats $formats): static
     {
         $this->formats = $formats;
+
+        return $this;
+    }
+
+    public function isStatus(): ?bool
+    {
+        return $this->status;
+    }
+
+    public function setStatus(?bool $status): static
+    {
+        $this->status = $status;
 
         return $this;
     }
