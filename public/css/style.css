@@ -47,7 +47,6 @@ body {
     margin: 0 auto;
 }
 
-
 h1{
     font-size: 2rem;
     font-weight: bold;
@@ -60,6 +59,11 @@ h1{
 h2{
     font-size : 1.5rem; 
     font-weight : bold;
+}
+
+.fs-20{
+    /* 1.25rem = 20px */
+    font-size: 1.25rem;
 }
 
 .links{
@@ -107,5 +111,20 @@ h2{
     .imgLogo{
         display: none;
     }
+}
 
+@media screen and (max-width: 360px)
+{
+    /* Taille de police réduite de 20% : empêcher le retour à la ligne du bouton burger sur les plus petits écrans */
+    .font-lazer {
+        font-family: "Lazer84";
+        text-decoration: none;
+        color: white;
+        font-size: calc(2.5rem * 0.8);
+        text-shadow:
+        2.4px 2.4px 1.6px #000,
+        -2.4px 2.4px 1.6px #000,
+        -2.4px -2.4px 0 #000,
+        2.4px -2.4px 0 #000;
+    }
 }
