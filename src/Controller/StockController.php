@@ -2,14 +2,18 @@
 
 namespace App\Controller;
 
+use App\Entity\Films;
+use App\Entity\Formats;
 use App\Entity\Stock;
 use App\Form\StockType;
+use App\Repository\FormatsRepository;
 use App\Repository\StockRepository;
 use Doctrine\ORM\EntityManagerInterface;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Contracts\HttpClient\HttpClientInterface;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 #[Route('/stock')]
 class StockController extends AbstractController
@@ -78,4 +82,43 @@ class StockController extends AbstractController
 
         return $this->redirectToRoute('app_stock_index', [], Response::HTTP_SEE_OTHER);
     }
+
+
+    //Route utilisée pour récupérer ma liste de films et créer les produits dans ma table stock. 
+    // #[Route('/getfilms', name: 'getfilms', methods: ['GET', 'POST'])]
+    // public function getfilms(HttpClientInterface $client, EntityManagerInterface $entityManager, FormatsRepository $formatsRepository)
+    // {
+    //     // Nombre total de pages à récupérer
+    //     $totalPages = 26;
+    
+    //     // Parcourir toutes les pages
+    //     for ($page = 1; $page <= $totalPages; $page++) {
+    //         // Récupérer les films de la page actuelle
+    //         $apiResponse = $client->request('GET', "https://api.themoviedb.org/3/list/8296832?language=fr&api_key={$_ENV['TMDB_API']}&page=$page");
+        
+    //         $apiResponseArray = $apiResponse->toArray();
+    //         $films = $apiResponseArray['items'];
+    
+    //         // Parcourir les films de la page actuelle
+    //         foreach ($films as $filmApi) {
+    //             $film = new Films();
+    //             $film->setFilmsApiId($filmApi['id']);
+    //             $entityManager->persist($film);
+    
+    //             // Parcourir tous les formats
+    //             $formats = $formatsRepository->findAll();
+    //             foreach ($formats as $format) {
+    //                 $stock = new Stock();
+    //                 $stock->setFormats($format);
+    //                 $stock->setFilms($film);
+    //                 $stock->setQuantiteStock(0);
+    //                 $entityManager->persist($stock);
+    //             }
+    //         }
+    //     }
+    
+    //     $entityManager->flush();
+    // }
+    
 }
+

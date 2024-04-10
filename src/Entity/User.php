@@ -53,8 +53,8 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $ville = null;
 
-    #[ORM\Column(nullable: true)]
-    private ?int $tel_user = null;
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $tel_user = null;
 
     #[ORM\Column(nullable: true)]
     private ?float $cagnotte = null;
@@ -228,12 +228,12 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
-    public function getTelUser(): ?int
+    public function getTelUser(): ?string
     {
         return $this->tel_user;
     }
 
-    public function setTelUser(?int $tel_user): static
+    public function setTelUser(?string $tel_user): static
     {
         $this->tel_user = $tel_user;
 
