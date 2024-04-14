@@ -102,8 +102,8 @@ class RegistrationFormType extends AbstractType
             ])
             ->add('date_naiss', BirthdayType::class, [
                 'widget' => 'single_text',
-                'years' => range(date('Y'), date('Y') - 120),  
-                
+                // 'widget' => 'choice',
+                // 'years' => range(date('Y'), date('Y') - 120),  
                 'constraints' => [
                     new NotBlank([
                         'message' => 'Veuillez saisir votre date de naissance'

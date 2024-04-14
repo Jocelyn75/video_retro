@@ -82,6 +82,7 @@ class StockController extends AbstractController
 
         return $this->redirectToRoute('app_stock_index', [], Response::HTTP_SEE_OTHER);
     }
+}
 
 
     //Route utilisée pour récupérer ma liste de films et créer les produits dans ma table stock. 
@@ -120,5 +121,5 @@ class StockController extends AbstractController
     //     $entityManager->flush();
     // }
     
-}
+
 
