@@ -4,17 +4,26 @@ namespace App\Controller;
 
 use App\Entity\Films;
 use App\Form\FilmsType;
+use App\Service\TMDBService;
 use App\Repository\FilmsRepository;
 use Doctrine\ORM\EntityManagerInterface;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Contracts\HttpClient\HttpClientInterface;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 #[Route('/films')]
 class FilmsController extends AbstractController
 {
+    private $tmdbService;
+
+    // Injectez le service TMDBService dans le constructeur
+    public function __construct(TMDBService $tmdbService)
+    {
+        $this->tmdbService = $tmdbService;
+    }
+    
     #[Route('/', name: 'app_films_index', methods: ['GET'])]
     public function index(FilmsRepository $filmsRepository): Response
     {
@@ -52,17 +61,11 @@ class FilmsController extends AbstractController
     // }
 
     #[Route('/{id}', name: 'app_films_show', methods: ['GET'])]
-    public function show(string $id, HttpClientInterface $client): Response
+    public function show(string $id): Response
     {
-        $apiResponse = $client->request('GET', "https://api.themoviedb.org/3/movie/{$id}?&language=fr&api_key={$_ENV['TMDB_API']}");
-
-        $apiResponse2 = $client->request('GET', "https://api.themoviedb.org/3/movie/{$id}/credits?language=fr&api_key={$_ENV['TMDB_API']}");
-
-        $apiResponse3= $client->request('GET', "https://api.themoviedb.org/3/movie/{$id}/watch/providers?language=fr&api_key={$_ENV['TMDB_API']}");
-
-        $filmsShow = $apiResponse->toArray();
-        $credits = $apiResponse2->toArray();
-        $data = $apiResponse3->toArray();
+        $filmsShow = $this->tmdbService->getFilmDetails($id);
+        $credits = $this->tmdbService->getFilmCredits($id);
+        $data = $this->tmdbService->getFilmProviders($id);
 
 
         $imageUrl = 'https://image.tmdb.org/t/p/';

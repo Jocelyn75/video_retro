@@ -13,7 +13,7 @@
                 <th>Prix_revente_defaut</th>
                 <th>Quantite_stock</th>
                 <th>Films_id</th>
-                <th>actions</th>
+                <th>Titres</th>
             </tr>
         </thead>
         <tbody>
@@ -23,7 +23,8 @@
                 <td>{{ stock.formatsId }}</td>
                 <td>{{ stock.prixReventeDefaut }}</td>
                 <td>{{ stock.quantiteStock }}</td>
-                <td>{{ stock.filmsId }}</td>
+                <td>{{ stock.films.filmsApiId }}</td>
+                <td>{{ filmTitles[stock.id] }}</td>
                 <td>
                     <a href="{{ path('app_stock_show', {'id': stock.id}) }}">show</a>
                     <a href="{{ path('app_stock_edit', {'id': stock.id}) }}">edit</a>
