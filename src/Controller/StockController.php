@@ -27,29 +27,26 @@ class StockController extends AbstractController
         $this->tmdbService = $tmdbService;
     }
 
-    #[Route('/', name: 'app_stock_index', methods: ['GET'])] // Définit la route pour cette méthode de contrôleur
-public function index(StockRepository $stockRepository): Response // Définit la méthode index du contrôleur, qui prend un StockRepository en argument et renvoie une réponse HTTP
+    #[Route('/', name: 'app_stock_index', methods: ['GET'])] 
+public function index(StockRepository $stockRepository): Response 
 {
-    $stocks = $stockRepository->findAll(); // Récupère tous les stocks depuis le repository
-    $filmTitles = []; // Initialise un tableau vide pour stocker les titres des films
+    $stocks = $stockRepository->findAll(); 
+    $filmTitles = []; 
 
-    // Pour chaque stock, récupère le titre du film en utilisant le service TMDBService
     foreach ($stocks as $stock) {
-        $filmId = $stock->getFilms()->getFilmsApiId(); // Récupère l'identifiant du film associé à ce stock
-        // Vérifie si l'identifiant du film est défini
+        $filmId = $stock->getFilms()->getFilmsApiId(); 
         if ($filmId !== null) {
-            $filmDetails = $this->tmdbService->getFilmDetails($filmId); // Utilise le service TMDBService pour obtenir les détails du film
-            $filmTitle = $filmDetails['title'] ?? 'Titre non disponible'; // Récupère le titre du film s'il existe, sinon utilise une chaîne par défaut
-            $filmTitles[$stock->getId()] = $filmTitle; // Stocke le titre du film dans le tableau filmTitles avec l'ID du stock comme clé
+            $filmDetails = $this->tmdbService->getFilmDetails($filmId); 
+            $filmTitle = $filmDetails['title'] ?? 'Titre non disponible'; 
+            $filmTitles[$stock->getId()] = $filmTitle; 
         } else {
-            $filmTitles[$stock->getId()] = 'Titre non disponible'; // Si l'identifiant du film n'est pas défini, utilise une chaîne par défaut
+            $filmTitles[$stock->getId()] = 'Titre non disponible'; 
         }
     }
 
-    // Renvoie une réponse HTML en rendant le template 'stock/index.html.twig' avec les données des stocks et des titres de films
     return $this->render('stock/index.html.twig', [
-        'stocks' => $stocks, // Passe les stocks à la vue Twig
-        'filmTitles' => $filmTitles, // Passe les titres des films à la vue Twig
+        'stocks' => $stocks, 
+        'filmTitles' => $filmTitles, 
         ]);
     }
 
