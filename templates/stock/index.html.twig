@@ -24,7 +24,7 @@
                 <td>{{ stock.prixReventeDefaut }}</td>
                 <td>{{ stock.quantiteStock }}</td>
                 <td>{{ stock.films.filmsApiId }}</td>
-                <td>{{ filmTitles[stock.id] }}</td>
+                <td>{{ filmTitles[stock.id] }}</td> {# Utilisation de la requête getFilmsDetails pour récupérer le titre du film #}
                 <td>
                     <a href="{{ path('app_stock_show', {'id': stock.id}) }}">show</a>
                     <a href="{{ path('app_stock_edit', {'id': stock.id}) }}">edit</a>
