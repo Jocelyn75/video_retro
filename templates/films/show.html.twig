@@ -7,9 +7,9 @@
         <div class="card-body row mt-4">
             <div class="col-md-4 col-xs-12 text-center">
                 {% if filmsShow.poster_path is not empty %}
-                    <img class="shadow" src="{{ imageUrl ~ 'w342' ~ filmsShow.poster_path }}" alt="{{ filmsShow.title }} Poster" class=" imgFilm img-fluid rounded mb-3">
+                    <img class="imgFilm img-fluid mb-3 shadow rounded" src="{{ imageUrl ~ 'w342' ~ filmsShow.poster_path }}" alt="{{ filmsShow.title }} Poster">
                 {% else %}
-                    <img class="shadow" src="{{ asset('images/no_image_available_w342_h513.png') }}" class="img-fluid rounded mb-3" alt="No image available">
+                    <img class="shadow rounded" src="{{ asset('images/no_image_available_w342_h513.png') }}" class="img-fluid rounded mb-3" alt="No image available">
                 {% endif %}
             </div>
 
@@ -18,17 +18,25 @@
 
                 <div class="d-flex">
                     {# <p class="mb-0"> #}
-                        {% set directors = [] %}
-                        {% for person in director %}
-                            {% if person.job == 'Director' %}
-                                {% set directors = directors|merge([person.name]) %}
-                            {% endif %}
-                        {% endfor %}
+                        {% if director is defined %}
+                            {% set directors = [] %}
+                            {% for person in director %}
+                                {% if person.job == 'Director' %}
+                                    {% set directors = directors|merge([person.name]) %}
+                                {% endif %}
+                            {% endfor %}
 
-                        {% if directors|length > 1 %}
-                            <p class="p-bold">Réalisation :&nbsp;</p> {{ directors|join(', ') }}<br>
+                            {% if directors %}
+                                {% if directors|length > 1 %}
+                                    <p class="p-bold">Réalisation :&nbsp;</p> {{ directors|join(', ') }}<br>
+                                {% else %}
+                                    <p class="p-bold">Réalisation :&nbsp;</p>{{ directors[0] }}<br>
+                                {% endif %}
+                            {% else %}
+                                <p class="p-bold">Réalisation :&nbsp;</p>Non renseigné<br>
+                            {% endif %}
                         {% else %}
-                            <p class="p-bold">Réalisation :&nbsp;</p>{{ directors[0] }}<br>
+                            <p class="p-bold">Réalisation :&nbsp;</p>Non renseigné<br>
                         {% endif %}
                     {# </p> #}
                 </div>

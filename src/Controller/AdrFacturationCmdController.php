@@ -11,7 +11,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-#[Route('/adr/facturation/cmd')]
+#[Route('/admin/adr/facturation/cmd')]
 class AdrFacturationCmdController extends AbstractController
 {
     #[Route('/', name: 'app_adr_facturation_cmd_index', methods: ['GET'])]

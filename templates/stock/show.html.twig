@@ -8,25 +8,31 @@
     <table class="table">
         <tbody>
             <tr>
-                <th>Id</th>
+                <th>Id Produit</th>
                 <td>{{ stock.id }}</td>
             </tr>
             <tr>
-                <th>Formats_id</th>
+                <th>Id Format</th>
                 <td>{{ stock.formatsId }}</td>
             </tr>
             <tr>
-                <th>Prix_revente_defaut</th>
+                <th>Prix de revente</th>
                 <td>{{ stock.prixReventeDefaut }}</td>
             </tr>
             <tr>
-                <th>Quantite_stock</th>
+                <th>Quantite en stock</th>
                 <td>{{ stock.quantiteStock }}</td>
             </tr>
             <tr>
-                <th>Films_id</th>
+                <th>Id du film</th>
                 <td>{{ stock.filmsId }}</td>
             </tr>
+
+            <tr>
+                <th>Film API Id</th>
+                <td>{{ stock.films.filmsApiId }}</td>
+            </tr>
+
         </tbody>
     </table>
 
@@ -34,5 +40,5 @@
 
     <a href="{{ path('app_stock_edit', {'id': stock.id}) }}">edit</a>
 
-    {{ include('stock/_delete_form.html.twig') }}
+    {# {{ include('stock/_delete_form.html.twig') }} #}
 {% endblock %}

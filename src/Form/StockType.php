@@ -15,34 +15,10 @@ class StockType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('formats_id', IntegerType::class, [
-                'constraints' => [
-                    new NotBlank([
-                        'message' => 'Veuillez saisir un format',
-                    ])
-                ]
-            ])
-            ->add('prix_revente_defaut', MoneyType::class, [
-                'constraints' => [
-                    new NotBlank([
-                        'message' => 'Veuillez renseigner un prix de revente par défaut',
-                    ])
-                ]
-            ])
-            ->add('quantite_stock', IntegerType::class, [
-                'constraints' => [
-                    new NotBlank([
-                        'message' => 'Veuillez renseigner la quantité en stock',
-                    ])
-                ]
-            ])
-            ->add('films_id', IntegerType::class, [
-                'constraints' => [
-                    new NotBlank([
-                        'message' => 'Veuillez renseigner un identifiant de film',
-                    ])
-                ]
-            ])
+            ->add('formats_id', IntegerType::class)
+            ->add('prix_revente_defaut', MoneyType::class)
+            ->add('quantite_stock', IntegerType::class)
+            ->add('films_id', IntegerType::class)
         ;
     }
 

@@ -16,7 +16,7 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Contracts\HttpClient\HttpClientInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
-#[Route('/stock')]
+#[Route('/admin/stock')]
 class StockController extends AbstractController
 {
 
@@ -94,8 +94,9 @@ public function index(StockRepository $stockRepository): Response // Définit la
         }
 
         return $this->render('stock/edit.html.twig', [
-            'stock' => $stock,
-            'form' => $form,
+            // 'stock' => $stock,
+            // 'form' => $form,
+            'form' => $form->createView(),
         ]);
     }
 

@@ -14,11 +14,11 @@
                     <div class="col-md-4 text-center mb-3 mb-md-0">
                         {% if results.poster_path is not empty %}
                             <a href="{{ path('app_films_show', {'id': results.id}) }}">
-                            <img src="{{ imageUrl ~ 'w185' ~ results.poster_path }}" class="img-fluid rounded-start" alt="{{ results.title }} Poster">
+                            <img src="{{ imageUrl ~ 'w185' ~ results.poster_path }}" class="img-fluid rounded" alt="{{ results.title }} Poster">
                             </a>
                         {% else %}
                             <a href="{{ path('app_films_show', {'id': results.id}) }}">
-                            <img src="{{asset('images/no_image_available_w185_h278.png')}}" class="img-fluid rounded-start" alt="No image available">
+                            <img src="{{asset('images/no_image_available_w185_h278.png')}}" class="img-fluid rounded" alt="No image available">
                             </a>
                         {% endif %}
                     </div>
