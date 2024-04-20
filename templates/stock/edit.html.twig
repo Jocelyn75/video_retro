@@ -1,13 +1,33 @@
-{% extends 'base.html.twig' %}
+{# {% extends 'base.html.twig' %}
 
 {% block title %}Edit Stock{% endblock %}
 
 {% block body %}
-    <h1>Edit Stock</h1>
 
     {{ include('stock/_form.html.twig', {'button_label': 'Update'}) }}
 
     <a href="{{ path('app_stock_index') }}">back to list</a>
 
     {{ include('stock/_delete_form.html.twig') }}
+{% endblock %} #}
+
+
+{% extends 'base.html.twig' %}
+
+{% block title %}Edit Stock{% endblock %}
+
+{% block body %}
+
+{{ form_errors(form) }}
+    {{ form_start(form) }}
+        {{ form_row(form.formats_id, {'disabled': true}) }}
+        {{ form_row(form.prix_revente_defaut) }}
+        {{ form_row(form.quantite_stock) }}
+        {{ form_row(form.films_id, {'disabled': true}) }}
+        <button type="submit">Save</button>
+    {{ form_end(form) }}
+
+    <a href="{{ path('app_stock_index') }}">back to list</a>
+
+    {# {{ include('stock/_delete_form.html.twig') }} #}
 {% endblock %}

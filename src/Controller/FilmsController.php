@@ -13,7 +13,7 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Contracts\HttpClient\HttpClientInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
-#[Route('/films')]
+// #[Route('/films')]
 class FilmsController extends AbstractController
 {
     private $tmdbService;
@@ -24,7 +24,7 @@ class FilmsController extends AbstractController
         $this->tmdbService = $tmdbService;
     }
     
-    #[Route('/', name: 'app_films_index', methods: ['GET'])]
+    #[Route('/admin/films', name: 'app_films_index', methods: ['GET'])]
     public function index(FilmsRepository $filmsRepository): Response
     {
         return $this->render('films/index.html.twig', [
@@ -32,26 +32,33 @@ class FilmsController extends AbstractController
         ]);
     }
 
-    #[Route('/new', name: 'app_films_new', methods: ['GET', 'POST'])]
-    public function new(Request $request, EntityManagerInterface $entityManager): Response
-    {
-        $film = new Films();
-        $form = $this->createForm(FilmsType::class, $film);
-        $form->handleRequest($request);
+    /**
+     * Route désactivée pour n'ajouter de nouveaux produits que via l'API.
+     * 
+     * */
+    // #[Route('/admin/films/new', name: 'app_films_new', methods: ['GET', 'POST'])]
+    // public function new(Request $request, EntityManagerInterface $entityManager): Response
+    // {
+    //     $film = new Films();
+    //     $form = $this->createForm(FilmsType::class, $film);
+    //     $form->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid()) {
-            $entityManager->persist($film);
-            $entityManager->flush();
+    //     if ($form->isSubmitted() && $form->isValid()) {
+    //         $entityManager->persist($film);
+    //         $entityManager->flush();
 
-            return $this->redirectToRoute('app_films_index', [], Response::HTTP_SEE_OTHER);
-        }
+    //         return $this->redirectToRoute('app_films_index', [], Response::HTTP_SEE_OTHER);
+    //     }
 
-        return $this->render('films/new.html.twig', [
-            'film' => $film,
-            'form' => $form,
-        ]);
-    }
+    //     return $this->render('films/new.html.twig', [
+    //         'film' => $film,
+    //         'form' => $form,
+    //     ]);
+    // }
 
+    /**
+     * Route show originelle du controller.
+    */
     // #[Route('/{id}', name: 'app_films_show', methods: ['GET'])]
     // public function show(Films $film): Response
     // {
@@ -60,7 +67,7 @@ class FilmsController extends AbstractController
     //     ]);
     // }
 
-    #[Route('/{id}', name: 'app_films_show', methods: ['GET'])]
+    #[Route('films/{id}', name: 'app_films_show', methods: ['GET'])]
     public function show(string $id): Response
     {
         $filmsShow = $this->tmdbService->getFilmDetails($id);
@@ -99,7 +106,7 @@ class FilmsController extends AbstractController
         ]);
     }
 
-    #[Route('/{id}/edit', name: 'app_films_edit', methods: ['GET', 'POST'])]
+    #[Route('/admin/films/{id}/edit', name: 'app_films_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, Films $film, EntityManagerInterface $entityManager): Response
     {
         $form = $this->createForm(FilmsType::class, $film);
@@ -117,7 +124,7 @@ class FilmsController extends AbstractController
         ]);
     }
 
-    #[Route('/{id}', name: 'app_films_delete', methods: ['POST'])]
+    #[Route('/admin/films/{id}', name: 'app_films_delete', methods: ['POST'])]
     public function delete(Request $request, Films $film, EntityManagerInterface $entityManager): Response
     {
         if ($this->isCsrfTokenValid('delete'.$film->getId(), $request->request->get('_token'))) {

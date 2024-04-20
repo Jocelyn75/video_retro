@@ -11,7 +11,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-#[Route('/adr/facturation/user')]
+#[Route('/admin/adr/facturation/user')]
 class AdrFacturationUserController extends AbstractController
 {
     #[Route('/', name: 'app_adr_facturation_user_index', methods: ['GET'])]

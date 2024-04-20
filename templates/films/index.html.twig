@@ -8,9 +8,9 @@
     <table class="table">
         <thead>
             <tr>
-                <th>Id</th>
-                <th>Films_api_id</th>
-                <th>actions</th>
+                <th>Film Id</th>
+                <th>Film API Id</th>
+                {# <th>actions</th> #}
             </tr>
         </thead>
         <tbody>
@@ -18,10 +18,10 @@
             <tr>
                 <td>{{ film.id }}</td>
                 <td>{{ film.filmsApiId }}</td>
-                <td>
+                {# <td>
                     <a href="{{ path('app_films_show', {'id': film.id}) }}">show</a>
                     <a href="{{ path('app_films_edit', {'id': film.id}) }}">edit</a>
-                </td>
+                </td> #}
             </tr>
         {% else %}
             <tr>
