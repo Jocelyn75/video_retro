@@ -1,44 +1,48 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Stock{% endblock %}
+{% block title %}<title>Stock</title>{% endblock %}
 
 {% block body %}
+    {% include '_header.html.twig' %}
     <h1>Stock</h1>
+    <main class="container">{% block main %}
 
-    <table class="table">
-        <tbody>
-            <tr>
-                <th>Id Produit</th>
-                <td>{{ stock.id }}</td>
-            </tr>
-            <tr>
-                <th>Id Format</th>
-                <td>{{ stock.formatsId }}</td>
-            </tr>
-            <tr>
-                <th>Prix de revente</th>
-                <td>{{ stock.prixReventeDefaut }}</td>
-            </tr>
-            <tr>
-                <th>Quantite en stock</th>
-                <td>{{ stock.quantiteStock }}</td>
-            </tr>
-            <tr>
-                <th>Id du film</th>
-                <td>{{ stock.filmsId }}</td>
-            </tr>
+        <table class="table">
+            <tbody>
+                <tr>
+                    <th>Id Produit</th>
+                    <td>{{ stock.id }}</td>
+                </tr>
+                <tr>
+                    <th>Id Format</th>
+                    <td>{{ stock.formatsId }}</td>
+                </tr>
+                <tr>
+                    <th>Prix de revente</th>
+                    <td>{{ stock.prixReventeDefaut }}</td>
+                </tr>
+                <tr>
+                    <th>Quantite en stock</th>
+                    <td>{{ stock.quantiteStock }}</td>
+                </tr>
+                <tr>
+                    <th>Id du film</th>
+                    <td>{{ stock.filmsId }}</td>
+                </tr>
 
-            <tr>
-                <th>Film API Id</th>
-                <td>{{ stock.films.filmsApiId }}</td>
-            </tr>
+                <tr>
+                    <th>Film API Id</th>
+                    <td>{{ stock.films.filmsApiId }}</td>
+                </tr>
 
-        </tbody>
-    </table>
+            </tbody>
+        </table>
 
-    <a href="{{ path('app_stock_index') }}">back to list</a>
+        <a href="{{ path('app_stock_index') }}">back to list</a>
 
-    <a href="{{ path('app_stock_edit', {'id': stock.id}) }}">edit</a>
+        <a href="{{ path('app_stock_edit', {'id': stock.id}) }}">edit</a>
 
-    {# {{ include('stock/_delete_form.html.twig') }} #}
+        {# {{ include('stock/_delete_form.html.twig') }} #}
+    {% endblock %}</main>
+    {% include "_footer.html.twig" %}
 {% endblock %}

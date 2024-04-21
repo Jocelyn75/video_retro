@@ -1,33 +1,23 @@
-{# {% extends 'base.html.twig' %}
-
-{% block title %}Edit Stock{% endblock %}
-
-{% block body %}
-
-    {{ include('stock/_form.html.twig', {'button_label': 'Update'}) }}
-
-    <a href="{{ path('app_stock_index') }}">back to list</a>
-
-    {{ include('stock/_delete_form.html.twig') }}
-{% endblock %} #}
-
-
 {% extends 'base.html.twig' %}
 
-{% block title %}Edit Stock{% endblock %}
+{% block title %}<title>Edit stock</title>{% endblock %}
 
 {% block body %}
+    {% include '_header.html.twig' %}
+    <h1>Edit stock</h1>
+    <main class="container">{% block main %}
+        {{ form_errors(form) }}
+            {{ form_start(form) }}
+                {{ form_row(form.formats_id, {'disabled': true}) }}
+                {{ form_row(form.prix_revente_defaut) }}
+                {{ form_row(form.quantite_stock) }}
+                {{ form_row(form.films_id, {'disabled': true}) }}
+                <button type="submit" class="btn btn-secondary w-100">Save</button>
+            {{ form_end(form) }}
 
-{{ form_errors(form) }}
-    {{ form_start(form) }}
-        {{ form_row(form.formats_id, {'disabled': true}) }}
-        {{ form_row(form.prix_revente_defaut) }}
-        {{ form_row(form.quantite_stock) }}
-        {{ form_row(form.films_id, {'disabled': true}) }}
-        <button type="submit">Save</button>
-    {{ form_end(form) }}
+            <a href="{{ path('app_stock_index') }}">back to list</a>
 
-    <a href="{{ path('app_stock_index') }}">back to list</a>
-
-    {# {{ include('stock/_delete_form.html.twig') }} #}
+            {# {{ include('stock/_delete_form.html.twig') }} #}
+    {% endblock %}</main>
+    {% include "_footer.html.twig" %}
 {% endblock %}

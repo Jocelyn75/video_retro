@@ -1,42 +1,46 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Stock index{% endblock %}
+{% block title %}<title>Stock index</title>{% endblock %}
 
 {% block body %}
+    {% include '_header.html.twig' %}
     <h1>Stock index</h1>
+    <main class="container">{% block main %}
 
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Id Produit</th>
-                <th>Id Format</th>
-                <th>Prix de revente</th>
-                <th>Quantite en stock</th>
-                <th>Film API Id</th>
-                <th>Titre</th>
-            </tr>
-        </thead>
-        <tbody>
-        {% for stock in stocks %}
-            <tr>
-                <td>{{ stock.id }}</td>
-                <td>{{ stock.formatsId }}</td>
-                <td>{{ stock.prixReventeDefaut }}</td>
-                <td>{{ stock.quantiteStock }}</td>
-                <td>{{ stock.films.filmsApiId }}</td>
-                <td>{{ filmTitles[stock.id] }}</td> {# Utilisation de la requête getFilmsDetails pour récupérer le titre du film #}
-                <td>
-                    <a href="{{ path('app_stock_show', {'id': stock.id}) }}">show</a>
-                    <a href="{{ path('app_stock_edit', {'id': stock.id}) }}">edit</a>
-                </td>
-            </tr>
-        {% else %}
-            <tr>
-                <td colspan="6">no records found</td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Id Produit</th>
+                    <th>Id Format</th>
+                    <th>Prix de revente</th>
+                    <th>Quantite en stock</th>
+                    <th>Film API Id</th>
+                    <th>Titre</th>
+                </tr>
+            </thead>
+            <tbody>
+            {% for stock in stocks %}
+                <tr>
+                    <td>{{ stock.id }}</td>
+                    <td>{{ stock.formatsId }}</td>
+                    <td>{{ stock.prixReventeDefaut }}</td>
+                    <td>{{ stock.quantiteStock }}</td>
+                    <td>{{ stock.films.filmsApiId }}</td>
+                    <td>{{ filmTitles[stock.id] }}</td> {# Utilisation de la requête getFilmsDetails pour récupérer le titre du film #}
+                    <td>
+                        <a href="{{ path('app_stock_show', {'id': stock.id}) }}">show</a>
+                        <a href="{{ path('app_stock_edit', {'id': stock.id}) }}">edit</a>
+                    </td>
+                </tr>
+            {% else %}
+                <tr>
+                    <td colspan="6">no records found</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
 
-    <a href="{{ path('app_stock_new') }}">Create new</a>
+        <a href="{{ path('app_stock_new') }}">Create new</a>
+    {% endblock %}</main>
+    {% include "_footer.html.twig" %}
 {% endblock %}
