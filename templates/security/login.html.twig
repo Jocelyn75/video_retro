@@ -2,9 +2,11 @@
 
 {% block title %}<title>Connexion</title>{% endblock %}
 
-{% block body %}
+    
+
+{% block body %}<body class="bodyConnexion">
     {% include '_header.html.twig' %}
-    <h1>Connexion</h1>
+    <h1 class="h1Connexion">Connexion</h1>
     <main class="container">{% block main %}
         <form method="post">
             {% if error %}
@@ -45,4 +47,26 @@
         </form>
     {% endblock %}</main>
     {% include "_footer.html.twig" %}
-{% endblock %}
+</body>{% endblock %}
+
+
+
+{% if error %}
+    <!-- Vérifie s'il y a une erreur à afficher -->
+    <div class="alert alert-danger">
+        <!-- Affiche un message d'erreur avec une classe CSS de danger -->
+        {{ error.messageKey|trans(error.messageData, 'security') }}
+        <!-- Utilise la fonction de traduction pour afficher le message d'erreur -->
+    </div>
+{% endif %}
+
+{# Message flash indiquant le changement réussi de mot de passe #}
+<!-- Commentaire expliquant le contenu du bloc suivant -->
+{% for message in app.flashes("success") %}
+    <!-- Boucle à travers tous les messages flash avec la clé "success" -->
+    <div class="text-center alert alert-success" role="alert">
+        <!-- Affiche un message avec une classe CSS de succès et centré -->
+        {{ message }}
+        <!-- Affiche le contenu du message flash -->
+    </div>
+{% endfor %}

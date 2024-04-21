@@ -9,6 +9,12 @@ body {
     grid-template-rows: auto 1fr auto;
 }
 
+/* La page connexion n'étant pas très haute verticalement, le css appliqué au body agrandit la taille du h1, créant un grand espace blanc entre le h1 et le corps du formulaire. Le css ci-dessous règle le problème. */
+.bodyConnexion{
+    display: grid;
+    grid-template-rows: auto 1fr 4fr auto;
+}
+
 /* CSS de base.html.twig */
 
 .imgLogo{
@@ -55,6 +61,10 @@ h1{
     /* couleur correspondant à text-secondary de Bootstrap */
     padding-bottom: 1rem;
 } 
+
+.h1Connexion{
+    line-height: 55px;
+}
 
 h2{
     font-size : 1.5rem; 
