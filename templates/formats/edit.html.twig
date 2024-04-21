@@ -1,13 +1,17 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Edit Formats{% endblock %}
+{% block title %}<title>Edit formats</title>{% endblock %}
 
 {% block body %}
-    <h1>Edit Formats</h1>
+    {% include '_header.html.twig' %}
+    <h1>Edit formats</h1>
+    <main class="container">{% block main %}
 
-    {{ include('formats/_form.html.twig', {'button_label': 'Update'}) }}
+        {{ include('formats/_form.html.twig', {'button_label': 'Update'}) }}
 
-    <a href="{{ path('app_formats_index') }}">back to list</a>
+        <a href="{{ path('app_formats_index') }}">back to list</a>
 
-    {{ include('formats/_delete_form.html.twig') }}
+        {{ include('formats/_delete_form.html.twig') }}
+    {% endblock %}</main>
+    {% include "_footer.html.twig" %}
 {% endblock %}

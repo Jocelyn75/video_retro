@@ -1,30 +1,30 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Back-office{% endblock %}
-
-{% block h1 %}Back Office{% endblock %}
+{% block title %}<title>Back-office</title>{% endblock %}
 
 {% block body %}
+    {% include '_header.html.twig' %}
+        <h1>Back-office</h1>
+        <main class="container">{% block main %}
+            <ul>
+                <li>
+                    <h2>Mon profil</h2>
+                </li>
+                <a href="{{ path('app_profil') }}">Mon profil</a>
+                <a href="{{ path('app_profil_edit') }}">Modifier mes informations</a>
+                    <a href="{{ path('app_admin_home') }}">Modifier mon mot de passe</a>
 
-<ul>
+                <li>
+                    <h2>Membres</h2>
+                </li>
+                <a href="{{ path('app_user_index') }}">Liste des membres</a>
+                <a href="{{ path('app_user_new') }}">Ajouter un membre</a>
 
-    <li>
-        <h2>Mon profil</h2>
-    </li>
-    <a href="{{ path('app_profil') }}">Mon profil</a>
-    <a href="{{ path('app_profil_edit') }}">Modifier mes informations</a>
-        <a href="{{ path('app_admin_home') }}">Modifier mon mot de passe</a>
-
-    <li>
-        <h2>Membres</h2>
-    </li>
-    <a href="{{ path('app_user_index') }}">Liste des membres</a>
-    <a href="{{ path('app_user_new') }}">Ajouter un membre</a>
-
-    <li>
-        <h2>Produits</h2>
-        <a href="{{ path('app_stock_index') }}">Catalogue</a>
-    </li>
-</ul>
-
+                <li>
+                    <h2>Produits</h2>
+                    <a href="{{ path('app_stock_index') }}">Catalogue</a>
+                </li>
+            </ul>
+        {% endblock %}</main>
+    {% include "_footer.html.twig" %}
 {% endblock %}

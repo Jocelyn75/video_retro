@@ -1,50 +1,51 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Modifier mon Profil{% endblock %}
-
-{% block h1 %}Modifier mon Profil{% endblock %}
+{% block title %}<title>Modifier mon profil</title>{% endblock %}
 
 {% block body %}
+    {% include '_header.html.twig' %}
+        <h1>Modifier mon profil</h1>
+    <main class="container">{% block main %}
+        {{ form_errors(form) }}
+            {{ form_start(form) }}
+                {{ form_row(form.email,{'label_attr': {'class': 'mb-2'}})}}
+                {{ form_row(form.plainPassword,{'label_attr': {'class': 'mb-3'}})}}
+                {{ form_row(form.nom) }}
+                {{ form_row(form.prenom,{
+                    label: 'Prénom'
+                }) }}
+                {{ form_row(form.date_naiss, {
+                    label: 'Date de naissance'
+                }) }}
 
-{{ form_errors(form) }}
-    {{ form_start(form) }}
-        {{ form_row(form.email,{'label_attr': {'class': 'mb-2'}})}}
-        {{ form_row(form.plainPassword,{'label_attr': {'class': 'mb-3'}})}}
-        {{ form_row(form.nom) }}
-        {{ form_row(form.prenom,{
-            label: 'Prénom'
-        }) }}
-        {{ form_row(form.date_naiss, {
-            label: 'Date de naissance'
-        }) }}
+                {{ form_row(form.adr_user, {
+                    label: 'Adresse'
+                }) }}
 
-        {{ form_row(form.adr_user, {
-            label: 'Adresse'
-        }) }}
+                {{ form_row(form.complement_adr, {
+                    label: 'Complément d\'adresse'
+                }) }}
 
-        {{ form_row(form.complement_adr, {
-            label: 'Complément d\'adresse'
-        }) }}
+                {{ form_row(form.code_postal, {
+                    label: 'Code postal'
+                }) }}
 
-        {{ form_row(form.code_postal, {
-            label: 'Code postal'
-        }) }}
+                {{ form_row(form.ville, {
+                    label: 'Ville'
+                }) }}
 
-        {{ form_row(form.ville, {
-            label: 'Ville'
-        }) }}
+                {{ form_row(form.tel_user, {
+                    label: 'Numéro de téléphone'
+                }) }}
 
-        {{ form_row(form.tel_user, {
-            label: 'Numéro de téléphone'
-        }) }}
+                {{ form_row(form.agreeTerms, {
+                    label : 'Accepter les termes et conditions d\'utilisation'
+                }) }}
 
-        {{ form_row(form.agreeTerms, {
-            label : 'Accepter les termes et conditions d\'utilisation'
-        }) }}
-
-        <button type="submit" class="btn btn-secondary w-100">Modifier mon profil</button>
-    {{ form_end(form) }}
-
+                <button type="submit" class="btn btn-secondary w-100">Modifier mon profil</button>
+            {{ form_end(form) }}
+    {% endblock %}</main>
+    {% include "_footer.html.twig" %}
 {% endblock %}
 
 

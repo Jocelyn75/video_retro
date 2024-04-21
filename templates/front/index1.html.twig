@@ -1,0 +1,14 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Page d'accueil{% endblock %}
+
+
+{% block body %}
+    {# Si un utlisateur est connecté, le message de bienvenue s'affiche #}
+    {% if app.user %}
+        <h1>
+            Bienvenue {{ app.user.prenom}} {{ app.user.nom}} !
+        </h1>
+    {% endif %}
+    <img class="homephoto" src="{{ asset('images/mosaique.jpg')}}" alt="mosaïque d'affiches de films">
+{% endblock %}
