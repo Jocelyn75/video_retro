@@ -1,18 +1,16 @@
-/* Pour mettre en place le footer, il faut définir une hauteur de 100% pour le body */
+/* Pour ajuster header, main et footer : */
 html, body {
     height: 100%;
 }
-
-/* Ensuite, il faut utiliser les grid. On découpe la page en 3 zones : le header à auto, le body à une fraction et le footer à auto. Ainsi, la hauteur du header et du footer s'ajuste en fonction de la hauteur du body (qui dépend de son contenu. */
-body {
-    display: grid;
-    grid-template-rows: auto 1fr auto;
+/* Disposition en colonnes pour ces trois éléments */
+body{
+    display: flex;
+    flex-direction: column;
 }
 
-/* La page connexion n'étant pas très haute verticalement, le css appliqué au body agrandit la taille du h1, créant un grand espace blanc entre le h1 et le corps du formulaire. Le css ci-dessous règle le problème. */
-.bodyConnexion{
-    display: grid;
-    grid-template-rows: auto 1fr 4fr auto;
+/* avec flex-grow: 1, le main va prendre l'espace restant entre le header et le footer en s'adaptant à la taille de l'écran. */
+main{
+    flex-grow: 1;
 }
 
 /* CSS de base.html.twig */
@@ -33,6 +31,10 @@ body {
     -3px 3px 2px #000,
     -3px -3px 0 #000,
     3px -3px 0 #000;
+}
+
+.bg-myPrimary{
+    background-color: #0B759B;
 }
 
 @font-face {
@@ -57,6 +59,7 @@ h1{
     font-size: 2rem;
     font-weight: bold;
     text-align: center;
+    line-height: 100px;
     color: #6c757d; 
     /* couleur correspondant à text-secondary de Bootstrap */
     padding-bottom: 1rem;
