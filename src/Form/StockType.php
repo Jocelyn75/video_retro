@@ -15,7 +15,7 @@ class StockType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('formats_id', IntegerType::class)
+            // ->add('formats_id', IntegerType::class)
             ->add('prix_revente_defaut', MoneyType::class)
             ->add('quantite_stock', IntegerType::class)
             ->add('films_id', IntegerType::class)

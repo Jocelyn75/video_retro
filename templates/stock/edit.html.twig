@@ -6,9 +6,11 @@
     {% include '_header.html.twig' %}
     <h1>Edit stock</h1>
     <main class="container">{% block main %}
+    <h2>{{ filmTitle }}</h2>
+    <p>Format : {{ stock.formats.nomFormat }}</p>
         {{ form_errors(form) }}
             {{ form_start(form) }}
-                {{ form_row(form.formats_id, {'disabled': true}) }}
+                {# {{ form_row(form.formats_id, {'disabled': true}) }} #}
                 {{ form_row(form.prix_revente_defaut) }}
                 {{ form_row(form.quantite_stock) }}
                 {{ form_row(form.films_id, {'disabled': true}) }}

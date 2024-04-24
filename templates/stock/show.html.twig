@@ -6,37 +6,36 @@
     {% include '_header.html.twig' %}
     <h1>Stock</h1>
     <main class="container">{% block main %}
+        <h2>{{ filmTitle }}</h2>
+            <table class="table">
+                <tbody>
+                        <th>Id Produit</th>
+                        <td>{{ stock.id }}</td>
+                    </tr>
+                    <tr>
+                        <th>Format</th>
+                        <td>{{ stock.formats.nomFormat }}</td>
+                    </tr>
+                    <tr>
+                        <th>Prix de revente</th>
+                        <td>{{ stock.prixReventeDefaut }}</td>
+                    </tr>
+                    <tr>
+                        <th>Quantite en stock</th>
+                        <td>{{ stock.quantiteStock }}</td>
+                    </tr>
+                    <tr>
+                        <th>Id du film</th>
+                        <td>{{ stock.filmsId }}</td>
+                    </tr>
 
-        <table class="table">
-            <tbody>
-                <tr>
-                    <th>Id Produit</th>
-                    <td>{{ stock.id }}</td>
-                </tr>
-                <tr>
-                    <th>Id Format</th>
-                    <td>{{ stock.formatsId }}</td>
-                </tr>
-                <tr>
-                    <th>Prix de revente</th>
-                    <td>{{ stock.prixReventeDefaut }}</td>
-                </tr>
-                <tr>
-                    <th>Quantite en stock</th>
-                    <td>{{ stock.quantiteStock }}</td>
-                </tr>
-                <tr>
-                    <th>Id du film</th>
-                    <td>{{ stock.filmsId }}</td>
-                </tr>
+                    <tr>
+                        <th>Film API Id</th>
+                        <td>{{ stock.films.filmsApiId }}</td>
+                    </tr>
 
-                <tr>
-                    <th>Film API Id</th>
-                    <td>{{ stock.films.filmsApiId }}</td>
-                </tr>
-
-            </tbody>
-        </table>
+                </tbody>
+            </table>
 
         <a href="{{ path('app_stock_index') }}">back to list</a>
 

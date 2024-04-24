@@ -1,46 +1,46 @@
 <header>
             {# Navbar 1 pour contenir le logo, les onglets Accueil, Inscription, Connexion, Déconnexion et produits qui sera à rajouter. #}
-            <nav class="navbar navbar-expand-md bg-secondary bg-gradient navbar-dark">
-                <div class="container-fluid">
-                    <a href="{{ path('home')}}"><img class="imgLogo pe-3" src="{{asset('images/cassette.svg')}}" alt="" /></a>
-                    <a class="font-lazer navbar-brand text-white" href="{{ path('home')}}">Video Retro</a>
-                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                        <span class="navbar-toggler-icon"></span>
-                    </button>
-                    <div class="collapse navbar-collapse" id="navbarNav">
-                        <ul class="navbar-nav ms-auto">
-                            <li class="nav-item">
-                                <a class="nav-link {{ app.request.get('_route') == 'home' ? 'active' : '' }} text-end" aria-current="page" href="{{ path('home')}}">Accueil</a>
-                            </li>
-                            {% if app.user %}
-                                {% if is_granted('ROLE_ADMIN') %}
-                                    <li class="nav-item">
-                                        <a class="nav-link text-end" href="{{path('app_admin_home')}}">Back office</a>
-                                    </li>
-                                {% endif %}
+<nav class="navbar navbar-expand-md bg-secondary bg-gradient navbar-dark">
+    <div class="container-fluid">
+        <a href="{{ path('home')}}"><img class="imgLogo pe-3" src="{{asset('images/cassette.svg')}}" alt="" /></a>
+        <a class="font-lazer navbar-brand text-white" href="{{ path('home')}}">Video Retro</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ms-auto">
+                <li class="nav-item">
+                    <a class="nav-link {{ app.request.get('_route') == 'home' ? 'active' : '' }} text-end" aria-current="page" href="{{ path('home')}}">Accueil</a>
+                </li>
+                {% if app.user %}
+                    {% if is_granted('ROLE_ADMIN') %}
+                        <li class="nav-item">
+                            <a class="nav-link {{ app.request.get('_route') == 'app_admin_home' ? 'active' : '' }} text-end" href="{{path('app_admin_home')}}">Back office</a>
+                        </li>
+                    {% endif %}
 
-                                {% if is_granted('ROLE_USER') %}
-                                    <li class="nav-item">
-                                        <a class="nav-link text-end" href="{{path('app_profil')}}">Mon profil</a>
-                                    </li>
-                                {% endif %}
-                                
-                                <li class="nav-item">
-                                    <a class="nav-link text-end" href="{{path('app_logout')}}">Déconnexion</a>
-                                </li>
-                            {% else %}
-                                <li class="nav-item">
-                                    <a class="nav-link {{ app.request.get('_route') == 'app_register' ? 'active' : '' }} text-end" href="{{path('app_register')}}">Inscription</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link {{ app.request.get('_route') == 'app_login' ? 'active' : '' }} text-end" href="{{path('app_login')}}">Connexion</a>
-                                </li>
-                            {% endif %}
-                            
-                        </ul>
-                    </div>                    
-                </div>
-            </nav>
+                    {% if is_granted('ROLE_USER') %}
+                        <li class="nav-item">
+                            <a class="nav-link {{ app.request.get('_route') == 'app_profil' ? 'active' : '' }} text-end" href="{{path('app_profil')}}">Mon profil</a>
+                        </li>
+                    {% endif %}
+                    
+                    <li class="nav-item">
+                        <a class="nav-link text-end" href="{{path('app_logout')}}">Déconnexion</a>
+                    </li>
+                {% else %}
+                    <li class="nav-item">
+                        <a class="nav-link {{ app.request.get('_route') == 'app_register' ? 'active' : '' }} text-end" href="{{path('app_register')}}">Inscription</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link {{ app.request.get('_route') == 'app_login' ? 'active' : '' }} text-end" href="{{path('app_login')}}">Connexion</a>
+                    </li>
+                {% endif %}
+                
+            </ul>
+        </div>                    
+    </div>
+</nav>
 
             {# NAVBAR 2 pour contenir la baseline et la barre de recherche. Une balise div a été préférée à une balise nav dans un souci d'amélioration du référencement : une seule balise nav #}
             <div class="d-flex justify-content-between align-items-center bg-myPrimary bg-gradient p-2 ps-3 pe-3 mb-3">
