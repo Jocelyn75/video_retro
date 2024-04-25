@@ -18,7 +18,7 @@ class StockType extends AbstractType
             // ->add('formats_id', IntegerType::class)
             ->add('prix_revente_defaut', MoneyType::class)
             ->add('quantite_stock', IntegerType::class)
-            ->add('films_id', IntegerType::class)
+            // ->add('films_id', IntegerType::class)
         ;
     }
 
