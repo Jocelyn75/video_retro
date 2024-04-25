@@ -68,6 +68,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\OneToMany(mappedBy: 'user', targetEntity: Commandes::class)]
     private Collection $commandes;
 
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $activation = null;
+
     public function __construct()
     {
         $this->adr_livraison_user = new ArrayCollection();
@@ -314,6 +317,18 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
                 $commande->setUser(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getActivation(): ?string
+    {
+        return $this->activation;
+    }
+
+    public function setActivation(?string $activation): static
+    {
+        $this->activation = $activation;
 
         return $this;
     }
