@@ -1,0 +1,36 @@
+{% extends 'base.html.twig' %}
+{% block title %}<title>Mentions légales - Video Retro</title>{% endblock %}
+{% block body %}
+    {% include '_header.html.twig' %}
+    <main class="container">{% block main %}
+    <h1>Mentions Légales</h1>
+
+        <h2>1. Informations légales</h2>
+            <p>Adresse : 9 rue de La Rochette 77 000 MELUN</p>
+            <p>Téléphone : +336 89 72 94 54 </p>
+            <p>E-mail : jocelyn.dufour@outlook.com</p>
+            <p>SIRET : 0000000000</p>
+            <p>TVA intracommunautaire : 0000000</p>
+
+        <h2>2. Hébergement</h2>
+            <p>Le site Video Retro est hébergé par : Hébergement.com</p>
+            <p>Adresse de l'hébergeur : 9 rue du Cloud 75 000 Paris</p>
+
+        <h2>3. Propriété intellectuelle</h2>
+            <p>Tous les éléments du site Video Retro, y compris les graphismes, images, textes, logos, et icônes sont la propriété exclusive de Video Retro.</p>
+
+        <h2>4. Données personnelles</h2>
+            <p>Video Retro s'engage à protéger vos données personnelles. Toutes les données personnelles recueillies sur le site sont traitées avec la plus stricte confidentialité.</p>
+
+        <h2>5. Cookies</h2>
+            <p>Le site Video Retro utilise des cookies pour assurer le bon fonctionnement du site et améliorer votre expérience en ligne.</p>
+
+        <h2>6. Limitation de responsabilité</h2>
+            <p>Video Retro ne peut être tenu responsable des dommages directs ou indirects causés au matériel de l'utilisateur lors de l'accès au site.</p>
+
+        <h2>7. Droit applicable</h2>
+            <p>Les présentes mentions légales sont régies par le droit français.</p>
+
+        {% endblock %}</main>
+    {% include "_footer.html.twig" %}
+{% endblock %}

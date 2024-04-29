@@ -16,9 +16,6 @@ class Stock
     private ?int $id = null;
 
     #[ORM\Column(nullable: true)]
-    private ?int $formats_id = null;
-
-    #[ORM\Column(nullable: true)]
     private ?float $prix_revente_defaut = null;
 
     #[ORM\Column(nullable: true)]
@@ -39,6 +36,8 @@ class Stock
     #[ORM\Column(nullable: true)]
     private ?bool $status = null;
 
+    // public $titre;
+
     public function __construct()
     {
         $this->detailsCommandes = new ArrayCollection();
@@ -49,17 +48,6 @@ class Stock
         return $this->id;
     }
 
-    public function getFormatsId(): ?int
-    {
-        return $this->formats_id;
-    }
-
-    public function setFormatsId(?int $formats_id): static
-    {
-        $this->formats_id = $formats_id;
-
-        return $this;
-    }
 
     public function getPrixReventeDefaut(): ?float
     {

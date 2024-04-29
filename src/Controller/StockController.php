@@ -51,6 +51,9 @@ class StockController extends AbstractController
             $filmTitles[$stock->getId()] = 'Titre non disponible';
         }
     }
+
+    // dd($filmTitles);
+
     return $this->render('stock/index.html.twig', [
         'pagination' => $pagination, // **Modification du passage de variable à la vue**
         'filmTitles' => $filmTitles,
