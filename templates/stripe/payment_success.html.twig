@@ -1,0 +1,19 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}<title>Paiement accepté</title>{% endblock %}
+
+{% block body %}
+    {% include '_header.html.twig' %}
+    <main class="container">{% block main %}
+        <h1>Paiement accepté</h1>
+
+            {# Récapitulatif de la commande
+             - le panier va se transformer en objet en BDD. Le panier, c'est la commande, chaque ligne du panier, ce sont des détails de la commande. L'objet commande passe à la vue avec plusieurs lignes : 
+             - commande.montant
+             - foreach de commande.detailscommande
+             - Envoi d'un email pour dire que le paiement a été accepté.
+             #}
+
+    {% endblock %}</main>
+    {% include "_footer.html.twig" %}
+{% endblock %}

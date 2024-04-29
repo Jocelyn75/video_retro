@@ -1,0 +1,29 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}<title>Formulaire de paiement</title>{% endblock %}
+
+{% block body %}
+    {% include '_header.html.twig' %}
+    <main class="container">{% block main %}
+        <h1>Formulaire de paiement</h1>
+
+            <form action="{{path('process_payment')}}" method="post">
+                <script
+                    src="https://checkout.stripe.com/checkout.js"
+                    class="stripe-button"
+                    data-key="{{stripe_public_key}}"
+                    data-amount="{{montant}}"
+                    data-name="Video Retro"
+                    data-description="site de vente de VHS, DVD et Blu-Ray"
+                    data-currency="eur"
+                    data-locale="auto"
+                >
+                
+                </script>
+            </form>
+
+
+
+    {% endblock %}</main>
+    {% include "_footer.html.twig" %}
+{% endblock %}

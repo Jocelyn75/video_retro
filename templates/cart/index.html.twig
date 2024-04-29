@@ -1,0 +1,19 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}<title>Mon panier</title>{% endblock %}
+
+{% block body %}
+    {% include '_header.html.twig' %}
+    <main class="container">{% block main %}
+
+        <h1>Mon panier</h1>
+            {% if app.user %}
+            
+            <a class="btn bg-myPrimary text-white" href="{{path('app_stripe')}}">Payer</a>
+            {% else %}
+                <h2>Veuillez-vous connecter</h2>
+            {% endif %}
+
+    {% endblock %}</main>
+    {% include "_footer.html.twig" %}
+{% endblock %}

@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Form\ChangePasswordFormType;
 use App\Form\RegistrationFormType;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;

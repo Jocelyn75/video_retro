@@ -14,9 +14,9 @@
                 {# offset permet de décaler le contenu (ici vers la droite) #}
                 <div class="offset-md-6">
                     <p class="text-white fw-bold fs-20">A propos</p>
-                    <p class="text-white mb-1"><i class="fa-solid fa-circle-info me-1"></i>Mentions légales</p>
-                    <p class="text-white mb-1"><i class="fa-solid fa-circle-info me-1"></i>Conditions générales de vente</p>
-                    <p class="text-white mb-1"><i class="fa-solid fa-circle-info me-1"></i>Conditions générales d'utilisation</p>
+                    <p class="text-white mb-1"><i class="fa-solid fa-circle-info me-1"></i><a href="{{ path('app_legal') }}" class="aFooter">Mentions légales</a></p>
+                    <p href="{{ path('app_cgv') }}" class="text-white mb-1"><i class="fa-solid fa-circle-info me-1"></i><a href="{{ path('app_cgu') }}" class="aFooter">Conditions générales d'utilisation</a></p>
+                    <p href="{{ path('app_cgu') }}"class="text-white mb-1"><i class="fa-solid fa-circle-info me-1"></i><a href="{{ path('app_cgv') }}" class="aFooter">Conditions générales de vente</a></p>
                 </div>
             </section>
         </div>

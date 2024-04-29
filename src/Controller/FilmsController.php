@@ -3,15 +3,19 @@
 namespace App\Controller;
 
 use App\Entity\Films;
+use App\Entity\Stock;
 use App\Form\FilmsType;
 use App\Service\TMDBService;
 use App\Repository\FilmsRepository;
+use App\Repository\FormatsRepository;
+use App\Repository\StockRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Contracts\HttpClient\HttpClientInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Session\SessionInterface;
 
 // #[Route('/films')]
 class FilmsController extends AbstractController
@@ -68,11 +72,40 @@ class FilmsController extends AbstractController
     // }
 
     #[Route('films/{id}', name: 'app_films_show', methods: ['GET'])]
-    public function show(string $id): Response
+    public function show(string $id, StockRepository $stockRepository, FilmsRepository $filmsRepository, FormatsRepository $formatsRepository): Response
     {
         $filmsShow = $this->tmdbService->getFilmDetails($id);
         $credits = $this->tmdbService->getFilmCredits($id);
         $data = $this->tmdbService->getFilmProviders($id);
+
+
+        // // Récupérer l'entité Films correspondant à l'$id fourni
+        $film = $filmsRepository->findOneBy(['films_api_id' => $id]);
+        $stock = $stockRepository->findAll();
+        $format = $formatsRepository->findAll();
+
+        
+
+
+
+
+        // // Vérifier si le film existe
+        // if (!$film) {
+        //     throw $this->createNotFoundException('Film non trouvé');
+        // }
+        
+        
+
+        // // Récupérer les stocks correspondant à chaque format spécifique
+        // $vhsStock = $stockRepository->findOneBy(['films' => $film, 'formats_id' => 1]);
+        // $dvdStock = $stockRepository->findOneBy(['films' => $film, 'formats_id' => 2]);
+        // $bluRayStock = $stockRepository->findOneBy(['films' => $film, 'formats_id' => 3]);
+
+        // // Vérifier si les stocks sont null et ajouter un message flash le cas échéant
+        // if (!$vhsStock || !$dvdStock || !$bluRayStock) {
+        //     $flashMessage = "Le produit n'est pas disponible pour le moment.";
+        //     $this->addFlash('warning', $flashMessage);
+        // }
 
 
         $imageUrl = 'https://image.tmdb.org/t/p/';
@@ -102,7 +135,10 @@ class FilmsController extends AbstractController
             'cast' => $cast,
             'rent' => $rent,
             'buy' => $buy,
-            'flatrate' => $flatrate
+            'flatrate' => $flatrate,
+            'film' => $film,
+            'stock' => $stock,
+            'format' => $format
         ]);
     }
 

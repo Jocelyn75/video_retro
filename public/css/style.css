@@ -20,6 +20,12 @@ main{
     height: auto;
 }
 
+@font-face {
+    font-family: "Lazer84";
+    src:
+        url("/fonts/Lazer84.ttf") format("truetype");
+}
+
 .font-lazer{
     font-family: "Lazer84";
     text-decoration: none;
@@ -37,10 +43,8 @@ main{
     background-color: #0B759B;
 }
 
-@font-face {
-    font-family: "Lazer84";
-    src:
-        url("/fonts/Lazer84.ttf") format("truetype");
+.btn .bg-myPrimary:hover{
+    background-color: #60ABC6;
 }
 
 .slogan{
@@ -72,6 +76,12 @@ h1{
 h2{
     font-size : 1.5rem; 
     font-weight : bold;
+    color: #0B759B;
+}
+
+.aFooter{
+    text-decoration: none;
+    color: white;
 }
 
 .fs-20{
