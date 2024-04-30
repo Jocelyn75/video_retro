@@ -2,14 +2,15 @@
 
 namespace App\Controller;
 
-use App\Repository\StockRepository;
 use App\Service\TMDBService;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\JsonResponse;
+use App\Repository\StockRepository;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\RedirectResponse;
+use Symfony\Component\HttpFoundation\Session\SessionInterface;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 #[Route('/cart')]
 class CartController extends AbstractController
@@ -122,6 +123,29 @@ class CartController extends AbstractController
         }
     
         // Redirection par défaut
+        return $this->redirectToRoute('app_cart');
+    }
+
+    #[Route('/empty', name: 'app_cart_empty')]
+    public function emptyCart(SessionInterface $session): RedirectResponse
+    {
+        // Supprimer tous les éléments du panier
+        $session->remove('cart');
+
+        // Rediriger vers la page du panier
+        return $this->redirectToRoute('app_cart');
+    }
+
+    #[Route('/remove/{stockId}', name: 'app_cart_remove')]
+    public function removeProduct(SessionInterface $session, $stockId): RedirectResponse
+    {
+        $cart = $session->get('cart', []);
+
+        if (isset($cart[$stockId])) {
+            unset($cart[$stockId]);
+            $session->set('cart', $cart);
+        }
+
         return $this->redirectToRoute('app_cart');
     }
 
