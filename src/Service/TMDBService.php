@@ -42,3 +42,5 @@ class TMDBService
         return $apiResponse->toArray();
     }
 }
+
+    //Ajouter la requête pour récupérer les images à partir de l'id d'un films

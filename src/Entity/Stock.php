@@ -36,7 +36,7 @@ class Stock
     #[ORM\Column(nullable: true)]
     private ?bool $status = null;
 
-    // public $titre;
+    public $titre;
 
     public function __construct()
     {

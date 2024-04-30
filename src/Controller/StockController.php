@@ -36,19 +36,17 @@ class StockController extends AbstractController
     $pagination = $paginator->paginate(
         $stocksQuery,
         $request->query->getInt('page', 1), /*numéro de la page*/
-        15 /*résultats par page : garder un multiple de 3 pour avoir la VHS, le DVD et le Blu-Ray pour chaque film sur la même page.*/
+        15 /*résultats par page : garder un multiple de 3 pour avoir la VHS, le DVD et le Blu-Ray de chaque film sur la même page.*/
     );
-    
-    $filmTitles = [];
 
     foreach ($pagination as $stock) { // **Modification de la boucle**
         $filmId = $stock->getFilms()->getFilmsApiId();
         if ($filmId !== null) {
             $filmDetails = $this->tmdbService->getFilmDetails($filmId);
             $filmTitle = $filmDetails['title'] ?? 'Titre non disponible';
-            $filmTitles[$stock->getId()] = $filmTitle;
+            $stock->titre = $filmTitle;
         } else {
-            $filmTitles[$stock->getId()] = 'Titre non disponible';
+            $stock->titre = 'Titre non disponible';
         }
     }
 
@@ -56,7 +54,6 @@ class StockController extends AbstractController
 
     return $this->render('stock/index.html.twig', [
         'pagination' => $pagination, // **Modification du passage de variable à la vue**
-        'filmTitles' => $filmTitles,
     ]);
     }
 
