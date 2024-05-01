@@ -129,20 +129,20 @@ class StockController extends AbstractController
 
         return $this->redirectToRoute('app_stock_index', [], Response::HTTP_SEE_OTHER);
     }
-}
 
+}
 
     //Route utilisée pour récupérer ma liste de films et créer les produits dans ma table stock. 
     // #[Route('/getfilms', name: 'getfilms', methods: ['GET', 'POST'])]
-    // public function getfilms(HttpClientInterface $client, EntityManagerInterface $entityManager, FormatsRepository $formatsRepository)
+    // public function getfilms(HttpClientInterface $client, EntityManagerInterface $entityManager, FormatsRepository $formatsRepository, Stock $stock)
     // {
     //     // Nombre total de pages à récupérer
-    //     $totalPages = 26;
+    //     $totalPages = 2;
     
     //     // Parcourir toutes les pages
     //     for ($page = 1; $page <= $totalPages; $page++) {
     //         // Récupérer les films de la page actuelle
-    //         $apiResponse = $client->request('GET', "https://api.themoviedb.org/3/list/8296832?language=fr&api_key={$_ENV['TMDB_API']}&page=$page");
+    //         $apiResponse = $client->request('GET', "https://api.themoviedb.org/3/list/8299195?language=fr&api_key={$_ENV['TMDB_API']}&page=$page");
         
     //         $apiResponseArray = $apiResponse->toArray();
     //         $films = $apiResponseArray['items'];
@@ -168,7 +168,7 @@ class StockController extends AbstractController
     //     $entityManager->flush();
     // }
     
-
+// }
 
 //Code commenté pour afficher la liste des produits 
 //     #[Route('/', name: 'app_stock_index', methods: ['GET'])] // Définit la route pour cette méthode de contrôleur

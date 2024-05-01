@@ -18,6 +18,7 @@
                                 {% endif %}
                             </div>
                         </div>
+
                         <div class="col-md-8 col-xs-12"> {# Colonne pour la deuxième partie sur tous les écrans #}
                             <div class="text-center">
                                 <h1>{{ filmsShow.title|upper }}</h1>
@@ -29,7 +30,6 @@
                                                 {% set directors = directors|merge([person.name]) %}
                                             {% endif %}
                                         {% endfor %}
-
                                         {% if directors %}
                                             {% if directors|length > 1 %}
                                                 <p class="p-bold">Réalisation :&nbsp;</p> {{ directors|join(', ') }}
@@ -59,6 +59,7 @@
                             </div>
                         </div>
                     </div>
+
                     <div class="row"> {# Nouvelle rangée pour placer la troisième partie en dessous des deux premières #}
                         <div class="col-12"> {# Colonne prenant toute la largeur sur tous les écrans #}
                             {% if film is not null %}
@@ -67,11 +68,11 @@
                                         <div class="col-md-4">
                                             <div class="d-flex flex-column align-items-center justify-content-center"> {# Ajout de classes pour centrer les éléments #}
                                                 {% set image = (stock.formats.id == 1) ? 'vhs_logo_w100.png' : (stock.formats.id == 2) ? 'dvd_logo_w100.png' : 'bluray_logo_w100.png' %}
-                                                <img class="logoFormats mb-2 shadow rounded" src="{{ asset('images/' ~ image) }}" alt="Logo VHS">
+                                                <img class="logoFormats mb-2 shadow rounded" src="{{ asset('images/logosFormats/' ~ image) }}" alt="Logo VHS">
                                                 {% if stock.quantiteStock > 0 %}
                                                     <form method="post" action="{{ path("app_cart_new")}}" class="text-center">
                                                         <select name="quantite">
-                                                            {% set quantity = stock.quantiteStock > 10 ? 10 : stock.quantiteStock %}
+                                                            {% set quantity = stock.quantiteStock > 9 ? 9 : stock.quantiteStock %}
                                                             {% for i in 1 .. quantity %}
                                                                 <option value="{{i}}">{{i}}</option>
                                                             {% endfor %}
@@ -81,7 +82,7 @@
                                                         <input type="submit" value="Je vends mon exemplaire" class="btn bg-myPrimary text-white m-1">
                                                     </form>
                                                 {% else %}
-                                                    <form method="post" action="" class="text-center">
+                                                    <form method="post" action="" class="d-flex flex-column text-center">
                                                         <input type="submit" value="Rupture de stock" class="btn btn-secondary text-white disabled m-1">
                                                         <input type="submit" value="Je vends mon exemplaire" class="btn bg-myPrimary text-white m-1">
                                                     </form>
@@ -98,6 +99,7 @@
                             {% endif %}
                         </div>
                     </div>
+
                     <div class="row"> {# Nouvelle rangée pour placer la quatrième partie en dessous de la troisième #}
                         <div class="col-12"> {# Colonne prenant toute la largeur sur tous les écrans #}
                             <div class="pt-3 text-center">

@@ -6,12 +6,56 @@
 {% block body %}
     {% include '_header.html.twig' %}
 
-        {# Si un utlisateur est connecté, le message de bienvenue s'affiche #}
+
+    <div id="carouselHome" class="carousel slide" data-bs-ride="carousel">
+        <div class="carousel-inner">
+            <div class="carousel-item active">
+                <img src="{{ asset('images/posters_carousel/ET-Extraterrestre_800x300.jpg')}}" class="d-block w-100" alt="...">
+            </div>
+            <div class="carousel-item">
+                <img src="{{ asset('images/posters_carousel/indianaJones_800x300.jpg')}}" class="d-block w-100" alt="...">
+            </div>
+            <div class="carousel-item">
+                <img src="{{ asset('images/posters_carousel/leCinquiemeElement_800x300.jpg')}}" class="d-block w-100" alt="...">
+            </div>
+            <div class="carousel-item">
+                <img src="{{ asset('images/posters_carousel/lesVisiteurs_800x300.jpg')}}" class="d-block w-100" alt="...">
+            </div>
+            <div class="carousel-item">
+                <img src="{{ asset('images/posters_carousel/terminator_800x300.jpg')}}" class="d-block w-100" alt="...">
+            </div>
+            <div class="carousel-item">
+                <img src="{{ asset('images/posters_carousel/leRoiLion_800x300.jpg')}}" class="d-block w-100" alt="...">
+            </div>
+            <div class="carousel-item">
+                <img src="{{ asset('images/posters_carousel/starWars_800x300.jpg')}}" class="d-block w-100" alt="...">
+            </div>
+            <div class="carousel-item">
+                <img src="{{ asset('images/posters_carousel/leDinerDeCons_800x300.jpg')}}" class="d-block w-100" alt="...">
+            </div>
+            <div class="carousel-item">
+                <img src="{{ asset('images/posters_carousel/titanic_800x300.jpg')}}" class="d-block w-100" alt="...">
+            </div>
+            <div class="carousel-item">
+                <img src="{{ asset('images/posters_carousel/pulpFiction_800x300.jpg')}}" class="d-block w-100" alt="...">
+            </div>
+        </div>
+        <button class="carousel-control-prev" type="button" data-bs-target="#carouselHome" data-bs-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Previous</span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#carouselHome" data-bs-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Next</span>
+        </button>
+    </div>
+
+        {# Si un utlisateur est connecté, le message de bienvenue s'affiche
         {% if app.user %}
             <h1>
                 Bienvenue {{ app.user.prenom}} {{ app.user.nom}} !
             </h1>
         {% endif %}
-        <img class="homephoto" src="{{ asset('images/mosaique.jpg')}}" alt="mosaïque d'affiches de films">
+        <img class="homephoto" src="{{ asset('images/mosaique.jpg')}}" alt="mosaïque d'affiches de films"> #}
     {% include "_footer.html.twig" %}
 {% endblock %}

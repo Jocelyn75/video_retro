@@ -39,6 +39,16 @@ main{
     3px -3px 0 #000;
 }
 
+#carouselHome {
+    width: 50%;
+    margin: auto;
+}
+
+.carousel-item img {
+    opacity: 0.5;
+    border-radius: 10px;
+}
+
 .bg-myPrimary{
     background-color: #0B759B;
 }
