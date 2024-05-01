@@ -43,7 +43,7 @@ main{
     background-color: #0B759B;
 }
 
-.btn .bg-myPrimary:hover{
+.btn.bg-myPrimary:hover{
     background-color: #60ABC6;
 }
 
