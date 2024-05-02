@@ -4,6 +4,18 @@
 
 {% block body %}
     {% include '_header.html.twig' %}
+
+    {# Fil d'Ariane #}
+    <nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item ms-3"><a class="aBreadCrumb" href="{{path('home')}}">Accueil</a></li>
+            <li class="breadcrumb-item"><a class="aBreadCrumb" href="{{path('app_admin_home')}}">Back office</a></li>
+            <li class="breadcrumb-item"><a class="aBreadCrumb" href="{{path('app_user_index')}}">Liste des utilisateurs</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Profil de {{ user.prenom }} {{ user.nom|upper }}</li>
+        </ol>
+    </nav>
+
+
     <h1>User</h1>
     <main class="container">{% block main %}
 
@@ -18,13 +30,21 @@
                     <td>{{ user.email }}</td>
                 </tr>
                 <tr>
+                    <th>Nom</th>
+                    <td>{{ user.nom }}</td>
+                </tr>
+                <tr>
+                    <th>Prénom</th>
+                    <td>{{ user.prenom }}</td>
+                </tr>
+                <tr>
                     <th>Roles</th>
                     <td>{{ user.roles ? user.roles|json_encode : '' }}</td>
                 </tr>
-                <tr>
+                {# <tr>
                     <th>Password</th>
                     <td>{{ user.password }}</td>
-                </tr>
+                </tr> #}
             </tbody>
         </table>
 

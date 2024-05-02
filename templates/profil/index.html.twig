@@ -4,6 +4,16 @@
 
 {% block body %}
     {% include '_header.html.twig' %}
+
+    <nav style="--bs-breadcrumb-divider:'>';" aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item ms-3"><a class="aBreadCrumb" href="{{path('home')}}">Accueil</a></li>
+            <li class="breadcrumb-item"><a class="aBreadCrumb" href="{{path('app_admin_home')}}">Back office</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Mon profil</li>
+        </ol>
+    </nav>
+
+
     <h1>Mon profil</h1>
 
     <main class="container">{% block main %}

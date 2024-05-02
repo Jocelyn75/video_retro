@@ -3,6 +3,16 @@
 {% block body %}
     {% include '_header.html.twig' %}
     <main class="container">{% block main %}
+
+    {# Fil d'Ariane #}
+    <nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item ms-3"><a class="aBreadCrumb" href="{{path('home')}}">Accueil</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Conditions générales de vente</li>
+        </ol>
+    </nav>
+
+
     <h1>Conditions générales de vente</h1>
 
         <h2>1. Objet</h2>

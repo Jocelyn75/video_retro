@@ -6,14 +6,16 @@
     {% include '_header.html.twig' %}
 
     {# Fil d'Ariane #}
-    <nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
-        <ol class="breadcrumb">
-            <li class="breadcrumb-item ms-3"><a class="aBreadCrumb" href="{{path('home')}}">Accueil</a></li>
-            <li class="breadcrumb-item"><a class="aBreadCrumb" href="{{ path('app_search', {'search[keyword]':'oppenheimer'}) }}">Résultats de la recherche</a></li>
-            <li class="breadcrumb-item"><a class="aBreadCrumb" href="{{ app.session.get('previous_url') }}">Dernier film ajouté</a></li>
-            <li class="breadcrumb-item active" aria-current="page">Mon panier</li>
-        </ol>
-    </nav>
+    {% if cartDetails is not empty %}
+        <nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item ms-3"><a class="aBreadCrumb" href="{{path('home')}}">Accueil</a></li>
+                <li class="breadcrumb-item"><a class="aBreadCrumb" href="{{ path('app_search', {'search[keyword]':'oppenheimer'}) }}">Résultats de la recherche</a></li>
+                <li class="breadcrumb-item"><a class="aBreadCrumb" href="{{ app.session.get('previous_url') }}">Dernier film ajouté</a></li>
+                <li class="breadcrumb-item active" aria-current="page">Mon panier</li>
+            </ol>
+        </nav>
+    {% endif %}
 
     <main class="container">{% block main %}
 

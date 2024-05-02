@@ -3,6 +3,15 @@
 {% block body %}
     {% include '_header.html.twig' %}
     <main class="container">{% block main %}
+
+    {# Fil d'Ariane #}
+    <nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item ms-3"><a class="aBreadCrumb" href="{{path('home')}}">Accueil</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Mentions légales</li>
+        </ol>
+    </nav>
+
     <h1>Mentions Légales</h1>
 
         <h2>1. Informations légales</h2>

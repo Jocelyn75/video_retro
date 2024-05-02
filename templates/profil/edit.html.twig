@@ -4,6 +4,17 @@
 
 {% block body %}
     {% include '_header.html.twig' %}
+
+    <nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item ms-3"><a class="aBreadCrumb" href="{{path('home')}}">Accueil</a></li>
+            <li class="breadcrumb-item"><a class="aBreadCrumb" href="{{path('app_admin_home')}}">Back office</a></li>
+            <li class="breadcrumb-item"><a class="aBreadCrumb" href=" {{path('app_profil')}}">Mon Profil</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Modifier mes informations</li>
+        </ol>
+    </nav>
+
+
         <h1>Modifier mon profil</h1>
     <main class="container">{% block main %}
         {{ form_errors(form) }}
@@ -14,7 +25,7 @@
                 {{ form_row(form.prenom,{
                     label: 'Prénom'
                 }) }}
-                {{ form_row(form.date_naiss, {
+                {# {{ form_row(form.date_naiss, {
                     label: 'Date de naissance'
                 }) }}
                 {{ form_row(form.adr_user, {
@@ -35,7 +46,7 @@
 
                 {{ form_row(form.tel_user, {
                     label: 'Numéro de téléphone'
-                }) }}
+                }) }} #}
 
                 {{ form_row(form.agreeTerms, {
                     label : 'Accepter les termes et conditions d\'utilisation'

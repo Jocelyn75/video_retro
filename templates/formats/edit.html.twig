@@ -4,6 +4,18 @@
 
 {% block body %}
     {% include '_header.html.twig' %}
+
+    {# Fil d'Ariane #}
+    <nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item ms-3"><a class="aBreadCrumb" href="{{path('home')}}">Accueil</a></li>
+            <li class="breadcrumb-item"><a class="aBreadCrumb" href="{{path('app_admin_home')}}">Back office</a></li>
+            <li class="breadcrumb-item"><a class="aBreadCrumb" href="{{path('app_formats_index')}}">Liste des formats</a></li>
+            <li class="breadcrumb-item"><a class="aBreadCrumb" href="{{path('app_formats_show', {'id': format.id} )}}">{{format.nomFormat}}</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Modifier le format {{format.nomFormat}}</li>
+        </ol>
+    </nav>
+
     <h1>Edit formats</h1>
     <main class="container">{% block main %}
 

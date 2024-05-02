@@ -4,6 +4,16 @@
 
 {% block body %}
     {% include '_header.html.twig' %}
+
+    {# Fil d'Ariane #}
+    <nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item ms-3"><a class="aBreadCrumb" href="{{path('home')}}">Accueil</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Back office</li>
+        </ol>
+    </nav>
+
+
         <h1>Back-office</h1>
         <main class="container">{% block main %}
             <ul>
@@ -24,6 +34,11 @@
                     <h2>Produits</h2>
                     <a href="{{ path('app_stock_index') }}">Catalogue</a>
                 </li>
+                <li>
+                    <h2>Formats</h2>
+                    <a href="{{ path('app_formats_index') }}">Liste</a>
+                </li>
+
             </ul>
         {% endblock %}</main>
     {% include "_footer.html.twig" %}

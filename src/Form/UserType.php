@@ -3,6 +3,7 @@
 namespace App\Form;
 
 use App\Entity\User;
+use phpDocumentor\Reflection\Types\Integer;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Validator\Constraints\Email;
@@ -51,6 +52,11 @@ class UserType extends AbstractType
 
         ->add('date_naiss', DateType::class)
             // ->add('password')
+        ->add('adr_user', TextType::class)
+        ->add('complement_adr', TextType::class)
+        ->add('code_postal', Integer::class)
+        ->add('ville', TextType::class)
+        ->add('tel_user', TextType::class)
         ;
     }
 
