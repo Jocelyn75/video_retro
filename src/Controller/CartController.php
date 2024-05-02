@@ -22,8 +22,14 @@ class CartController extends AbstractController
     }
 
     #[Route('/', name: 'app_cart')]
-    public function index(SessionInterface $session, TMDBService $tmdbService): Response
+    public function index(SessionInterface $session, TMDBService $tmdbService, Request $request): Response
     {
+
+        // Récupérer l'URL précédente
+        $previousUrl = $request->headers->get('referer');
+        // Stocker l'URL précédente dans la session
+        $session->set('previous_url', $previousUrl);
+
         $cart = $session->get('cart', []);
         dump($cart);
 
@@ -149,6 +155,15 @@ class CartController extends AbstractController
         return $this->redirectToRoute('app_cart');
     }
 
+    #[Route('/go-to-previous-film', name: 'go_to_previous_film')]
+    public function goToPreviousFilm(SessionInterface $session): Response
+    {
+        // Récupérer l'URL précédente depuis la session
+        $previousUrl = $session->get('previous_url');
+
+        // Rediriger l'utilisateur vers l'URL précédente
+        return $this->redirect($previousUrl);
+    }
 }
 
     // #[Route('/update-quantity', name: 'app_cart_update_quantity', methods: ['POST'])]

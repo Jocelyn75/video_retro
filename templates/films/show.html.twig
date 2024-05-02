@@ -4,6 +4,16 @@
 
 {% block body %}
     {% include '_header.html.twig' %}
+
+    {# Fil d'Ariane #}
+    <nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item ms-3"><a class="aBreadCrumb" href="{{path('home')}}">Accueil</a></li>
+            <li class="breadcrumb-item"><a class="aBreadCrumb" href="{{ path('app_search', {'search[keyword]': filmsShow.title }) }}">Résultats de la recherche</a></li>
+            <li class="breadcrumb-item active" aria-current="page">{{filmsShow.title}}</li>
+        </ol>
+    </nav>
+
     <main class="container">
         <div class="card bg-light shadow movieCard"> {# Ajout d'une seule carte pour englober l'ensemble du contenu #}
             <div class="card-body">

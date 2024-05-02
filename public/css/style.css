@@ -39,6 +39,15 @@ main{
     3px -3px 0 #000;
 }
 
+.aBreadCrumb{
+    text-decoration: none;
+    color: #6c757d;
+}
+
+.aBreadCrumb:hover{
+     color: darkslategrey;
+}
+
 #carouselHome {
     width: 50%;
     margin: auto;
