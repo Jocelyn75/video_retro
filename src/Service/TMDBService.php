@@ -7,10 +7,17 @@ use Symfony\Contracts\HttpClient\HttpClientInterface;
 class TMDBService
 {
     private $client;
+    private $imageUrl = 'https://image.tmdb.org/t/p/';
 
     public function __construct(HttpClientInterface $client)
     {
         $this->client = $client;
+    }
+
+    //Méthode pour accéder au préfixe des urls pour les requêtes sur les images.
+    public function getImageUrl(): string
+    {
+        return $this->imageUrl;
     }
 
     // Requête pour la barre de recherche : recherche d'un film par mots-clés.
@@ -40,6 +47,17 @@ class TMDBService
     {
         $apiResponse = $this->client->request('GET', "https://api.themoviedb.org/3/movie/{$id}/watch/providers?language=fr&api_key={$_ENV['TMDB_API']}");
         return $apiResponse->toArray();
+    }
+
+    //Requête pour récupérer le titre des films 
+    public function getFilmTitle($filmId): string
+    {
+        if ($filmId !== null) {
+            $filmDetails = $this->getFilmDetails($filmId);
+            return $filmDetails['title'] ?? 'Titre non disponible';
+        } else {
+            return 'Titre non disponible';
+        }
     }
 }
 

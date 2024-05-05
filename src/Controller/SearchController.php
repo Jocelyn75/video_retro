@@ -28,7 +28,7 @@ class SearchController extends AbstractController
         // Utiliser le service TMDBService pour effectuer la recherche de films
         $films = $this->tmdbService->searchFilms($search);
         
-        $imageUrl = 'https://image.tmdb.org/t/p/';
+        $imageUrl = $this->tmdbService->getImageUrl();
 
         return $this->render('search/index.html.twig', [
             'films' => $films,

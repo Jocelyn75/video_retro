@@ -34,17 +34,25 @@
                 <table class="table">
                     <thead>
                         <tr>
+                            <th>Affiche</th>
                             <th>Titre</th>
                             <th>Format</th>
-                            <th>Prix à l'unité</th>
+                            <th>Prix</th>
                             <th>Quantité</th>
-                            <th>Montant</th>
-                            <th>Retirer le produit</th>
+                            <th>Total</th>
+                            <th>Supprimer</th>
                         </tr>
                     </thead>
                     <tbody>
                         {% for details in cartDetails %}
                             <tr>
+                                <td>
+                                    {% if details.imageUrl is not empty %}
+                                        <img src="{{ details.imageUrl }}" class="img-fluid rounded" alt="{{details.titre}} Poster">
+                                    {% else %}
+                                        <img src="{{asset('images/no_image_available_w92_h138')}}" class="img-fluid rounded" alt="Pas d'image disponible">
+                                    {% endif %}
+                                </td>
                                 <td>{{ details.titre }}</td>
                                 <td>{{ details.format }}</td>
                                 <td>{{ details.prix }} €</td>
@@ -79,6 +87,7 @@
                 <form action="{{ path('app_cart_empty') }}" method="post" onsubmit="return confirm('Êtes-vous sûr de vouloir vider le panier ?');">
                     <button type="submit" class="btn btn-danger">Vider le panier</button>
                 </form>
+                <a class="btn bg-myPrimary text-white" href="{{ path('app_commandes_new') }}">Valider le panier</a>
                 {% endif %}            
             {% else %}
                 <h2>Veuillez-vous connecter</h2>

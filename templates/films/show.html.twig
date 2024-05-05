@@ -2,7 +2,7 @@
 
 {% block title %}<title>{{filmsShow.title}}</title>{% endblock %}
 
-{% block body %}
+{% block body %}<body>
     {% include '_header.html.twig' %}
 
     {# Fil d'Ariane #}
@@ -24,7 +24,7 @@
                                 {% if filmsShow.poster_path is not empty %}
                                     <img class="imgFilm img-fluid mb-3 shadow rounded" src="{{ imageUrl ~ 'w342' ~ filmsShow.poster_path }}" alt="{{ filmsShow.title }} Poster">
                                 {% else %}
-                                    <img class="shadow rounded" src="{{ asset('images/no_image_available_w342_h513.png') }}" class="img-fluid rounded mb-3" alt="No image available">
+                                    <img class="shadow rounded" src="{{ asset('images/no_image_available_w342_h513.png') }}" class="img-fluid rounded mb-3" alt="Pas d'image disponible">
                                 {% endif %}
                             </div>
                         </div>
@@ -110,53 +110,58 @@
                         </div>
                     </div>
 
-                    <div class="row"> {# Nouvelle rangée pour placer la quatrième partie en dessous de la troisième #}
-                        <div class="col-12"> {# Colonne prenant toute la largeur sur tous les écrans #}
-                            <div class="pt-3 text-center">
-                                <p class="p-bold">Regarder ce film sur les plateformes</p>
-                                <p class="p-bold">A l'achat</p>
-                                {% if buy is defined and buy is not empty %}
-                                    <ul class="providers d-flex flex-wrap justify-content-center me-1 ps-0">
-                                        {% for provider in buy %}
-                                            {% if provider.logo_path is defined %}
-                                                <li class="provider ms-1"><img src="{{ imageUrl ~ 'w45' ~ provider.logo_path }}" class="img-fluid rounded mb-1" alt="{{ provider.provider_name }} logo"></li>
-                                            {% endif %}
-                                        {% endfor %}
-                                    </ul>
-                                {% endif %}
-                            </div>
+                    
+                        <div class="row"> {# Nouvelle rangée pour placer la quatrième partie en dessous de la troisième #}
+                            <div class="col-12"> {# Colonne prenant toute la largeur sur tous les écrans #}
+                                <div class="pt-3 text-center">
+                                    {% if (buy is defined and buy is not empty) or (rent is defined and rent is not empty) or (flatrate is defined and flatrate is not empty) %}
+                                        <p class="p-bold">Regarder ce film sur les plateformes</p>
+                                    {% endif %}
+                                    {% if buy is defined and buy is not empty %}
+                                        <p class="p-bold">A l'achat</p>
+                                        <ul class="providers d-flex flex-wrap justify-content-center me-1 ps-0">
+                                            {% for provider in buy %}
+                                                {% if provider.logo_path is defined %}
+                                                    <li class="provider ms-1"><img src="{{ imageUrl ~ 'w45' ~ provider.logo_path }}" class="img-fluid rounded mb-1" data-toggle="tooltip" title="{{ provider.provider_name}}" alt="{{ provider.provider_name }} logo"></li>
+                                                {% endif %}
+                                            {% endfor %}
+                                        </ul>
+                                    {% endif %}
+                                </div>
 
-                            <div class="text-center">
-                                {% if rent is defined and rent is not empty %}
-                                    <p class="p-bold">En location</p>
-                                    <ul class="providers d-flex flex-wrap justify-content-center me-1 ps-0">
-                                        {% for provider in rent %}
-                                            {% if provider.logo_path is defined %}
-                                                <li class="provider ms-1"><img src="{{ imageUrl ~ 'w45' ~ provider.logo_path }}" class="img-fluid rounded mb-1" alt="{{ provider.provider_name }} logo"></li>
-                                            {% endif %}
-                                        {% endfor %}
-                                    </ul>
-                                {% endif %}
-                            </div>
+                                <div class="text-center">
+                                    {% if rent is defined and rent is not empty %}
+                                        <p class="p-bold">En location</p>
+                                        <ul class="providers d-flex flex-wrap justify-content-center me-1 ps-0">
+                                            {% for provider in rent %}
+                                                {% if provider.logo_path is defined %}
+                                                    <li class="provider ms-1"><img src="{{ imageUrl ~ 'w45' ~ provider.logo_path }}" class="img-fluid rounded mb-1" data-toggle="tooltip" title="{{ provider.provider_name}}" alt="{{ provider.provider_name }} logo"></li>
+                                                {% endif %}
+                                            {% endfor %}
+                                        </ul>
+                                    {% endif %}
+                                </div>
 
-                            <div class="text-center">
-                                {% if flatrate is defined and flatrate is not empty %}
-                                    <p class="p-bold">En streaming avec abonnement</p>
-                                    <ul class="providers d-flex flex-wrap justify-content-center me-1 ps-0">
-                                        {% for provider in flatrate %}
-                                            {% if provider.logo_path is defined %}
-                                                <li class="provider ms-1"><img src="{{ imageUrl ~ 'w45' ~ provider.logo_path }}" class="img-fluid rounded mb-1" alt="{{ provider.provider_name }} logo"></li>
-                                            {% endif %}
-                                        {% endfor %}
-                                    </ul>
-                                {% else %}
-                                {% endif %}
+                                <div class="text-center">
+                                    {% if flatrate is defined and flatrate is not empty %}
+                                        <p class="p-bold">En streaming avec abonnement</p>
+                                        <ul class="providers d-flex flex-wrap justify-content-center me-1 ps-0">
+                                            {% for provider in flatrate %}
+                                                {% if provider.logo_path is defined %}
+                                                    <li class="provider ms-1"><img src="{{ imageUrl ~ 'w45' ~ provider.logo_path }}" class="img-fluid rounded mb-1" data-toggle="tooltip" title="{{ provider.provider_name}}" alt="{{ provider.provider_name }} logo"></li>
+                                                {% endif %}
+                                            {% endfor %}
+                                        </ul>
+                                    {% else %}
+                                    {% endif %}
+                                </div>
                             </div>
                         </div>
-                    </div>
                 {% endblock %}
             </div>
         </div>
     </main>
     {% include "_footer.html.twig" %}
-{% endblock %}
+
+</body>{% endblock %}
+

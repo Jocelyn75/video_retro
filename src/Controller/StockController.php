@@ -41,13 +41,7 @@ class StockController extends AbstractController
 
     foreach ($pagination as $stock) { // **Modification de la boucle**
         $filmId = $stock->getFilms()->getFilmsApiId();
-        if ($filmId !== null) {
-            $filmDetails = $this->tmdbService->getFilmDetails($filmId);
-            $filmTitle = $filmDetails['title'] ?? 'Titre non disponible';
-            $stock->titre = $filmTitle;
-        } else {
-            $stock->titre = 'Titre non disponible';
-        }
+        $stock->titre = $this->tmdbService->getFilmTitle($filmId);
     }
 
     // dd($filmTitles);

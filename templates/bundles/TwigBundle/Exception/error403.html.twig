@@ -1,0 +1,20 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}<title>Mon panier</title>{% endblock %}
+
+{% block body %}
+    {% include '_header.html.twig' %}
+    <main class="container">{% block main %}
+
+    <h1>Erreur 403</h1>
+    <div class="d-flex justify-content-center align-items-center">
+        <div class="d-flex flex-column justify-content-center align-items-center w-75">
+            <h2 class="text-center pb-5">Vous n'êtes pas autorisé à accéder à cette page</h2>
+            <img src="{{ asset('images/403.gif') }}" alt="Accès non autorisé" class="img-fluid rounded w-75 pb-5
+            mb-5">
+        </div>
+    </div>
+    {% endblock %}</main>
+    {% include "_footer.html.twig" %}
+{% endblock %}
+

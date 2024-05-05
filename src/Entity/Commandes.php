@@ -46,8 +46,14 @@ class Commandes
     #[ORM\ManyToOne(inversedBy: 'commandes')]
     private ?Livreur $livreur = null;
 
-    #[ORM\OneToMany(mappedBy: 'commandes', targetEntity: DetailsCommandes::class)]
+    #[ORM\OneToMany(mappedBy: 'commandes', targetEntity: DetailsCommandes::class, orphanRemoval:true, cascade:['persist'])]
     private Collection $details_commandes;
+
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $reference = null;
+
+    #[ORM\Column(nullable: true)]
+    private ?\DateTimeImmutable $createdAt = null;
 
     public function __construct()
     {
@@ -205,6 +211,30 @@ class Commandes
                 $detailsCommande->setCommandes(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getReference(): ?string
+    {
+        return $this->reference;
+    }
+
+    public function setReference(?string $reference): static
+    {
+        $this->reference = $reference;
+
+        return $this;
+    }
+
+    public function getCreatedAt(): ?\DateTimeImmutable
+    {
+        return $this->createdAt;
+    }
+
+    public function setCreatedAt(?\DateTimeImmutable $createdAt): static
+    {
+        $this->createdAt = $createdAt;
 
         return $this;
     }
