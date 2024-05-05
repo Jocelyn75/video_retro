@@ -40,18 +40,15 @@ class CartController extends AbstractController
             if ($stock !== null) {
 
                 $filmId = $stock->getFilms()->getFilmsApiId();
-                if ($filmId !== null) {
-                    $filmDetails = $tmdbService->getFilmDetails($filmId);
-                    $filmTitle = $filmDetails['title'] ?? 'Titre non disponible';
-                    $stock->titre = $filmTitle;
-                } else {
-                    $stock->titre = 'Titre non disponible';
-                }
-                
+                $stock->titre = $tmdbService->getFilmTitle($filmId);
+                $filmDetails = $tmdbService->getFilmDetails($filmId);
+                $imageUrl = $tmdbService->getImageUrl() . 'w92' . $filmDetails['poster_path'];
+
                 $montant = $stock->getPrixReventeDefaut() * $quantity;
                 $montantTotal += $montant;
 
                 $cartDetails[] = [
+                    'imageUrl' => $imageUrl,
                     'id' => $stock->getId(),
                     'titre' => $stock->titre,
                     'format' => $stock->getFormats()->getNomFormat(),

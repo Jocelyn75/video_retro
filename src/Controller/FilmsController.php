@@ -60,6 +60,7 @@ class FilmsController extends AbstractController
     //     ]);
     // }
 
+    
     /**
      * Route show originelle du controller.
     */
@@ -108,7 +109,7 @@ class FilmsController extends AbstractController
         // }
 
 
-        $imageUrl = 'https://image.tmdb.org/t/p/';
+        $imageUrl = $this->tmdbService->getImageUrl();
 
         //Crédits
         $director = array_filter($credits['crew'], function ($crewMember) {
