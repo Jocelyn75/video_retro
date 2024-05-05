@@ -21,7 +21,15 @@ class CartController extends AbstractController
         $this->stockRepository = $stockRepository;
     }
 
-    #[Route('/', name: 'app_cart')]
+    #[Route('/', name: 'app_cart')]    
+    /**
+     * index
+     *
+     * @param  mixed $session
+     * @param  mixed $tmdbService
+     * @param  mixed $request
+     * @return Response
+     */
     public function index(SessionInterface $session, TMDBService $tmdbService, Request $request): Response
     {
 
@@ -65,7 +73,14 @@ class CartController extends AbstractController
         ]);
     }
 
-    #[Route('/add', name: 'app_cart_new', methods: ['POST'])]
+    #[Route('/add', name: 'app_cart_new', methods: ['POST'])]    
+    /**
+     * add
+     *
+     * @param  mixed $request
+     * @param  mixed $session
+     * @return void
+     */
     public function add(Request $request, SessionInterface $session)
     {
         $stockId = $request->request->get('stock');
@@ -95,7 +110,15 @@ class CartController extends AbstractController
         // Value : quantité
     }
 
-    #[Route('/update-quantity', name: 'app_cart_update_quantity', methods: ['POST'])]
+    #[Route('/update-quantity', name: 'app_cart_update_quantity', methods: ['POST'])]    
+    /**
+     * updateQuantity
+     *
+     * @param  mixed $request
+     * @param  mixed $session
+     * @param  mixed $stockRepository
+     * @return void
+     */
     public function updateQuantity(Request $request, SessionInterface $session, StockRepository $stockRepository)
     {
         $stockId = $request->request->get('stockId');
@@ -129,7 +152,13 @@ class CartController extends AbstractController
         return $this->redirectToRoute('app_cart');
     }
 
-    #[Route('/empty', name: 'app_cart_empty')]
+    #[Route('/empty', name: 'app_cart_empty')]    
+    /**
+     * emptyCart
+     *
+     * @param  mixed $session
+     * @return RedirectResponse
+     */
     public function emptyCart(SessionInterface $session): RedirectResponse
     {
         // Supprimer tous les éléments du panier
@@ -139,7 +168,14 @@ class CartController extends AbstractController
         return $this->redirectToRoute('app_cart');
     }
 
-    #[Route('/remove/{stockId}', name: 'app_cart_remove')]
+    #[Route('/remove/{stockId}', name: 'app_cart_remove')]    
+    /**
+     * removeProduct
+     *
+     * @param  mixed $session
+     * @param  mixed $stockId
+     * @return RedirectResponse
+     */
     public function removeProduct(SessionInterface $session, $stockId): RedirectResponse
     {
         $cart = $session->get('cart', []);
@@ -152,7 +188,13 @@ class CartController extends AbstractController
         return $this->redirectToRoute('app_cart');
     }
 
-    #[Route('/go-to-previous-film', name: 'go_to_previous_film')]
+    #[Route('/go-to-previous-film', name: 'go_to_previous_film')]    
+    /**
+     * goToPreviousFilm
+     *
+     * @param  mixed $session
+     * @return Response
+     */
     public function goToPreviousFilm(SessionInterface $session): Response
     {
         // Récupérer l'URL précédente depuis la session

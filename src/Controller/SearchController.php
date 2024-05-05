@@ -19,7 +19,14 @@ class SearchController extends AbstractController
         $this->tmdbService = $tmdbService;
     }
 
-    #[Route('/search', name: 'app_search', methods:['GET'])]
+    #[Route('/search', name: 'app_search', methods:['GET'])]    
+    /**
+     * index
+     *
+     * @param  mixed $request
+     * @param  mixed $client
+     * @return Response
+     */
     public function index(Request $request, HttpClientInterface $client): Response
     {
         $data = $request->query->all();
@@ -35,7 +42,12 @@ class SearchController extends AbstractController
             'imageUrl' => $imageUrl,
         ]);
     }
-
+    
+    /**
+     * getSearchBar
+     *
+     * @return Response
+     */
     public function getSearchBar() : Response
     {
         $form = $this->createForm(SearchType::class, null, [

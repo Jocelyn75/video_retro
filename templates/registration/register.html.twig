@@ -15,7 +15,7 @@
             {{ form_row(registrationForm.prenom,{
                 label: 'Prénom'
             }) }}
-            {# {{ form_row(registrationForm.date_naiss, {
+            {{ form_row(registrationForm.date_naiss, {
                 label: 'Date de naissance'
             }) }}
 
@@ -38,12 +38,12 @@
             {{ form_row(registrationForm.tel_user, {
                 label: 'Numéro de téléphone'
             }) }}
- #}
+
             {{ form_row(registrationForm.agreeTerms, {
                 label : 'Accepter les termes et conditions d\'utilisation'
             }) }}
 
-            <button type="submit" class="btn btn-secondary w-100">S'inscrire</button>
+            <button type="submit" class="btn bg-myPrimary text-white w-100">S'inscrire</button>
         {{ form_end(registrationForm) }}
     {% endblock %}</main>
     {% include "_footer.html.twig" %}

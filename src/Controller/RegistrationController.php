@@ -19,7 +19,17 @@ use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
 class RegistrationController extends AbstractController
 {
-    #[Route('/register', name: 'app_register')]
+    #[Route('/register', name: 'app_register')]    
+    /**
+     * register
+     *
+     * @param  mixed $request
+     * @param  mixed $userPasswordHasher
+     * @param  mixed $entityManager
+     * @param  mixed $codeManager
+     * @param  mixed $mailer
+     * @return Response
+     */
     public function register(Request $request, UserPasswordHasherInterface $userPasswordHasher, EntityManagerInterface $entityManager, CodeManager $codeManager, MailerInterface $mailer): Response
     {
         $user = new User();
@@ -58,7 +68,15 @@ class RegistrationController extends AbstractController
         ]);
     }
 
-    #[Route('/activation/{token})', name: 'activation')]
+    #[Route('/activation/{token})', name: 'activation')]    
+    /**
+     * activation
+     *
+     * @param  mixed $token
+     * @param  mixed $userRepository
+     * @param  mixed $entityManager
+     * @return void
+     */
     public function activation($token, UserRepository $userRepository, EntityManagerInterface $entityManager)
     {
         $user = $userRepository->findOneBy(['activation' => $token]);

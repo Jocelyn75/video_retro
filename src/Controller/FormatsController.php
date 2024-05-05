@@ -14,7 +14,13 @@ use Symfony\Component\Routing\Annotation\Route;
 #[Route('/admin/formats')]
 class FormatsController extends AbstractController
 {
-    #[Route('/', name: 'app_formats_index', methods: ['GET'])]
+    #[Route('/', name: 'app_formats_index', methods: ['GET'])]    
+    /**
+     * index
+     *
+     * @param  mixed $formatsRepository
+     * @return Response
+     */
     public function index(FormatsRepository $formatsRepository): Response
     {
         return $this->render('formats/index.html.twig', [
@@ -22,7 +28,14 @@ class FormatsController extends AbstractController
         ]);
     }
 
-    #[Route('/new', name: 'app_formats_new', methods: ['GET', 'POST'])]
+    #[Route('/new', name: 'app_formats_new', methods: ['GET', 'POST'])]    
+    /**
+     * new
+     *
+     * @param  mixed $request
+     * @param  mixed $entityManager
+     * @return Response
+     */
     public function new(Request $request, EntityManagerInterface $entityManager): Response
     {
         $format = new Formats();
@@ -42,7 +55,13 @@ class FormatsController extends AbstractController
         ]);
     }
 
-    #[Route('/{id}', name: 'app_formats_show', methods: ['GET'])]
+    #[Route('/{id}', name: 'app_formats_show', methods: ['GET'])]    
+    /**
+     * show
+     *
+     * @param  mixed $format
+     * @return Response
+     */
     public function show(Formats $format): Response
     {
         return $this->render('formats/show.html.twig', [
@@ -50,7 +69,15 @@ class FormatsController extends AbstractController
         ]);
     }
 
-    #[Route('/{id}/edit', name: 'app_formats_edit', methods: ['GET', 'POST'])]
+    #[Route('/{id}/edit', name: 'app_formats_edit', methods: ['GET', 'POST'])]    
+    /**
+     * edit
+     *
+     * @param  mixed $request
+     * @param  mixed $format
+     * @param  mixed $entityManager
+     * @return Response
+     */
     public function edit(Request $request, Formats $format, EntityManagerInterface $entityManager): Response
     {
         $form = $this->createForm(FormatsType::class, $format);
@@ -68,7 +95,15 @@ class FormatsController extends AbstractController
         ]);
     }
 
-    #[Route('/{id}', name: 'app_formats_delete', methods: ['POST'])]
+    #[Route('/{id}', name: 'app_formats_delete', methods: ['POST'])]    
+    /**
+     * delete
+     *
+     * @param  mixed $request
+     * @param  mixed $format
+     * @param  mixed $entityManager
+     * @return Response
+     */
     public function delete(Request $request, Formats $format, EntityManagerInterface $entityManager): Response
     {
         if ($this->isCsrfTokenValid('delete'.$format->getId(), $request->request->get('_token'))) {

@@ -22,13 +22,27 @@ class StockController extends AbstractController
 {
 
     private $tmdbService;
-
+    
+    /**
+     * __construct
+     *
+     * @param  mixed $tmdbService
+     * @return void
+     */
     public function __construct(TMDBService $tmdbService)
     {
         $this->tmdbService = $tmdbService;
     }
 
-    #[Route('/', name: 'app_stock_index', methods: ['GET'])]
+    #[Route('/', name: 'app_stock_index', methods: ['GET'])]    
+    /**
+     * index
+     *
+     * @param  mixed $stockRepository
+     * @param  mixed $request
+     * @param  mixed $paginator
+     * @return Response
+     */
     public function index(StockRepository $stockRepository, Request $request, PaginatorInterface $paginator): Response
     {
     // php $stocks = $stockRepository->findAll(); ne fonctionne pas, elle ne retourne pas une query mais un tableau d'objets qui ne peut pas être utilisé avec paginator.
@@ -51,7 +65,14 @@ class StockController extends AbstractController
     ]);
     }
 
-    #[Route('/new', name: 'app_stock_new', methods: ['GET', 'POST'])]
+    #[Route('/new', name: 'app_stock_new', methods: ['GET', 'POST'])]    
+    /**
+     * new
+     *
+     * @param  mixed $request
+     * @param  mixed $entityManager
+     * @return Response
+     */
     public function new(Request $request, EntityManagerInterface $entityManager): Response
     {
         $stock = new Stock();
@@ -71,7 +92,14 @@ class StockController extends AbstractController
         ]);
     }
 
-    #[Route('/{id}', name: 'app_stock_show', methods: ['GET'])]
+    #[Route('/{id}', name: 'app_stock_show', methods: ['GET'])]    
+    /**
+     * show
+     *
+     * @param  mixed $stock
+     * @param  mixed $tmdbService
+     * @return Response
+     */
     public function show(Stock $stock, TMDBService $tmdbService): Response
     {
         $filmId = $stock->getFilms()->getFilmsApiId();
@@ -87,7 +115,16 @@ class StockController extends AbstractController
     ]);
     }
 
-    #[Route('/{id}/edit', name: 'app_stock_edit', methods: ['GET', 'POST'])]
+    #[Route('/{id}/edit', name: 'app_stock_edit', methods: ['GET', 'POST'])]    
+    /**
+     * edit
+     *
+     * @param  mixed $request
+     * @param  mixed $stock
+     * @param  mixed $entityManager
+     * @param  mixed $tmdbService
+     * @return Response
+     */
     public function edit(Request $request, Stock $stock, EntityManagerInterface $entityManager, TMDBService $tmdbService): Response
     {
         $form = $this->createForm(StockType::class, $stock);
@@ -113,7 +150,15 @@ class StockController extends AbstractController
         ]);
     }
 
-    #[Route('/{id}', name: 'app_stock_delete', methods: ['POST'])]
+    #[Route('/{id}', name: 'app_stock_delete', methods: ['POST'])]    
+    /**
+     * delete
+     *
+     * @param  mixed $request
+     * @param  mixed $stock
+     * @param  mixed $entityManager
+     * @return Response
+     */
     public function delete(Request $request, Stock $stock, EntityManagerInterface $entityManager): Response
     {
         if ($this->isCsrfTokenValid('delete'.$stock->getId(), $request->request->get('_token'))) {
