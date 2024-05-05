@@ -16,7 +16,14 @@ class StripeController extends AbstractController
 {
     private $stockRepository;
     private $session;
-
+    
+    /**
+     * __construct
+     *
+     * @param  mixed $stockRepository
+     * @param  mixed $requestStack
+     * @return void
+     */
     public function __construct(StockRepository $stockRepository, RequestStack $requestStack)
     {
         $this->stockRepository = $stockRepository;
@@ -43,7 +50,12 @@ class StripeController extends AbstractController
     }
 
     // Formulaire de paiement
-    #[Route('/stripe', name: 'app_stripe')]
+    #[Route('/stripe', name: 'app_stripe')]    
+    /**
+     * index
+     *
+     * @return Response
+     */
     public function index(): Response
     {
 
@@ -63,7 +75,13 @@ class StripeController extends AbstractController
         ]);
     }
 
-    #[Route('/process-payment', name: 'process_payment')]
+    #[Route('/process-payment', name: 'process_payment')]    
+    /**
+     * processPayment
+     *
+     * @param  mixed $request
+     * @return void
+     */
     public function processPayment(Request $request)
     {
         $stripeSecretKey = $_ENV['STRIPE_SECRET_KEY'];
@@ -89,7 +107,12 @@ class StripeController extends AbstractController
         }
     }
 
-    #[Route('/payment-success', name: 'payment_success')]
+    #[Route('/payment-success', name: 'payment_success')]    
+    /**
+     * payment_success
+     *
+     * @return Response
+     */
     public function payment_success():Response
     {
 
@@ -100,7 +123,12 @@ class StripeController extends AbstractController
         return $this->render('stripe/payment_success.html.twig');
     }
 
-    #[Route('/payment-failure', name: 'payment_failure')]
+    #[Route('/payment-failure', name: 'payment_failure')]    
+    /**
+     * payment_failure
+     *
+     * @return Response
+     */
     public function payment_failure():Response
     {
         return $this->render('stripe/payment_failure.html.twig');

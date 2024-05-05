@@ -20,7 +20,13 @@ use Symfony\Component\Routing\Annotation\Route;
 #[Route('/commandes')]
 class CommandesController extends AbstractController
 {
-    #[Route('/', name: 'app_commandes_index', methods: ['GET'])]
+    #[Route('/', name: 'app_commandes_index', methods: ['GET'])]    
+    /**
+     * index
+     *
+     * @param  mixed $commandesRepository
+     * @return Response
+     */
     public function index(CommandesRepository $commandesRepository): Response
     {
         return $this->render('commandes/index.html.twig', [
@@ -28,7 +34,18 @@ class CommandesController extends AbstractController
         ]);
     }
 
-    #[Route('/new', name: 'app_commandes_new', methods: ['GET', 'POST'])]
+    #[Route('/new', name: 'app_commandes_new', methods: ['GET', 'POST'])]    
+    /**
+     * new
+     *
+     * @param  mixed $request
+     * @param  mixed $em
+     * @param  mixed $session
+     * @param  mixed $stockRepository
+     * @param  mixed $tmdbService
+     * @param  mixed $commandeRef
+     * @return Response
+     */
     public function new(Request $request, EntityManagerInterface $em, SessionInterface $session, StockRepository $stockRepository, TMDBService $tmdbService, CommandeRefGenerator $commandeRef): Response
     {
         //On récupère le panier
@@ -39,6 +56,7 @@ class CommandesController extends AbstractController
 
         // On remplit la commande
         $commande->setUser($this->getUser());
+        $commande->setCreatedAt(new \DateTimeImmutable('now'));
         $commande->setReference($commandeRef->generateReference());
         
         //On boucle le panier pour créer les détails de la commande.
@@ -86,7 +104,13 @@ class CommandesController extends AbstractController
         ]);
     }
 
-    #[Route('/{id}', name: 'app_commandes_show', methods: ['GET'])]
+    #[Route('/{id}', name: 'app_commandes_show', methods: ['GET'])]    
+    /**
+     * show
+     *
+     * @param  mixed $commande
+     * @return Response
+     */
     public function show(Commandes $commande): Response
     {
         return $this->render('commandes/show.html.twig', [
@@ -94,7 +118,15 @@ class CommandesController extends AbstractController
         ]);
     }
 
-    #[Route('/{id}/edit', name: 'app_commandes_edit', methods: ['GET', 'POST'])]
+    #[Route('/{id}/edit', name: 'app_commandes_edit', methods: ['GET', 'POST'])]    
+    /**
+     * edit
+     *
+     * @param  mixed $request
+     * @param  mixed $commande
+     * @param  mixed $entityManager
+     * @return Response
+     */
     public function edit(Request $request, Commandes $commande, EntityManagerInterface $entityManager): Response
     {
         $form = $this->createForm(CommandesType::class, $commande);
@@ -112,7 +144,15 @@ class CommandesController extends AbstractController
         ]);
     }
 
-    #[Route('/{id}', name: 'app_commandes_delete', methods: ['POST'])]
+    #[Route('/{id}', name: 'app_commandes_delete', methods: ['POST'])]    
+    /**
+     * delete
+     *
+     * @param  mixed $request
+     * @param  mixed $commande
+     * @param  mixed $entityManager
+     * @return Response
+     */
     public function delete(Request $request, Commandes $commande, EntityManagerInterface $entityManager): Response
     {
         if ($this->isCsrfTokenValid('delete'.$commande->getId(), $request->request->get('_token'))) {

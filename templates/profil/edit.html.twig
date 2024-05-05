@@ -20,17 +20,17 @@
         {{ form_errors(form) }}
             {{ form_start(form) }}
                 {{ form_row(form.email,{'label_attr': {'class': 'mb-2'}})}}
-                {{ form_row(form.plainPassword,{'label_attr': {'class': 'mb-3'}})}}
+                {# {{ form_row(form.plainPassword,{'label_attr': {'class': 'mb-3'}})}} #}
                 {{ form_row(form.nom) }}
                 {{ form_row(form.prenom,{
                     label: 'Prénom'
                 }) }}
-                {# {{ form_row(form.date_naiss, {
+                {{ form_row(form.date_naiss, {
                     label: 'Date de naissance'
                 }) }} 
                 {{ form_row(form.adr_user, {
                     label: 'Adresse'
-                }) }}#}
+                }) }}
 
                 {{ form_row(form.complement_adr, {
                     label: 'Complément d\'adresse'
@@ -48,11 +48,11 @@
                     label: 'Numéro de téléphone'
                 }) }}
 
-                {{ form_row(form.agreeTerms, {
+                {# {{ form_row(form.agreeTerms, {
                     label : 'Accepter les termes et conditions d\'utilisation'
-                }) }}
+                }) }} #}
 
-                <button type="submit" class="btn btn-secondary w-100">Modifier mon profil</button>
+                <button type="submit" class="btn bg-myPrimary text-white w-100">Modifier mon profil</button>
             {{ form_end(form) }}
     {% endblock %}</main>
     {% include "_footer.html.twig" %}

@@ -11,20 +11,58 @@
             <li class="breadcrumb-item ms-3"><a class="aBreadCrumb" href="{{path('home')}}">Accueil</a></li>
             <li class="breadcrumb-item"><a class="aBreadCrumb" href="{{path('app_admin_home')}}">Back office</a></li>
             <li class="breadcrumb-item"><a class="aBreadCrumb" href="{{path('app_user_index')}}">Liste des utilisateurs</a></li>
-            <li class="breadcrumb-item"><a class="aBreadCrumb" href="{{path('app_user_show')}}">Profil de {{ user.prenom }} {{ user.nom|upper }}</a></li>
+            <li class="breadcrumb-item"><a class="aBreadCrumb" href="{{path('app_user_show', {'id': user.id})}}">Profil de {{ user.prenom }} {{ user.nom|upper }}</a></li>
             <li class="breadcrumb-item active" aria-current="page">Modifier le profil de {{ user.prenom }} {{ user.nom|upper }}</li>
         </ol>
     </nav>
 
     <h1>Edit user</h1>
     <main class="container">{% block main %}
+        {{ form_errors(form) }}
+            {{ form_start(form) }}
+                {{ form_row(form.email,{'label_attr': {'class': 'mb-2'}})}}
+                {# {{ form_row(form.plainPassword,{'label_attr': {'class': 'mb-3'}})}} #}
+                {{ form_row(form.nom) }}
+                {{ form_row(form.prenom,{
+                    label: 'Prénom'
+                }) }}
+                {{ form_row(form.date_naiss, {
+                    label: 'Date de naissance'
+                }) }} 
+                {{ form_row(form.adr_user, {
+                    label: 'Adresse'
+                }) }}
+
+                {{ form_row(form.complement_adr, {
+                    label: 'Complément d\'adresse'
+                }) }}
+
+                {{ form_row(form.code_postal, {
+                    label: 'Code postal'
+                }) }}
+
+                {{ form_row(form.ville, {
+                    label: 'Ville'
+                }) }}
+
+                {{ form_row(form.tel_user, {
+                    label: 'Numéro de téléphone'
+                }) }}
+                {{ form_row(form.roles, {
+                    label: 'Rôles'
+                }) }}
+
+                <a href="{{ path('app_user_index') }}">back to list</a>
 
 
-        {{ include('user/_form.html.twig', {'button_label': 'Update'}) }}
+                {# <button class="btn">{{ button_label|default('Valider') }}</button>
+ #}
 
-        <a href="{{ path('app_user_index') }}">back to list</a>
+                <button type="submit" class="btn bg-myPrimary text-white w-100">Modifier le profil</button>
 
-        {{ include('user/_delete_form.html.twig') }}
+            {{ form_end(form) }}
+            {{ include('user/_delete_form.html.twig') }}
+
     {% endblock %}</main>
     {% include "_footer.html.twig" %}
 {% endblock %}

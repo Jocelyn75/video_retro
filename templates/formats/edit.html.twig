@@ -18,8 +18,19 @@
 
     <h1>Edit formats</h1>
     <main class="container">{% block main %}
+        <h2>{{format.nomFormat}}</h2>
+        {{ form_errors(form) }}
+            {{ form_start(form) }}
+                {# {{ form_row(form.formats_id, {'disabled': true}) }} #}
+                {{ form_row(form.prix_rachat_defaut, {
+                    label: 'Prix de rachat'
+                }) }}
+                {# {{ form_row(form.films_id) }} #}
+                <button type="submit" class="btn bg-myPrimary text-white w-100">Save</button>
+            {{ form_end(form) }}
 
-        {{ include('formats/_form.html.twig', {'button_label': 'Update'}) }}
+
+        {# {{ include('formats/_form.html.twig', {'button_label': 'Update'}) }} #}
 
         <a href="{{ path('app_formats_index') }}">back to list</a>
 

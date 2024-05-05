@@ -24,10 +24,14 @@
         {{ form_errors(form) }}
             {{ form_start(form) }}
                 {# {{ form_row(form.formats_id, {'disabled': true}) }} #}
-                {{ form_row(form.prix_revente_defaut) }}
-                {{ form_row(form.quantite_stock) }}
+                {{ form_row(form.prix_revente_defaut, {
+                    label: 'Prix de revente'
+                }) }}
+                {{ form_row(form.quantite_stock, {
+                    label: 'Quantité en stock'
+                }) }}
                 {# {{ form_row(form.films_id) }} #}
-                <button type="submit" class="btn btn-secondary w-100">Save</button>
+                <button type="submit" class="btn bg-myPrimary text-white w-100">Save</button>
             {{ form_end(form) }}
 
             <a href="{{ path('app_stock_index') }}">back to list</a>
