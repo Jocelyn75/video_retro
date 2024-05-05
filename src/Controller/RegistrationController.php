@@ -51,7 +51,7 @@ class RegistrationController extends AbstractController
             $email = (new TemplatedEmail())
                 ->from(new Address('noreply@videoretro.fr', 'Video Retro'))
                 ->to($user->getEmail())
-                ->subject('Réinitialisation de votre mot de passe')
+                ->subject('Activation de votre compte Video Retro')
                 ->htmlTemplate('email/inscription.html.twig')
                 ->context([
                     'user' => $user,

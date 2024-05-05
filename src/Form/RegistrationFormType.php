@@ -101,57 +101,57 @@ class RegistrationFormType extends AbstractType
                 ],
             ])
             
-            ->add('date_naiss', BirthdayType::class, [
-                'widget' => 'single_text',
-                // 'widget' => 'choice',
-                // 'years' => range(date('Y'), date('Y') - 120),  
-                'constraints' => [
-                    new NotBlank([
-                        'message' => 'Veuillez saisir votre date de naissance'
-                    ])
-                ],                
-            ])
+            // ->add('date_naiss', BirthdayType::class, [
+            //     'widget' => 'single_text',
+            //     // 'widget' => 'choice',
+            //     // 'years' => range(date('Y'), date('Y') - 120),  
+            //     'constraints' => [
+            //         new NotBlank([
+            //             'message' => 'Veuillez saisir votre date de naissance'
+            //         ])
+            //     ],                
+            // ])
             
-            ->add('adr_user', TextType::class, [
-                'constraints' => [
-                    new NotBlank([
-                        'message' => 'Veuillez saisir votre adresse',
-                    ])
-                ]
-            ])
-            ->add('complement_adr')
+            // ->add('adr_user', TextType::class, [
+            //     'constraints' => [
+            //         new NotBlank([
+            //             'message' => 'Veuillez saisir votre adresse',
+            //         ])
+            //     ]
+            // ])
+            // ->add('complement_adr')
 
-            ->add('code_postal', NumberType::class, [
-                'constraints' => [
-                    new NotBlank([
-                        'message' => 'Veuillez saisir votre code postal',
-                    ]),
-                    new Positive ([
-                        'message' => 'Le code postal doit être un nombre positif',
-                    ]),
-                    new Length ([
-                        'min' => 5,
-                        'max' => 5,
-                        'minMessage' => 'Un code postal doit comprendre 5 chiffres',
-                        'maxMessage' => 'Un code postal doit comprendre 5 chiffres',
+            // ->add('code_postal', NumberType::class, [
+            //     'constraints' => [
+            //         new NotBlank([
+            //             'message' => 'Veuillez saisir votre code postal',
+            //         ]),
+            //         new Positive ([
+            //             'message' => 'Le code postal doit être un nombre positif',
+            //         ]),
+            //         new Length ([
+            //             'min' => 5,
+            //             'max' => 5,
+            //             'minMessage' => 'Un code postal doit comprendre 5 chiffres',
+            //             'maxMessage' => 'Un code postal doit comprendre 5 chiffres',
                         
-                    ])
-                ]
-            ])
-            ->add('ville', TextType::class, [
-                'constraints' => [
-                    new NotBlank([
-                        'message' => 'Veuillez saisir votre ville',
-                    ])
-                ]
-            ])
-            ->add('tel_user', TextType::class, [
-                'constraints' => [
-                    new NotBlank([
-                        'message' => 'Veuillez saisir votre numéro de téléphone',
-                    ])
-                ]
-            ])
+            //         ])
+            //     ]
+            // ])
+            // ->add('ville', TextType::class, [
+            //     'constraints' => [
+            //         new NotBlank([
+            //             'message' => 'Veuillez saisir votre ville',
+            //         ])
+            //     ]
+            // ])
+            // ->add('tel_user', TextType::class, [
+            //     'constraints' => [
+            //         new NotBlank([
+            //             'message' => 'Veuillez saisir votre numéro de téléphone',
+            //         ])
+            //     ]
+            // ])
 
         ;
     }

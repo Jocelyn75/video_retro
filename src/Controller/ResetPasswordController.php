@@ -191,7 +191,7 @@ class ResetPasswordController extends AbstractController
         $email = (new TemplatedEmail())
             ->from(new Address('noreply@videoretro.fr', 'Video Retro'))
             ->to($user->getEmail())
-            ->subject('Réinitialisation de votre mot de passe')
+            ->subject('Réinitialisation de votre mot de passe Video Retro')
             ->htmlTemplate('reset_password/email.html.twig')
             ->context([
                 'resetToken' => $resetToken,

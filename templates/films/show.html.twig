@@ -18,8 +18,8 @@
         <div class="card bg-light shadow movieCard"> {# Ajout d'une seule carte pour englober l'ensemble du contenu #}
             <div class="card-body">
                 {% block main %}
-                    <div class="row mb-5"> {# Ajout d'une rangée pour diviser l'écran en colonnes #}
-                        <div class="col-md-4 col-xs-12"> {# Colonne pour la première partie sur tous les écrans #}
+                    <div class="row mb-5"> {# Ajout d'une première rangée pour l'image et les métadonnées #}
+                        <div class="col-md-4 col-xs-12"> {# Colonne pour la partie image #}
                             <div class="text-center">
                                 {% if filmsShow.poster_path is not empty %}
                                     <img class="imgFilm img-fluid mb-3 shadow rounded" src="{{ imageUrl ~ 'w342' ~ filmsShow.poster_path }}" alt="{{ filmsShow.title }} Poster">
@@ -29,7 +29,7 @@
                             </div>
                         </div>
 
-                        <div class="col-md-8 col-xs-12"> {# Colonne pour la deuxième partie sur tous les écrans #}
+                        <div class="col-md-8 col-xs-12"> {# Colonne pour la partie métadonnées #}
                             <div class="text-center">
                                 <h1>{{ filmsShow.title|upper }}</h1>
                                 <div class="d-flex justify-content-center">
@@ -70,13 +70,13 @@
                         </div>
                     </div>
 
-                    <div class="row"> {# Nouvelle rangée pour placer la troisième partie en dessous des deux premières #}
-                        <div class="col-12"> {# Colonne prenant toute la largeur sur tous les écrans #}
+                    <div class="row"> {# Nouvelle rangée pour la partie VHS, DVD, Blu-Ray #}
+                        <div class="col-12"> 
                             {% if film is not null %}
                                 <div class="row logoFormatsContainer mb-3">
                                     {% for stock in film.stocks %}
                                         <div class="col-md-4">
-                                            <div class="d-flex flex-column align-items-center justify-content-center"> {# Ajout de classes pour centrer les éléments #}
+                                            <div class="d-flex flex-column align-items-center justify-content-center">
                                                 {% set image = (stock.formats.id == 1) ? 'vhs_logo_w100.png' : (stock.formats.id == 2) ? 'dvd_logo_w100.png' : 'bluray_logo_w100.png' %}
                                                 <img class="logoFormats mb-2 shadow rounded" src="{{ asset('images/logosFormats/' ~ image) }}" alt="Logo VHS">
                                                 {% if stock.quantiteStock > 0 %}
@@ -102,20 +102,22 @@
                                     {% endfor %}
                                 </div>
                             {% else %}
-                                <form method="post" action="" class="text-center m-4"> {# Ajout de classe pour centrer le formulaire #}
-                                    <input type="submit" value="Rupture de stock" class="btn btn-secondary text-white disabled me-2">
-                                    <input type="submit" value="Je vends mon exemplaire" class="btn bg-myPrimary text-white ms-2">
+                                <form method="post" action="" class="text-center m-4">
+                                    <div class="d-flex flex-column flex-md-row align-items-center justify-content-center">
+                                        <input type="submit" value="Rupture de stock" class="btn btn-secondary text-white disabled mb-2 mb-md-0 me-md-2">
+                                        <input type="submit" value="Je vends mon exemplaire" class="btn bg-myPrimary text-white">
+                                    </div>
                                 </form>
                             {% endif %}
                         </div>
                     </div>
 
                     
-                        <div class="row"> {# Nouvelle rangée pour placer la quatrième partie en dessous de la troisième #}
-                            <div class="col-12"> {# Colonne prenant toute la largeur sur tous les écrans #}
+                        <div class="row"> {# Nouvelle rangée pour la partie des services VOD/SVOD #}
+                            <div class="col-12">
                                 <div class="pt-3 text-center">
                                     {% if (buy is defined and buy is not empty) or (rent is defined and rent is not empty) or (flatrate is defined and flatrate is not empty) %}
-                                        <p class="p-bold">Regarder ce film sur les plateformes</p>
+                                        <p class="p-bold">Regarder ce film sur les plateformes :</p>
                                     {% endif %}
                                     {% if buy is defined and buy is not empty %}
                                         <p class="p-bold">A l'achat</p>
