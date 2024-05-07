@@ -13,6 +13,11 @@
         </ol>
     </nav> #}
 
+    {% for message in app.flashes("success")%}
+        <div id="alert" class="text-center alert alert-success w-50 mx-auto" role="alert">
+            {{message}}
+        </div>
+    {% endfor %}
 
     <div id="carouselHome" class="carousel slide" data-bs-ride="carousel">
         <div class="carousel-inner">

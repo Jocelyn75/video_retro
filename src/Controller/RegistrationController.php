@@ -58,9 +58,9 @@ class RegistrationController extends AbstractController
                 ])
             ;
 
-        $mailer->send($email);
-        $this->addFlash('success', "Bienvenue, un email vous a été envoyé pour valider votre compte.");
-        return $this->redirectToRoute('app_login');
+            $mailer->send($email);
+            $this->addFlash('success', "Bienvenue, un email vous a été envoyé pour valider votre compte.");
+            return $this->redirectToRoute('app_login');
         }
 
         return $this->render('registration/register.html.twig', [

@@ -19,7 +19,18 @@ class SecurityController extends AbstractController
     public function login(AuthenticationUtils $authenticationUtils): Response
     {
         if ($this->getUser()) {
-            return $this->redirectToRoute('home');
+            // On récupère les rôles de l'utilisateur connecté
+            $roles = $this->getUser()->getRoles();
+
+            if (in_array('ROLE_USER', $roles)){
+                $this->addFlash('success', "Vous êtes connecté.");
+                return $this->redirectToRoute('home');
+            }
+            // elseif (in_array('ROLE_ADMIN', $roles)) {
+            //     $this->addFlash('success', "Vous êtes connecté en tant qu'administrateur.");
+            //     return $this->redirectToRoute('app_admin_home');
+            // } 
+
         }
 
         // get the login error if there is one
