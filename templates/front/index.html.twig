@@ -62,6 +62,13 @@
         </button>
     </div>
 
+    <div class="searchBar-container d-flex justify-content-center align-items-center w-100">
+    {# On rend la méthode GetSearchBar du controller SearchController. Les :: permettent d'appeler getSearchBar de manière statique. Les \\ sont une convention, cela ne fonctionne pas avec un seul \ #}
+    {{ render(controller("App\\Controller\\SearchController::getSearchByYear")) }}  
+    </div>    
+
+
+
         {# Si un utlisateur est connecté, le message de bienvenue s'affiche
         {% if app.user %}
             <h1>
