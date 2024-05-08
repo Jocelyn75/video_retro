@@ -2,11 +2,14 @@
 
 namespace App\Controller;
 
+use App\Entity\User;
 use App\Form\ChangePasswordFormType;
+use App\Form\EditPasswordType;
 use App\Form\ProfilType;
 use App\Form\RegistrationFormType;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Form\FormError;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
@@ -69,7 +72,84 @@ class ProfilController extends AbstractController
         ]);
     }
 
-    // #[Route('/profil/modifier-mot-de-passe', name: 'profil_modifier_mot_de_passe')]
+    #[Route('/profil/edit-password', name: 'app_profil_edit_password', methods: ['GET', 'POST'])]    
+    /**
+     * editPassword
+     *
+     * @param  mixed $user
+     * @param  mixed $request
+     * @param  mixed $em
+     * @param  mixed $passwordHasher
+     * @return Response
+     */
+    public function editPassword(User $user, Request $request, UserPasswordHasherInterface $hasher, EntityManagerInterface $em): Response
+    {
+        $user = $this->getUser();
+
+        $form = $this->createForm(EditPasswordType::class);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $currentPassword = $form->get('currentPassword')->getData();
+            $newPassword = $form->get('newPassword')->getData();
+            $confirmPassword = $form->get('confirmPassword')->getData();
+
+            $access = true;
+
+            if (!$currentPassword){
+                $access = false;
+                $form->get('currentPassword')->addError(new FormError("Veuillez saisir votre mot de passe actuel"));
+            }else{
+                if(!$hasher->isPasswordValid($user, $currentPassword)) {
+                    $access = false;
+                    $form->get('currentPassword')->addError(new FormError('Mot de passe incorrect'));
+                }else{
+                    if ($newPassword != $confirmPassword){
+                        $access = false;
+                        $form->get('newPassword')->addError(new FormError('Les mots de passe ne sont pas identiques'));
+                    }else{
+                        if (!$newPassword){
+                            $access = false;
+                            $form->get('newPassword')->addError(new FormError('Saisir votre mot de passe'));
+                        }else{
+                            if ($currentPassword == $newPassword){
+                                $access = false;
+                                $form->get('newPassword')->addError(new FormError('Il s\'agit du mot de passe actuel'));
+                            }else {
+                                if (!preg_match('/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W\_])[A-Za-z\d\W\_]{12,255}$/', $newPassword)) {
+                                    $access = false;
+                                    $form->get('newPassword')->addError(new FormError('regex'));
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+
+            if ($access) {
+                $user->setPassword(
+                    $hasher->hashPassword(
+                        $user,
+                        $form->get('newPassword')->getData()
+                    )
+                );
+                $em->persist($user);
+                $em->flush();
+
+                $this->addFlash('success', 'Votre mot de passe a bien été modifié');
+                return $this->redirectToRoute('app_profil');
+            }
+        }
+
+        return $this->render('profil/edit_password.html.twig', [
+            'form' => $form->createView(),
+            'user' => $user,
+        ]);
+
+    }
+
+
+    // #[Route('/profil/edit-password', name: 'app_profil_edit_password', methods: ['GET', 'POST'])]    
     // public function modifierMotDePasse(Request $request, UserPasswordHasherInterface $passwordHasher): Response
     // {
     
@@ -77,7 +157,7 @@ class ProfilController extends AbstractController
     //     $user = $this->getUser();
 
     //     // Création du formulaire de modification de mot de passe
-    //     $form = $this->createForm(ChangePasswordFormType::class);
+    //     $form = $this->createForm(EditPasswordType::class);
     //     $form->handleRequest($request);
     
     //     if ($form->isSubmitted() && $form->isValid()) {
@@ -102,7 +182,23 @@ class ProfilController extends AbstractController
     //         'form' => $form->createView(),
     //     ]);
     // }
+
     
+    // }
+
+//     $this->addFlash('success', 'Votre mot de passe a bien été modifié');
+//                 return $this->redirectToRoute('app_profil');
+            
+//             }
+//             else 
+//             {
+//                 $this->addFlash('warning', 'Le mot de passe renseigné est incorrect');
+//             }
+//         };
+//     }
+//         return $this->render('profil/edit_password.html.twig', [
+//             'form'=> $form->createView(),
+//         ]);
+//     }
+// }
 }
-
-
