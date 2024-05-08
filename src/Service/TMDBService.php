@@ -27,7 +27,8 @@ class TMDBService
             'query'=>[
                 'api_key' => $_ENV['TMDB_API'],
                 'query' => $searchQuery,
-                'language' => 'fr',
+                'language' => 'fr-FR',
+                'region' => 'FR',
                 'page' => 1,
                 ]
             ]);
@@ -36,14 +37,16 @@ class TMDBService
     }
 
     //Méthode pour récupérer la liste des films populaires par année
-    public function getPopularMoviesByYear($year): array
+    public function getPopularFilmsByYear($year): array
     {
         $apiResponse = $this->client->request('GET', 'https://api.themoviedb.org/3/discover/movie', [
             'query' => [
                 'api_key' => $_ENV['TMDB_API'],
                 'primary_release_year' => $year,
-                'sort_by' => 'popularity.desc', // Trier par popularité décroissante
-                'page' => 1, // Vous pouvez ajuster cela pour obtenir plus de résultats
+                'language' => 'fr-FR',
+                'region' => 'FR',
+                'sort_by' => 'vote_count.desc', 
+                'page' => 1,
             ],
         ]);
 
@@ -51,25 +54,43 @@ class TMDBService
         return $apiResponseArray['results'];
     }
 
+    // Méthode pour récupérer les films populaires au moment de la requête
+    public function getPopularFilms(): array
+    {
+    $apiResponse = $this->client->request('GET', 'https://api.themoviedb.org/3/movie/popular', [
+        'query' => [
+            'api_key' => $_ENV['TMDB_API'],
+            'language' => 'fr-FR',
+            'region' => 'FR',
+            'page' => 1,
+        ],
+    ]);
+
+    $apiResponseArray = $apiResponse->toArray();
+    // Limiter les résultats aux 10 premiers films
+    $popularFilms = array_slice($apiResponseArray['results'], 0, 10);
+    return $popularFilms;
+}
+
 
     // Méthode pour la fiche film : récupération des données d'un film à partir de son id
     public function getFilmDetails(string $id): array
     {
-        $apiResponse = $this->client->request('GET', "https://api.themoviedb.org/3/movie/{$id}?&language=fr&api_key={$_ENV['TMDB_API']}");
+        $apiResponse = $this->client->request('GET', "https://api.themoviedb.org/3/movie/{$id}?&language=fr-FR&region=FR&api_key={$_ENV['TMDB_API']}");
         return $apiResponse->toArray();
     }
 
     // Méthode pour la fiche film : récupérer les crédits d'un film à partir de son id
     public function getFilmCredits(string $id): array
     {
-        $apiResponse = $this->client->request('GET', "https://api.themoviedb.org/3/movie/{$id}/credits?language=fr&api_key={$_ENV['TMDB_API']}");
+        $apiResponse = $this->client->request('GET', "https://api.themoviedb.org/3/movie/{$id}/credits?language=fr-FR&region=FR&api_key={$_ENV['TMDB_API']}");
         return $apiResponse->toArray();
     }
 
     // Méthode pour la fiche film : récupérer les services de VOD et SVOD sur lesquels le film est disponible, à partir de l'id du film
     public function getFilmProviders(string $id): array
     {
-        $apiResponse = $this->client->request('GET', "https://api.themoviedb.org/3/movie/{$id}/watch/providers?language=fr&api_key={$_ENV['TMDB_API']}");
+        $apiResponse = $this->client->request('GET', "https://api.themoviedb.org/3/movie/{$id}/watch/providers?language=fr-FR&region=FR&api_key={$_ENV['TMDB_API']}");
         return $apiResponse->toArray();
     }
 

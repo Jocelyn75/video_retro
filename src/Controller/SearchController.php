@@ -72,24 +72,30 @@ class SearchController extends AbstractController
      * @return Response
      */
     public function searchByYear(Request $request): Response
-    {
-        $data = $request->query->all();
+        {
+            $data = $request->query->all();
+            
+            //Si une année est renseignée, alors $search prend la valeur renseignée, sinon $search est nul.
+            $search = isset($data['search']['year']) ? $data['search']['year'] : null;
 
-        $search = isset($data['search']['year']) ? $data['search']['year'] : null;
+                // if (!is_numeric($search) || intval($search) != $search) {
+                // return new Response('Veuillez entrer une année valide.', Response::HTTP_BAD_REQUEST);
+                // }
 
-        if ($search) {
-            $films = $this->tmdbService->getPopularMoviesByYear($search);
-        } else {
-            $films = [];
+            if ($search) {
+                $films = $this->tmdbService->getPopularFilmsByYear($search);
+            } else {
+                $films = [];
+            }
+            
+            $imageUrl = $this->tmdbService->getImageUrl();
+
+            return $this->render('search/index.html.twig', [
+                'films' => $films,
+                'imageUrl' => $imageUrl,
+            ]);
         }
-        
-        $imageUrl = $this->tmdbService->getImageUrl();
 
-        return $this->render('search/index.html.twig', [
-            'films' => $films,
-            'imageUrl' => $imageUrl,
-        ]);
-    }
 
         /**
      * getSearchBar

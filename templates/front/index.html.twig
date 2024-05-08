@@ -67,6 +67,22 @@
     {{ render(controller("App\\Controller\\SearchController::getSearchByYear")) }}  
     </div>    
 
+<div class="row">
+        {% for results in popularFilms %}
+            <div class="col-md-3 mb-4">
+                <div class="card">
+                    {% if results.poster_path %}
+                        <img src="{{ imageUrl ~ 'w92' ~ results.poster_path }}" class="card-img-top" alt="{{ results.title }} Poster">
+                    {% else %}
+                        <div class="card-img-top text-center">Image non disponible</div>
+                    {% endif %}
+                    <div class="card-body">
+                        <h5 class="card-title">{{ results.title }}</h5>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
 
 
         {# Si un utlisateur est connecté, le message de bienvenue s'affiche
