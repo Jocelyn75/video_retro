@@ -44,7 +44,7 @@
 
             {# NAVBAR 2 pour contenir la baseline et la barre de recherche. Une balise div a été préférée à une balise nav dans un souci d'amélioration du référencement : une seule balise nav #}
             <div class="d-flex justify-content-between align-items-center bg-myPrimary bg-gradient p-2 ps-3 pe-3 mb-3">
-                <p class="slogan-sm slogan text-light ps-5 align-self-items-center">Tout le cinéma en VHS, DVD et Blu-Ray</p> 
+                <p class="slogan slogan-sm slogan text-light ps-5 align-self-items-center">Tout le cinéma en VHS, DVD et Blu-Ray</p> 
                 <div class="searchBar-container d-flex justify-content-center align-items-center">
                     {# On rend la méthode GetSearchBar du controller SearchController. Les :: permettent d'appeler getSearchBar de manière statique. Les \\ sont une convention, cela ne fonctionne pas avec un seul \ #}
                     {{ render(controller("App\\Controller\\SearchController::getSearchBar")) }}      

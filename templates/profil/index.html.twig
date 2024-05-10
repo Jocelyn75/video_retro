@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}<title>Mon profil</title>{% endblock %}
+{% block title %}<title>Mon profil - Video Retro</title>{% endblock %}
 
 
 {% block body %}
@@ -30,39 +30,55 @@
             <div>
         {% endfor %}  #}
 
-        <div>
-            <div class="d-flex">
-                <p class ="mb-3 p-bold">Nom :&nbsp;</p> {{app.user.nom}} 
-            </div>
-            <div class="d-flex">
-                <p class ="mb-3 p-bold">Prénom :&nbsp;</p> {{app.user.prenom}}
-            </div>
-            <div class="d-flex">
-                <p class ="mb-3 p-bold">Email :&nbsp;</p> {{app.user.email}}
-            </div>
-            <div class="d-flex">
-                <p class ="mb-3 p-bold">Date de naissance :&nbsp;</p> {{app.user.dateNaiss|date('d/m/Y')}}
-            </div>
-            <div class="d-flex">
-                <p class ="mb-3 p-bold">Adresse :&nbsp;</p>{{app.user.adrUser}}
-            </div>
-            <div class="d-flex">
-                <p class ="mb-3 p-bold">Complément d'adresse :&nbsp;</p>{{app.user.complementAdr}}
-            </div>
-            <div class="d-flex">
-                <p class ="mb-3 p-bold">Code postal :&nbsp;</p>{{app.user.codePostal}}
-            </div>
-            <div class="d-flex">
-                <p class ="mb-3 p-bold">Ville :&nbsp;</p>{{app.user.ville}}
-            </div>
-            <div class="d-flex">
-                <p class ="mb-3 p-bold">Téléphone :&nbsp;</p>{{app.user.telUser}}
-            </div>
+        <div class="table-responsive">
+            <table class="table table-bordered mb-4">
+                <tbody>
+                    <tr>
+                        <th class="myPrimary">Nom</th>
+                        <td> {{app.user.nom}} </td>
+                    </tr>
+                    <tr>
+                        <th class="myPrimary">Prenom</th>
+                        <td> {{app.user.prenom}} </td>
+                    </tr>
+                    <tr>
+                        <th class="myPrimary">Email</th>
+                        <td> {{app.user.email}} </td>
+                    </tr>
+                    <tr>
+                        <th class="myPrimary">Date de naissance</th>
+                        <td> {{app.user.dateNaiss|date('d/m/Y')}} </td>
+                    </tr>
+                    <tr>
+                        <th class="myPrimary">Adresse</th>
+                        <td> {{app.user.adrUser}} </td>
+                    </tr>
+                    <tr>
+                        <th class="myPrimary">Complément d'adresse</th>
+                        <td> {{app.user.complementAdr}} </td>
+                    </tr>
+                    <tr>
+                        <th class="myPrimary">Code postal</th>
+                        <td> {{app.user.codePostal}} </td>
+                    </tr>
+                    <tr>
+                        <th class="myPrimary">Ville</th>
+                        <td> {{app.user.ville}} </td>
+                    </tr>
+                    <tr>
+                        <th class="myPrimary">Téléphone</th>
+                        <td> {{app.user.telUser}} </td>
+                    </tr>
 
-            <a class="btn bg-myPrimary text-white" href="{{ path("app_profil_edit")}}">Modifier mes informations</a>
-            <a class="btn bg-myPrimary text-white" href="{{ path("app_profil_edit_password")}}">Modifier mon mot de passe</a>
-
+                </tbody>
+            </table>
         </div>
+
+        <div class="mb-5">
+            <a class="btn bg-myPrimary text-white m-2" href="{{ path("app_profil_edit")}}">Modifier mes informations</a>
+            <a class="btn bg-myPrimary text-white m-2" href="{{ path("app_profil_edit_password")}}">Modifier mon mot de passe</a>
+        </div>
+
     {% endblock %}</main>
     {% include "_footer.html.twig" %}
 {% endblock %}

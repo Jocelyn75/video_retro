@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}<title>Résultats de la recherche</title>{% endblock %}
+{% block title %}<title>Résultats de la recherche - Video Retro</title>{% endblock %}
 
 {% block body %}
     {% include '_header.html.twig' %}
@@ -14,13 +14,13 @@
     </nav>
 
 
-    <h1 class="text-center mb-3 fw-bold text-secondary">Résultats de la recherche</h1>
+    <h1 class="mb-3">Résultats de la recherche</h1>
     <main class="container">{% block main %}
 
         <section class="d-flex justify-content-center">
             <div style="width: 80%;">
                 {% if films is empty %}
-                        <h2 class="text-center">Aucun résultat</h2>
+                        <h2 class="text-center pb-5 mb-5">Aucun résultat</h2>
                 {% else %}
                     {% for results in films %}
                     <div class="card mb-3 bg-light shadow" style="max-width: 100%;">
@@ -28,7 +28,7 @@
                             <div class="col-md-4 text-center mb-3 mb-md-0">
                                 {% if results.poster_path is not empty %}
                                     <a href="{{ path('app_films_show', {'id': results.id}) }}">
-                                    <img src="{{ imageUrl ~ 'w185' ~ results.poster_path }}" class="img-fluid rounded" alt="{{ results.title }} Poster">
+                                    <img src="{{ imageUrl ~ 'w185' ~ results.poster_path }}" class="img-fluid rounded shadow my-3" alt="{{ results.title }} Poster">
                                     </a>
                                 {% else %}
                                     <a href="{{ path('app_films_show', {'id': results.id}) }}">
@@ -37,13 +37,13 @@
                                 {% endif %}
                             </div>
                             <div class="card-body col-md-8 text-center">
-                                <h2 class="card-title mb-2 fw-bold">{{ results.title|upper }}</h2>
-                                <p class="card-text mb-2 pb-3">{{results.release_date|slice(0,4)}}</p>
+                                <h2 class="text-myPrimary mb-2">{{ results.title|upper }}</h2>
+                                <p class="mb-2 pb-3">{{results.release_date|slice(0,4)}}</p>
                                 <div class="overview-text">
                                     {% if results.overview is not empty %}
-                                        <p class="card-text mb-2 pe-3">{{ results.overview|slice(0, 200) }}...</p>
+                                        <p class="mb-2 pe-3">{{ results.overview|slice(0, 200) }}...</p>
                                     {% else %}
-                                        <p class="card-text font-italic mb-2">Pas de synopsis disponible</p>
+                                        <p class="font-italic mb-2">Pas de synopsis disponible</p>
                                     {% endif %}
                                 </div>
                             </div>

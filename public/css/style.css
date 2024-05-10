@@ -13,11 +13,21 @@ main{
     flex-grow: 1;
 }
 
-/* CSS de base.html.twig */
+.test-css{
+    color: red;
+    font-family: 'Lucida Sans';
+}
 
+/* Header */
 .imgLogo{
     width:100px;
     height: auto;
+}
+
+.slogan{
+    align-items: center;
+    font-style: italic;
+    margin: 0;
 }
 
 @font-face {
@@ -39,15 +49,17 @@ main{
     3px -3px 0 #000;
 }
 
+/* Fil d'Ariane */
 .aBreadCrumb{
     text-decoration: none;
     color: #6c757d;
 }
 
 .aBreadCrumb:hover{
-     color: darkslategrey;
+    color: darkslategrey;
 }
 
+/* Home */
 #carouselHome {
     width: 50%;
     margin: auto;
@@ -58,6 +70,22 @@ main{
     border-radius: 10px;
 }
 
+/* Usage général */
+.h1{
+    font-family: "VcrOsd";
+    font-style: italic;
+    font-size: 60px;
+}
+
+.h2{
+    font-family: "VcrOsd";
+    font-style: italic;
+    font-size: 40px;
+}
+
+.myPrimary{
+    color: #0B759B !important;
+}
 .bg-myPrimary{
     background-color: #0B759B;
 }
@@ -66,24 +94,18 @@ main{
     background-color: #60ABC6;
 }
 
-.slogan{
-    align-items: center;
-    font-style: italic;
-    margin: 0;
-}
-
-.homephoto{
-    width: 90%;
-    display: block;
-    margin: 0 auto;
+a.bg-secondary:hover{
+    background-color: #5c5c68!important;
 }
 
 h1{
     font-size: 2rem;
     font-weight: bold;
     text-align: center;
+    font-style: italic;
     line-height: 100px;
     color: #6c757d; 
+    text-transform: uppercase;
     /* couleur correspondant à text-secondary de Bootstrap */
     padding-bottom: 1rem;
 } 
@@ -96,6 +118,8 @@ h2{
     font-size : 1.5rem; 
     font-weight : bold;
     color: #0B759B;
+    font-style: italic;
+    text-transform: uppercase;
 }
 
 .aFooter{
@@ -121,6 +145,21 @@ h2{
     font-weight: bold;
 }
 
+
+/* Tableaux  */
+.table-bordered td,
+.table-bordered th {
+    border: none;
+}
+
+/* Back Office */
+.aBackOff{
+    text-decoration: none;
+    color :#0B759B;
+}
+
+
+/* Media Queries */
 @media screen and (max-width: 992px) {
     .overview {
         display: none;
@@ -150,13 +189,18 @@ h2{
 
 @media screen and (max-width: 576px)
 {
-    .imgLogo{
+    .imgLogo, .imgCart{
         display: none;
     }
+
 }
 
 @media screen and (max-width: 360px)
 {
+    h1{
+        line-height: 60px;
+    }
+
     /* Taille de police réduite de 20% : empêcher le retour à la ligne du bouton burger sur les plus petits écrans */
     .font-lazer {
         font-family: "Lazer84";

@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}<title>Back-office</title>{% endblock %}
+{% block title %}<title>Back-office - Video Retro</title>{% endblock %}
 
 {% block body %}
     {% include '_header.html.twig' %}
@@ -13,32 +13,69 @@
         </ol>
     </nav>
     
-            <h1>Back-office</h1>
-        <main class="container">{% block main %}
-            <ul>
-                <li>
-                    <h2>Mon profil</h2>
-                </li>
-                <a href="{{ path('app_profil') }}">Mon profil</a>
-                <a href="{{ path('app_profil_edit') }}">Modifier mes informations</a>
-                    <a href="{{ path('app_admin_home') }}">Modifier mon mot de passe</a>
+        <h1 class="fs-1 fst-italic">Back-office</h1>
+            <main class="container">{% block main %}
 
-                <li>
-                    <h2>Membres</h2>
-                </li>
-                <a href="{{ path('app_user_index') }}">Liste des membres</a>
-                <a href="{{ path('app_user_new') }}">Ajouter un membre</a>
+                <div class="container">
+                    <div class="row">
+                        <div class="col-lg-3 col-md-6 col-sm-6 col-12">
+                            <ul class="list-group py-4">
+                                <li class="list-group-item list-group-item-secondary">
+                                    <h2>Mon profil</h2>
+                                </li>
+                                <li class="list-group-item list-group-item-action  list-group-item-light">
+                                    <a class="aBackOff" href="{{ path('app_profil') }}">Voir mes informations</a>
+                                </li>
+                                <li class="list-group-item list-group-item-action  list-group-item-light">
+                                    <a class="aBackOff" href="{{ path('app_profil_edit') }}">Modifier mes informations</a>
+                                </li>
+                                <li class="list-group-item list-group-item-action  list-group-item-light">
+                                    <a class="aBackOff" href="{{ path('app_admin_home') }}">Modifier mon mot de passe</a>
+                                </li>
+                                <li class="list-group-item list-group-item-action  list-group-item-light">
+                                    <a class="aBackOff text-danger" href="{{ path('app_logout') }}">Déconnexion</a>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="col-lg-3 col-md-6 col-sm-6 col-12">
+                            <ul class="list-group py-4">
+                                <li class="list-group-item list-group-item-secondary">
+                                    <h2>Utilisateurs</h2>
+                                </li>
+                                <li class="list-group-item list-group-item-action  list-group-item-light">
+                                    <a class="aBackOff" href="{{ path('app_user_index') }}">Liste des utilisateurs</a>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="col-lg-3 col-md-6 col-sm-6 col-12">
+                            <ul class="list-group py-4">
+                                <li class="list-group-item list-group-item-secondary">
+                                    <h2>Produits</h2>
+                                </li>
+                                <li class="list-group-item list-group-item-action  list-group-item-light">
+                                    <a class="aBackOff" href="{{ path('app_stock_index') }}">Catalogue</a>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="col-lg-3 col-md-6 col-sm-6 col-12">
+                            <ul class="list-group py-4">
+                                <li class="list-group-item list-group-item-secondary">
+                                    <h2>Formats</h2>
+                                </li>
+                                <li class="list-group-item list-group-item-action  list-group-item-light">
+                                    <a class="aBackOff" href="{{ path('app_formats_index') }}">Liste</a>
+                                </li>
+                                <li class="list-group-item list-group-item-action  list-group-item-light">
+                                    <a class="aBackOff" href="{{ path('app_formats_new') }}">Ajouter un format</a>
+                                </li>
 
-                <li>
-                    <h2>Produits</h2>
-                    <a href="{{ path('app_stock_index') }}">Catalogue</a>
-                </li>
-                <li>
-                    <h2>Formats</h2>
-                    <a href="{{ path('app_formats_index') }}">Liste</a>
-                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
 
-            </ul>
-        {% endblock %}</main>
+
+
+            {% endblock %}</main>
     {% include "_footer.html.twig" %}
 {% endblock %}

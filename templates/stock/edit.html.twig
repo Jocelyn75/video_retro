@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}<title>Edit stock</title>{% endblock %}
+{% block title %}<title>Modifier le produit - Video Retro</title>{% endblock %}
 
 {% block body %}
     {% include '_header.html.twig' %}
@@ -10,33 +10,39 @@
         <ol class="breadcrumb">
             <li class="breadcrumb-item ms-3"><a class="aBreadCrumb" href="{{path('home')}}">Accueil</a></li>
             <li class="breadcrumb-item"><a class="aBreadCrumb" href="{{path('app_admin_home')}}">Back office</a></li>
-            <li class="breadcrumb-item"><a class="aBreadCrumb" href="{{path('app_stock_index')}}">Liste des films</a></li>
+            <li class="breadcrumb-item"><a class="aBreadCrumb" href="{{path('app_stock_index')}}">Liste des produits</a></li>
             <li class="breadcrumb-item"><a class="aBreadCrumb" href="{{ path('app_stock_show', {'id': stock.id}) }}">{{ filmTitle }}</a></li>
             <li class="breadcrumb-item active" aria-current="page">Modifier {{ filmTitle }}</li>
         </ol>
     </nav>
 
 
-    <h1>Edit stock</h1>
-    <main class="container">{% block main %}
-    <h2>{{ filmTitle }}</h2>
-    <p>Format : {{ stock.formats.nomFormat }}</p>
-        {{ form_errors(form) }}
+    <h1>Modifier le produit</h1>
+
+        <main class="container">{% block main %}
+
+            <h2 class="text-center mb-5">{{ filmTitle }} ({{ stock.formats.nomFormat }})</h2>
+
+            {{ form_errors(form) }}
             {{ form_start(form) }}
                 {# {{ form_row(form.formats_id, {'disabled': true}) }} #}
                 {{ form_row(form.prix_revente_defaut, {
-                    label: 'Prix de revente'
+                    label: 'Prix de revente (€)'
                 }) }}
                 {{ form_row(form.quantite_stock, {
                     label: 'Quantité en stock'
                 }) }}
                 {# {{ form_row(form.films_id) }} #}
-                <button type="submit" class="btn bg-myPrimary text-white w-100">Save</button>
+                <button type="submit" class="btn bg-myPrimary text-white w-100 mb-5">Enregistrer</button>
             {{ form_end(form) }}
 
-            <a href="{{ path('app_stock_index') }}">back to list</a>
+            <div class="d-flex justify-content-between mb-5">
+                <a class="btn bg-secondary text-white mb-1" href="{{ path('app_stock_index') }}">Retour à la liste</a>
+                {{ include('stock/_delete_form.html.twig') }}
+            </div>
 
-            {# {{ include('stock/_delete_form.html.twig') }} #}
-    {% endblock %}</main>
+        {% endblock %}</main>
+
     {% include "_footer.html.twig" %}
+    
 {% endblock %}

@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}<title>User index</title>{% endblock %}
+{% block title %}<title>Liste des utilisateurs - Video Retro</title>{% endblock %}
 
 {% block body %}
     {% include '_header.html.twig' %}
@@ -14,8 +14,8 @@
         </ol>
     </nav>
 
+    <h1>Liste des utilisateurs</h1>
 
-    <h1>User index</h1>
     <main class="container">{% block main %}
 
         {% for message in app.flashes("success")%}
@@ -24,37 +24,69 @@
             </div>
         {% endfor %}     
 
-        <table class="table">
-            <thead>
-                <tr>
-                    <th>Id</th>
-                    <th>Email</th>
-                    <th>Rôles</th>
-                    {# <th>Mots de passe</th> #}
-                    <th>Actions</th>
-                </tr>
-            </thead>
-            <tbody>
-            {% for user in users %}
-                <tr>
-                    <td>{{ user.id }}</td>
-                    <td>{{ user.email }}</td>
-                    <td>{{ user.roles ? user.roles|json_encode : '' }}</td>
-                    {# <td>{{ user.password }}</td> #}
-                    <td>
-                        <a href="{{ path('app_user_show', {'id': user.id}) }}">show</a>
-                        <a href="{{ path('app_user_edit', {'id': user.id}) }}">edit</a>
-                    </td>
-                </tr>
-            {% else %}
-                <tr>
-                    <td colspan="5">no records found</td>
-                </tr>
-            {% endfor %}
-            </tbody>
-        </table>
+        <div class="table-responsive pb-5">
+            <table class="table table-light table-bordered mb-5">
+                <thead class="table-secondary">
+                    <tr class="table-secondary">
+                        <th class="text-center myPrimary">Id</th>
+                        <th class="text-center myPrimary">Email</th>
+                        <th class="text-center myPrimary">Rôle(s)</th>
+                        {# <th class="text-center myPrimary">Mots de passe</th> #}
+                        <th class="text-center myPrimary">Actions</th>
+                    </tr>
+                </thead>
 
+                <tbody>
+                {% for user in users %}
+                    <tr>
+                        <td  class="text-center">{{ user.id }}</td>
+                        <td  class="text-center">{{ user.email }}</td>
+
+                        {#  On associe le rôle à un nom de rôle lisible #}
+                        {% set roleNames = {  
+                            'ROLE_ADMIN': 'Administrateur',
+                            'ROLE_USER': 'Utilisateur',
+                        } %}
+                        <td  class="text-center">
+                        
+                        {# On initialise une liste des rôles #}
+                        {% set userRoleNames = [] %}
+                            {% for role in user.roles %}
+                                {# Attribution du nom correspondant au rôle dans roleNames, sinon le nom du rôle est utilisé #}
+                                {% set roleName = roleNames[role] ?? role %}  
+                                {# Vérification si le nom du rôle n'est pas déjà dans userRoleNames #}
+                                {% if roleName not in userRoleNames %}
+                                    {# Ajout du nom du rôle dans userRoleNames #}
+                                    {% set userRoleNames = userRoleNames|merge([roleName]) %}
+                                {% endif %}
+                            {% endfor %}
+                            {# Affichage des noms des rôles de l'utilisateur, séparés par une virgule et un saut de ligne, avec autorisation du rendu brut  #}
+                            {{ userRoleNames|join(',<br>')|raw }}
+                        
+                        {# {{ user.roles ? user.roles|json_encode : '' }} #}
+                        
+                        
+                        </td>
+                        {# <td  class="text-center">{{ user.password }}</td> #}
+                        <td class="text-center">
+                                    <a href="{{ path('app_user_show', {'id': user.id}) }}">
+                                        <i class="fa-solid fa-book fa-lg px-1" style="color: #6C757D;" data-toggle="tooltip" title="Consulter ce produit"></i></a>
+                                    <a href="{{ path('app_user_edit', {'id': user.id}) }}">
+                                        <i class="fa-solid fa-pen-to-square fa-lg px-1" style="color: #0B759B;" data-toggle="tooltip" title="Modifier ce produit"></i>
+                                    </a>
+                                </td>
+                    </tr>
+                {% else %}
+                    <tr>
+                        <td colspan="5">Aucun utilisateur</td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
         {# <a href="{{ path('app_user_new') }}">Create new</a> #}
     {% endblock %}</main>
+
     {% include "_footer.html.twig" %}
+
 {% endblock %}

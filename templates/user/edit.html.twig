@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}<title>Edit user</title>{% endblock %}
+{% block title %}<title>Modifier un utilisateur - Video Retro</title>{% endblock %}
 
 {% block body %}
     {% include '_header.html.twig' %}
@@ -16,8 +16,10 @@
         </ol>
     </nav>
 
-    <h1>Edit user</h1>
+    <h1>Modifier un utilisateur</h1>
+
     <main class="container">{% block main %}
+
         {{ form_errors(form) }}
             {{ form_start(form) }}
                 {{ form_row(form.email,{'label_attr': {'class': 'mb-2'}})}}
@@ -52,17 +54,21 @@
                     label: 'Rôles'
                 }) }}
 
-                <a href="{{ path('app_user_index') }}">back to list</a>
-
-
-                {# <button class="btn">{{ button_label|default('Valider') }}</button>
- #}
-
-                <button type="submit" class="btn bg-myPrimary text-white w-100">Modifier le profil</button>
+                <button type="submit" class="btn bg-myPrimary text-white w-100 mb-5">Enregistrer</button>
 
             {{ form_end(form) }}
-            {{ include('user/_delete_form.html.twig') }}
+
+
+                {# <button class="btn">{{ button_label|default('Valider') }}</button>#}
+
+            <div class="d-flex justify-content-between mb-5">
+                <a class="btn bg-secondary text-white mb-1" href="{{ path('app_user_index') }}">Retour à la liste</a>
+                {{ include('user/_delete_form.html.twig') }}
+            </div>
+
 
     {% endblock %}</main>
+
     {% include "_footer.html.twig" %}
+
 {% endblock %}

@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}<title>Mon panier</title>{% endblock %}
+{% block title %}<title>Mon panier - Video Retro</title>{% endblock %}
 
 {% block body %}
     {% include '_header.html.twig' %}
@@ -19,78 +19,85 @@
 
     <main class="container">{% block main %}
 
-        <h1>Mon panier</h1>
+        <h1 class="text-center fs-1 fst-italic">Mon panier</h1>
             {% if app.user %}
             
                 {% if cartDetails is empty %}
-                    <h2>Votre panier est vide</h2>
+                    <h2 class="text-center mb-5 pb-5">Votre panier est vide</h2>
                 {% else %}
                 {% for message in app.flashes("error")%}
                     <div class="text-center alert alert-danger" role="alert">
-                        <p class="p-bold">{{message}}</p>
+                        <p class="p-bold text-center">{{message}}</p>
                     </div>
                 {% endfor %}      
                 
-                <table class="table">
-                    <thead>
-                        <tr>
-                            <th>Affiche</th>
-                            <th>Titre</th>
-                            <th>Format</th>
-                            <th>Prix</th>
-                            <th>Quantité</th>
-                            <th>Total</th>
-                            <th>Supprimer</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {% for details in cartDetails %}
-                            <tr>
-                                <td>
-                                    {% if details.imageUrl is not empty %}
-                                        <img src="{{ details.imageUrl }}" class="img-fluid rounded" alt="{{details.titre}} Poster">
-                                    {% else %}
-                                        <img src="{{asset('images/no_image_available_w92_h138')}}" class="img-fluid rounded" alt="Pas d'image disponible">
-                                    {% endif %}
-                                </td>
-                                <td>{{ details.titre }}</td>
-                                <td>{{ details.format }}</td>
-                                <td>{{ details.prix }} €</td>
-                                <td>
-                                    <form action="{{ path('app_cart_update_quantity') }}" method="post">
-                                        <input type="hidden" name="stockId" value="{{ details.id }}">
-                                        <button type="submit" class="btn btn-sm bg-myPrimary text-white mx-1" name="changeQuantity" value="-1">
-                                            <i class="fa-solid fa-minus "></i>
-                                        </button>
-                                        {# <button class="btn update-quantity" data-stock-id="{{ details.id }}" data-change-quantity="-1">-</button> #}
-                                        {{ details.quantite }}
-                                        {# <button class="btn update-quantity" data-stock-id="{{ details.id }}" data-change-quantity="1">+</button> #}
-                                        <button type="submit" class="btn btn-sm bg-myPrimary text-white mx-1" name="changeQuantity" value="1">
-                                            <i class="fa-solid fa-plus "></i>
-                                        </button>
-                                    </form>
-                                </td>
-                                <td>{{ details.montant }} €</td>
-                                <td>
-                                    <form action="{{ path('app_cart_remove', {'stockId': details.id}) }}" method="post" onsubmit="return confirm('Êtes-vous sûr de vouloir supprimer ce produit du panier ?');">
-                                        <button type="submit" class="btn btn-sm btn-danger">
-                                            <i class="fa-solid fa-x"></i>
-                                        </button>
-                                    </form>
-                                </td>
+                <div class="table-responsive pb-5">
+                    <table class="table table-light table-bordered">
+                        <thead class="table-secondary">
+                            <tr class="table-secondary">
+                                <th class="myPrimary text-center imgCart">Affiche</th>
+                                <th class="myPrimary text-center">Titre</th>
+                                <th class="myPrimary text-center">Format</th>
+                                <th class="myPrimary text-center pe-3">Prix</th>
+                                <th class="myPrimary text-center">Quantité</th>
+                                <th class="myPrimary text-center">Total</th>
+                                <th class="myPrimary text-center">Supprimer</th>
                             </tr>
-                        {% endfor %}
-                    </tbody>
-                </table>
+                        </thead>
+                        <tbody>
+                            {% for details in cartDetails %}
+                                <tr>
+                                    <td class="text-center imgCart">
+                                        {% if details.imageUrl is not empty %}
+                                            <img src="{{ details.imageUrl }}" class="img-fluid rounded" alt="{{details.titre}} Poster">
+                                        {% else %}
+                                            <img src="{{asset('images/no_image_available_w92_h138')}}" class="img-fluid rounded" alt="Pas d'image disponible">
+                                        {% endif %}
+                                    </td>
+                                    <td class="align-middle text-center">{{ details.titre }}</td>
+                                    <td class="align-middle text-center">{{ details.format }}</td>
+                                    <td class="align-middle text-center">{{ details.prix }} €</td>
+                                    <td class="align-middle text-center">
+                                        <form action="{{ path('app_cart_update_quantity') }}" method="post">
+                                            <input type="hidden" name="stockId" value="{{ details.id }}">
+                                            <button type="submit" class="btn btn-sm bg-myPrimary text-white px-1" name="changeQuantity" value="-1">
+                                                <i class="fa-solid fa-minus "></i>
+                                            </button>
+                                            {# <button class="btn update-quantity" data-stock-id="{{ details.id }}" data-change-quantity="-1">-</button> #}
+                                            {{ details.quantite }}
+                                            {# <button class="btn update-quantity" data-stock-id="{{ details.id }}" data-change-quantity="1">+</button> #}
+                                            <button type="submit" class="btn btn-sm bg-myPrimary text-white px-1" name="changeQuantity" value="1">
+                                                <i class="fa-solid fa-plus "></i>
+                                            </button>
+                                        </form>
+                                    </td>
+                                    <td class="align-middle text-center">{{ details.montant }} €</td>
+                                    <td class="align-middle text-center">
+                                        <form action="{{ path('app_cart_remove', {'stockId': details.id}) }}" method="post" onsubmit="return confirm('Êtes-vous sûr de vouloir supprimer ce produit du panier ?');">
+                                            <button type="submit" class="btn btn-sm btn-danger">
+                                                <i class="fa-solid fa-x"></i>
+                                            </button>
+                                        </form>
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+                
+                <h2 id="montantTotal" class="text-center fs-2 fst-italic pb-3">Montant total : {{ montantTotal}} €</h2>
+                <div class="d-flex justify-content-between">
+                    <a class="btn bg-myPrimary text-white mb-1" href="{{ path('app_commandes_new') }}">Valider le panier</a>
+                    <form action="{{ path('app_cart_empty') }}" method="post" onsubmit="return confirm('Êtes-vous sûr de vouloir vider le panier ?');">
+                        <button type="submit" class="btn btn-danger">Vider le panier</button>
+                    </form>
+                </div>
+                
                 <a class="btn bg-myPrimary text-white" href="{{path('app_stripe')}}">Payer</a>
-                <h2 id="montantTotal">Montant total : {{ montantTotal}} €</h2>
-                <form action="{{ path('app_cart_empty') }}" method="post" onsubmit="return confirm('Êtes-vous sûr de vouloir vider le panier ?');">
-                    <button type="submit" class="btn btn-danger">Vider le panier</button>
-                </form>
-                <a class="btn bg-myPrimary text-white" href="{{ path('app_commandes_new') }}">Valider le panier</a>
+
                 {% endif %}            
             {% else %}
-                <h2>Veuillez-vous connecter</h2>
+                <h2 class="text-center fs-2 fst-italic">Veuillez-vous connecter</h2>
             {% endif %}
 
     {% endblock %}</main>

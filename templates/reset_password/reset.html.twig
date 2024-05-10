@@ -1,16 +1,21 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}<title>Réinitialisation du mot de passe</title>{% endblock %}
+{% block title %}<title>Réinitialisation du mot de passe - Video Retro</title>{% endblock %}
 
 {% block body %}
     {% include '_header.html.twig' %}
+
     <h1>Réinitialiser votre mot de passe</h1>
+
     <main class="container">{% block main %}
 
         {{ form_start(resetForm) }}
             {{ form_row(resetForm.plainPassword) }}
             <button class="btn bg-myPrimary text-white">Réinitialiser le mot de passe</button>
         {{ form_end(resetForm) }}
+
     {% endblock %}</main>
+
     {% include "_footer.html.twig" %}
+    
 {% endblock %}

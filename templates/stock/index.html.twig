@@ -1,5 +1,5 @@
 {% extends 'base.html.twig' %}
-{% block title %}<title>Stock index</title>{% endblock %}
+{% block title %}<title>Liste des produits - Video Retro</title>{% endblock %}
 {% block body %}
     {% include '_header.html.twig' %}
 
@@ -8,52 +8,68 @@
         <ol class="breadcrumb">
             <li class="breadcrumb-item ms-3"><a class="aBreadCrumb" href="{{path('home')}}">Accueil</a></li>
             <li class="breadcrumb-item"><a class="aBreadCrumb" href="{{path('app_admin_home')}}">Back office</a></li>
-            <li class="breadcrumb-item active" aria-current="page">Liste des films</li>
+            <li class="breadcrumb-item active" aria-current="page">Liste des produits</li>
         </ol>
     </nav>
     
     <main class="container">{% block main %}
 
-    <h1>Stock index</h1>
+        <h1>Liste des produits</h1>
+            <div class="table-responsive pb-3">
 
-        <table class="table">
-            <thead>
-                <tr>
-                    <th>Id Produit</th>
-                    <th>Format</th>
-                    <th>Prix de revente</th>
-                    <th>Quantité en stock</th>
-                    <th>Film API Id</th>
-                    <th>Titre</th>
-                </tr>
-            </thead>
-            <tbody>
-            {% for stock in pagination %}
-                <tr>
-                    <td>{{ stock.id }}</td>
-                    <td>{{ stock.formats.nomFormat }}</td>
-                    <td>{{ stock.prixReventeDefaut }}</td>
-                    <td>{{ stock.quantiteStock }}</td>
-                    <td>{{ stock.films.filmsApiId }}</td>
-                    <td>{{ stock.titre }}</td>
-                    <td>
-                    <a href="{{ path('app_stock_show', {'id': stock.id}) }}">show</a>
-                    <a href="{{ path('app_stock_edit', {'id': stock.id}) }}">edit</a>
-                    </td>
-                </tr>
-            {% else %}
-            <tr>
-                <td colspan="6">Pas de produits</td>
-            </tr>
-            {% endfor %}
-            </tbody>
-        </table>
-        <div class="navigation"> {# zone de navigation dans la pagination #}
-        {{ knp_pagination_render(pagination) }}
-        </div>
-        <a href="{{ path('app_stock_new') }}">Create new</a>
+                <table class="table table-light table-bordered mb-3">
+
+                    <thead class="table-secondary">
+                        <tr class="table-secondary">
+
+                            <th class="text-center myPrimary">Id Produit</th>
+                            <th class="text-center myPrimary">Format</th>
+                            <th class="text-center myPrimary">Prix de revente (€)</th>
+                            <th class="text-center myPrimary">Quantité en stock</th>
+                            <th class="text-center myPrimary">Film API Id</th>
+                            <th class="text-center myPrimary">Titre</th>
+                            <th class="text-center myPrimary">Actions</th>
+                            
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                    {% for stock in pagination %}
+                        <tr>
+                            <td class="text-center">{{ stock.id }}</td>
+                            <td class="text-center">{{ stock.formats.nomFormat }}</td>
+                            <td class="text-center">{{ stock.prixReventeDefaut }}</td>
+                            <td class="text-center">{{ stock.quantiteStock }}</td>
+                            <td class="text-center">{{ stock.films.filmsApiId }}</td>
+                            <td class="text-center">{{ stock.titre }}</td>
+                            <td class="text-center">
+                                <a href="{{ path('app_stock_show', {'id': stock.id}) }}">
+                                    <i class="fa-solid fa-book fa-lg px-1" style="color: #6C757D;" data-toggle="tooltip" title="Consulter ce produit"></i></a>
+                                <a href="{{ path('app_stock_edit', {'id': stock.id}) }}">
+                                    <i class="fa-solid fa-pen-to-square fa-lg px-1" style="color: #0B759B;" data-toggle="tooltip" title="Modifier ce produit"></i>
+                                </a>
+                            </td>
+                        </tr>
+                    {% else %}
+                    <tr>
+                        <td colspan="6">Aucun produit</td>
+                    </tr>
+                    {% endfor %}
+                    </tbody>
+
+                </table>
+            </div>
+
+            <div class="navigation d-flex justify-content-center pb-3"> {# zone de navigation dans la pagination #}
+            {{ knp_pagination_render(pagination) }}
+            </div>
+
+            <a class="btn bg-myPrimary text-white mb-1 mb-5" href="{{ path('app_stock_new') }}">Ajouter un produit</a>
+
     {% endblock %}</main>
+
 {% include "_footer.html.twig" %}
+
 {% endblock %}
 
 

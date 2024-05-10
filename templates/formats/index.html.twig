@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}<title>Formats index</title>{% endblock %}
+{% block title %}<title>Liste des Formats - Video Retro</title>{% endblock %}
 
 {% block body %}
     {% include '_header.html.twig' %}
@@ -15,37 +15,48 @@
     </nav>
 
 
-    <h1>Formats index</h1>
+    <h1>Liste des Formats</h1>
+
     <main class="container">{% block main %}
-        <table class="table">
-            <thead>
-                <tr>
-                    <th>Id</th>
-                    <th>Nom du format</th>
-                    <th>Prix de rachat par défaut</th>
-                    <th>Actions</th>
+
+        <table class="table table-light table-bordered mb-5">
+
+            <thead class="table-secondary">
+                <tr class="table-secondary">
+                    <th class="text-center myPrimary">Id</th>
+                    <th class="text-center myPrimary">Nom du format</th>
+                    <th class="text-center myPrimary">Prix de rachat (€)</th>
+                    <th class="text-center myPrimary">Actions</th>
                 </tr>
             </thead>
+
             <tbody>
             {% for format in formats %}
                 <tr>
-                    <td>{{ format.id }}</td>
-                    <td>{{ format.nomFormat }}</td>
-                    <td>{{ format.prixRachatDefaut }}</td>
-                    <td>
-                        <a href="{{ path('app_formats_show', {'id': format.id}) }}">show</a>
-                        <a href="{{ path('app_formats_edit', {'id': format.id}) }}">edit</a>
+                    <td class="text-center">{{ format.id }}</td>
+                    <td class="text-center">{{ format.nomFormat }}</td>
+                    <td class="text-center">{{ format.prixRachatDefaut }}</td>
+                    <td class="text-center">
+                        <a href="{{ path('app_formats_show', {'id': format.id}) }}">
+                            <i class="fa-solid fa-book fa-lg px-1" style="color: #6C757D;" data-toggle="tooltip" title="Consulter ce format"></i></a>
+                        <a href="{{ path('app_formats_edit', {'id': format.id}) }}">
+                            <i class="fa-solid fa-pen-to-square fa-lg px-1" style="color: #0B759B;" data-toggle="tooltip" title="Modifier ce format"></i>
+                        </a>
                     </td>
                 </tr>
             {% else %}
                 <tr>
-                    <td colspan="4">no records found</td>
+                    <td colspan="4">Aucun format</td>
                 </tr>
             {% endfor %}
             </tbody>
+
         </table>
 
-        <a href="{{ path('app_formats_new') }}">Create new</a>
+        <a class="btn bg-myPrimary text-white mb-1 mb-5" href="{{ path('app_formats_new') }}">Ajouter un format</a>
+
     {% endblock %}</main>
+
     {% include "_footer.html.twig" %}
+    
 {% endblock %}

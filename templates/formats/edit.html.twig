@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}<title>Edit formats</title>{% endblock %}
+{% block title %}<title>Modifier un format - Video Retro</title>{% endblock %}
 
 {% block body %}
     {% include '_header.html.twig' %}
@@ -16,25 +16,28 @@
         </ol>
     </nav>
 
-    <h1>Edit formats</h1>
+    <h1>Modifier le format</h1>
     <main class="container">{% block main %}
-        <h2>{{format.nomFormat}}</h2>
+        <h2 class="text-center mb-5">{{format.nomFormat}}</h2>
         {{ form_errors(form) }}
             {{ form_start(form) }}
-                {# {{ form_row(form.formats_id, {'disabled': true}) }} #}
-                {{ form_row(form.prix_rachat_defaut, {
-                    label: 'Prix de rachat'
+                {{ form_row(form.nom_format, {
+                    label: 'Nom du format'
                 }) }}
-                {# {{ form_row(form.films_id) }} #}
-                <button type="submit" class="btn bg-myPrimary text-white w-100">Save</button>
+                {{ form_row(form.prix_rachat_defaut, {
+                    label: 'Prix de rachat (€)'
+                }) }}
+                <button type="submit" class="btn bg-myPrimary text-white w-100 mb-5">Enregistrer</button>
             {{ form_end(form) }}
 
 
         {# {{ include('formats/_form.html.twig', {'button_label': 'Update'}) }} #}
 
-        <a href="{{ path('app_formats_index') }}">back to list</a>
+        <div class="d-flex justify-content-between mb-5">
+            <a class="btn bg-secondary text-white mb-1" href="{{ path('app_formats_index') }}">Retour à la liste</a>
 
-        {{ include('formats/_delete_form.html.twig') }}
+            {{ include('formats/_delete_form.html.twig') }}
+        </div>
     {% endblock %}</main>
     {% include "_footer.html.twig" %}
 {% endblock %}

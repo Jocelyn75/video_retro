@@ -1,13 +1,17 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}<title>Connexion</title>{% endblock %}
+{% block title %}<title>Connexion - Video Retro</title>{% endblock %}
 
     
 
 {% block body %}<body class="bodyConnexion">
+
     {% include '_header.html.twig' %}
+
     <h1 class="h1Connexion">Connexion</h1>
+
     <main class="container">{% block main %}
+
         <form method="post">
             {% if error %}
                 <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
@@ -35,16 +39,15 @@
             </label>
             </div>
 
-
-            <input type="hidden" name="_csrf_token"
-                    value="{{ csrf_token('authenticate') }}"
-            >
-
+            <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
             <button class="btn btn-lg bg-myPrimary text-white w-100" type="submit">
                 Connexion
             </button>
             {# </div> #}
         </form>
+
     {% endblock %}</main>
+
     {% include "_footer.html.twig" %}
+
 </body>{% endblock %}

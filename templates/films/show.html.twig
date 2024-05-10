@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}<title>{{filmsShow.title}}</title>{% endblock %}
+{% block title %}<title>{{filmsShow.title}} - Video Retro</title>{% endblock %}
 
 {% block body %}<body>
     {% include '_header.html.twig' %}
@@ -42,25 +42,25 @@
                                         {% endfor %}
                                         {% if directors %}
                                             {% if directors|length > 1 %}
-                                                <p class="p-bold">Réalisation :&nbsp;</p> {{ directors|join(', ') }}
+                                                <p class="p-bold myPrimary">Réalisation :&nbsp;</p> {{ directors|join(', ') }}
                                             {% else %}
-                                                <p class="p-bold">Réalisation :&nbsp;</p>{{ directors[0] }}
+                                                <p class="p-bold myPrimary">Réalisation :&nbsp;</p>{{ directors[0] }}
                                             {% endif %}
                                         {% else %}
-                                            <p class="p-bold">Réalisation :&nbsp;</p>Non renseigné
+                                            <p class="p-bold myPrimary">Réalisation :&nbsp;</p>Non renseigné
                                         {% endif %}
                                     {% else %}
-                                        <p class="p-bold">Réalisation :&nbsp;</p>Non renseigné
+                                        <p class="p-bold myPrimary">Réalisation :&nbsp;</p>Non renseigné
                                     {% endif %}
                                 </div>
                                 <div class="d-flex justify-content-center">
-                                    <p class="p-bold">Durée :&nbsp;</p> {{ filmsShow.runtime }} mn
+                                    <p class="p-bold myPrimary">Durée :&nbsp;</p> {{ filmsShow.runtime }} mn
                                 </div>
                                 <div class="d-flex justify-content-center">
-                                    <p class="p-bold">Année de sortie :&nbsp;</p> {{ filmsShow.release_date|slice(0,4) }}
+                                    <p class="p-bold myPrimary">Année de sortie :&nbsp;</p> {{ filmsShow.release_date|slice(0,4) }}
                                 </div>
                                 <p class="mb-4 overview">{{ filmsShow.overview }}</p>
-                                <p class="p-bold mb-0">Têtes d'affiche</p>
+                                <p class="p-bold myPrimary mb-0">Têtes d'affiche</p>
                                 <div class="d-flex justify-content-center">
                                     {% for actor in cast|slice(0, 5) %}
                                         {{ actor.name }}{% if not loop.last %},&nbsp;{% endif %}
@@ -117,10 +117,10 @@
                             <div class="col-12">
                                 <div class="pt-3 text-center">
                                     {% if (buy is defined and buy is not empty) or (rent is defined and rent is not empty) or (flatrate is defined and flatrate is not empty) %}
-                                        <p class="p-bold">Regarder ce film sur les plateformes :</p>
+                                        <p class="p-bold myPrimary">Regarder ce film sur les plateformes :</p>
                                     {% endif %}
                                     {% if buy is defined and buy is not empty %}
-                                        <p class="p-bold">A l'achat</p>
+                                        <p class="p-bold myPrimary">A l'achat</p>
                                         <ul class="providers d-flex flex-wrap justify-content-center me-1 ps-0">
                                             {% for provider in buy %}
                                                 {% if provider.logo_path is defined %}
@@ -133,7 +133,7 @@
 
                                 <div class="text-center">
                                     {% if rent is defined and rent is not empty %}
-                                        <p class="p-bold">En location</p>
+                                        <p class="p-bold myPrimary">En location</p>
                                         <ul class="providers d-flex flex-wrap justify-content-center me-1 ps-0">
                                             {% for provider in rent %}
                                                 {% if provider.logo_path is defined %}
@@ -146,7 +146,7 @@
 
                                 <div class="text-center">
                                     {% if flatrate is defined and flatrate is not empty %}
-                                        <p class="p-bold">En streaming avec abonnement</p>
+                                        <p class="p-bold myPrimary">En streaming avec abonnement</p>
                                         <ul class="providers d-flex flex-wrap justify-content-center me-1 ps-0">
                                             {% for provider in flatrate %}
                                                 {% if provider.logo_path is defined %}

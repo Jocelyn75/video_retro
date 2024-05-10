@@ -23,7 +23,7 @@ class SecurityController extends AbstractController
             $roles = $this->getUser()->getRoles();
 
             if (in_array('ROLE_USER', $roles)){
-                $this->addFlash('success', "Vous êtes connecté.");
+                $this->addFlash('success', "Vous êtes connecté·e.");
                 return $this->redirectToRoute('home');
             }
             // elseif (in_array('ROLE_ADMIN', $roles)) {

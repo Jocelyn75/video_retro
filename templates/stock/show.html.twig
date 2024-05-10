@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}<title>Stock</title>{% endblock %}
+{% block title %}<title>Produits - Video Retro</title>{% endblock %}
 
 {% block body %}
     {% include '_header.html.twig' %}
@@ -10,49 +10,56 @@
         <ol class="breadcrumb">
             <li class="breadcrumb-item ms-3"><a class="aBreadCrumb" href="{{path('home')}}">Accueil</a></li>
             <li class="breadcrumb-item"><a class="aBreadCrumb" href="{{path('app_admin_home')}}">Back office</a></li>
-            <li class="breadcrumb-item"><a class="aBreadCrumb" href="{{path('app_stock_index')}}">Liste des films</a></li>
+            <li class="breadcrumb-item"><a class="aBreadCrumb" href="{{path('app_stock_index')}}">Liste des produits</a></li>
             <li class="breadcrumb-item active" aria-current="page">{{ filmTitle }}</li>
         </ol>
     </nav>
 
-    <h1>Stock</h1>
+    <h1>Produits</h1>
     <main class="container">{% block main %}
-        <h2>{{ filmTitle }}</h2>
-            <table class="table">
-                <tbody>
-                        <th>Id Produit</th>
-                        <td>{{ stock.id }}</td>
-                    </tr>
-                    <tr>
-                        <th>Format</th>
-                        <td>{{ stock.formats.nomFormat }}</td>
-                    </tr>
-                    <tr>
-                        <th>Prix de revente</th>
-                        <td>{{ stock.prixReventeDefaut }}</td>
-                    </tr>
-                    <tr>
-                        <th>Quantité en stock</th>
-                        <td>{{ stock.quantiteStock }}</td>
-                    </tr>
-                    <tr>
-                        <th>Id du film</th>
-                        <td>{{ stock.filmsId }}</td>
-                    </tr>
+        <h2 class="text-center mb-5">{{ filmTitle }}</h2>
 
-                    <tr>
-                        <th>Film API Id</th>
-                        <td>{{ stock.films.filmsApiId }}</td>
-                    </tr>
+            <div class="table-responsive">
+                <table class="table table-bordered mb-5">
+                    <tbody>
+                        <tr>
+                            <th class="myPrimary bg-light">Id</th>
+                            <td class="bg-light">{{ stock.id }}</td>
+                        </tr>
+                        <tr>
+                            <th class="myPrimary">Format</th>
+                            <td>{{ stock.formats.nomFormat }}</td>
+                        </tr>
+                        <tr>
+                            <th class="myPrimary bg-light">Prix de revente (€)</th>
+                            <td class="bg-light">{{ stock.prixReventeDefaut }}</td>
+                        </tr>
+                        <tr>
+                            <th class="myPrimary">Quantité en stock</th>
+                            <td>{{ stock.quantiteStock }}</td>
+                        </tr>
+                        <tr>
+                            <th class="myPrimary bg-light">Id du film</th>
+                            <td class="bg-light">{{ stock.filmsId }}</td>
+                        </tr>
 
-                </tbody>
-            </table>
+                        <tr>
+                            <th class="myPrimary">Film API Id</th>
+                            <td>{{ stock.films.filmsApiId }}</td>
+                        </tr>
 
-        <a href="{{ path('app_stock_index') }}">back to list</a>
+                    </tbody>
+                </table>
+            </div>
 
-        <a href="{{ path('app_stock_edit', {'id': stock.id}) }}">edit</a>
+            <div class="d-flex justify-content-between mb-5">
+                <a class="btn bg-myPrimary text-white" href="{{ path('app_stock_edit', {'id': stock.id}) }}">Modifier</a>
+                {{ include('stock/_delete_form.html.twig') }}
+            </div>
 
-        {# {{ include('stock/_delete_form.html.twig') }} #}
+            <a class="btn bg-secondary text-white mb-5" href="{{ path('app_stock_index') }}">Retour à la liste</a>
+
+
     {% endblock %}</main>
     {% include "_footer.html.twig" %}
 {% endblock %}
