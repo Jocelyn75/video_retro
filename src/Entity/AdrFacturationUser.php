@@ -21,6 +21,18 @@ class AdrFacturationUser
     #[ORM\OneToMany(mappedBy: 'adr_facturation_user', targetEntity: User::class)]
     private Collection $users;
 
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $adresse = null;
+
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $complementAdr = null;
+
+    #[ORM\Column(nullable: true)]
+    private ?int $codePostal = null;
+
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $ville = null;
+
     public function __construct()
     {
         $this->users = new ArrayCollection();
@@ -69,6 +81,54 @@ class AdrFacturationUser
                 $user->setAdrFacturationUser(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getAdresse(): ?string
+    {
+        return $this->adresse;
+    }
+
+    public function setAdresse(?string $adresse): static
+    {
+        $this->adresse = $adresse;
+
+        return $this;
+    }
+
+    public function getComplementAdr(): ?string
+    {
+        return $this->complementAdr;
+    }
+
+    public function setComplementAdr(?string $complementAdr): static
+    {
+        $this->complementAdr = $complementAdr;
+
+        return $this;
+    }
+
+    public function getCodePostal(): ?int
+    {
+        return $this->codePostal;
+    }
+
+    public function setCodePostal(?int $codePostal): static
+    {
+        $this->codePostal = $codePostal;
+
+        return $this;
+    }
+
+    public function getVille(): ?string
+    {
+        return $this->ville;
+    }
+
+    public function setVille(?string $ville): static
+    {
+        $this->ville = $ville;
 
         return $this;
     }

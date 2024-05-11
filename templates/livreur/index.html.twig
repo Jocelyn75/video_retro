@@ -10,6 +10,7 @@
             <tr>
                 <th>Id</th>
                 <th>Nom_livreur</th>
+                <th>Prix</th>
                 <th>actions</th>
             </tr>
         </thead>
@@ -18,6 +19,7 @@
             <tr>
                 <td>{{ livreur.id }}</td>
                 <td>{{ livreur.nomLivreur }}</td>
+                <td>{{livreur.prix}}</td>
                 <td>
                     <a href="{{ path('app_livreur_show', {'id': livreur.id}) }}">show</a>
                     <a href="{{ path('app_livreur_edit', {'id': livreur.id}) }}">edit</a>

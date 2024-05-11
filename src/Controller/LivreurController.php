@@ -11,7 +11,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-#[Route('/livreur')]
+#[Route('/admin/livreur')]
 class LivreurController extends AbstractController
 {
     #[Route('/', name: 'app_livreur_index', methods: ['GET'])]

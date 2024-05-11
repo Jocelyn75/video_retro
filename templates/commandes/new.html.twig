@@ -1,10 +1,43 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}New Commandes{% endblock %}
+{% block title %}Récapitulatif de la commande - Video Retro{% endblock %}
 
 {% block body %}
-    <h1>Create new Commandes</h1>
+    <h1>Récapitulatif de la commande</h1>
+
+        <h2>Contenu du panier</h2>
+            
+            <ul>
+    {% for stockId, quantity in cart %}
+        {# Récupérer le stock associé à l'ID #}
+        {% set stock = stockRepository.find(stockId) %}
+        {# Vérifier si le stock existe et s'il a un film associé #}
+        {% if stock is not null and stock.films is not null %}
+            {# Récupérer le titre du film à partir du stock #}
+            {% set filmId = stock.films.filmsApiId %}
+            {% set filmTitle = tmdbService.getFilmTitle(filmId) %}
+            {# Afficher le contenu du panier avec le titre du film #}
+            <li>Titre : {{ filmTitle }}, Stock ID : {{ stockId }}, Quantité : {{ quantity }}</li>
+        {% endif %}
+    {% endfor %}
+</ul>
+
+{# Affichage du contenu de $commande #}
+<h2>Informations sur la commande :</h2>
+<p>Référence de la commande : {{ commande.reference }}</p>
+<p>Date de création : {{ commande.createdAt|date('Y-m-d H:i:s') }}</p>
+<p>Utilisateur : {{ commande.user.username }}</p>
+
+{# Si vous voulez afficher les détails de la commande #}
+<h2>Détails de la commande :</h2>
+<ul>
+    {% for detailsCommande in commande.detailsCommandes %}
+        <li>Stock ID : {{ detailsCommande.stockId }}</li>
+        <li>Prix unitaire : {{ detailsCommande.prixUnitaire }}</li>
+        <li>Quantité commandée : {{ detailsCommande.quantiteCmd }}</li>
+    {% endfor %}
+</ul>
 
 
-    <a href="{{ path('app_commandes_index') }}">back to list</a>
+    {# <a href="{{ path('app_commandes_index') }}">back to list</a> #}
 {% endblock %}

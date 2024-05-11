@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Repository\LivreurRepository;
 use App\Service\TMDBService;
 use App\Repository\StockRepository;
 use Symfony\Component\HttpFoundation\Request;
@@ -70,6 +71,82 @@ class CartController extends AbstractController
         return $this->render('cart/index.html.twig', [
             'cartDetails' => $cartDetails,
             'montantTotal' => $montantTotal
+        ]);
+    }
+
+    #[Route('/cart-validation', name: 'app_cart_validation')]    
+        
+    /**
+     * cartValidation
+     *
+     * @param  mixed $session
+     * @param  mixed $tmdbService
+     * @param  mixed $request
+     * @param  mixed $livreurRepository
+     * @return Response
+     */
+    public function cartValidation(SessionInterface $session, TMDBService $tmdbService, Request $request, LivreurRepository $livreurRepository): Response
+    {
+        //Utilisation du referer dans le fil d'Ariane.
+        // Récupérer l'URL précédente
+        $previousUrl = $request->headers->get('referer');
+        // Stocker l'URL précédente dans la session
+        $session->set('previous_url', $previousUrl);
+
+        $cart = $session->get('cart', []);
+
+        $cartDetails = [];
+        $montantTotal = 0;
+        foreach ($cart as $stockId => $quantity) {
+            $stock = $this->stockRepository->find($stockId);
+            if ($stock !== null) {
+
+                $filmId = $stock->getFilms()->getFilmsApiId();
+                $stock->titre = $tmdbService->getFilmTitle($filmId);
+                $filmDetails = $tmdbService->getFilmDetails($filmId);
+                $imageUrl = $tmdbService->getImageUrl() . 'w92' . $filmDetails['poster_path'];
+
+                $montant = $stock->getPrixReventeDefaut() * $quantity;
+                $montantTotal += $montant;
+
+                $cartDetails[] = [
+                    'imageUrl' => $imageUrl,
+                    'id' => $stock->getId(),
+                    'titre' => $stock->titre,
+                    'format' => $stock->getFormats()->getNomFormat(),
+                    'prix' => $stock->getPrixReventeDefaut(),
+                    'quantite' => $quantity,
+                    'montant' => $montant,
+                ];
+            }
+        }
+
+        // Initialiser le montant total de la commande au montant total du panier
+        $montantTotalCommande = $montantTotal;
+
+        // Traitement du formulaire de sélection du livreur
+        if ($request->isMethod('POST')) {
+            $livreurId = $request->request->get('livreur');
+            $livreur = $livreurRepository->find($livreurId);
+            if ($livreur !== null) {
+                // Ajouter les frais de livraison au montant total de la commande
+                $montantTotalCommande += $livreur->getPrix();
+            } else {
+                // Gérer le cas où aucun livreur n'est sélectionné
+                // Peut-être afficher un message d'erreur ou prendre une autre action appropriée
+            }
+        }
+
+        $livreurs = $livreurRepository->findAll();
+
+        // Stocker le montant total de la commande dans la session
+        $session->set('montantTotalCommande', $montantTotalCommande);
+   
+        return $this->render('cart/cart_validation.html.twig', [
+            'cartDetails' => $cartDetails,
+            'montantTotal' => $montantTotal,
+            'livreurs' => $livreurs, 
+            'montantTotalCommande' => $montantTotalCommande
         ]);
     }
 

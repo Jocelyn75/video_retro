@@ -78,15 +78,17 @@ class CommandesController extends AbstractController
             //On ajoute dans la commande les détails de la commande.
             $commande->addDetailsCommande($detailsCommandes);
         }
-
+        // ---------------
+        // Persist et flush à faire à la validation de la commande par l'utilisateur pour ne pas injecter les données de la commande en BDD tant que la commande n'est pas validée. 
         // Avec persist on crée les requêtes.
-        $em->persist($commande);
-        // Avec flush, on les exécutes
-        $em->flush();
-        $session->remove('cart');
+        // $em->persist($commande);
+        // // Avec flush, on les exécutes
+        // $em->flush();
+        // $session->remove('cart');
+        // ---------------
 
-
-
+        
+        // ------------
         // $form = $this->createForm(CommandesType::class, $commande);
         // $form->handleRequest($request);
 
@@ -95,11 +97,13 @@ class CommandesController extends AbstractController
         //     $entityManager->flush();
 
         //     return $this->redirectToRoute('app_commandes_index', [], Response::HTTP_SEE_OTHER);
+        // -------------
         
         $this->addFlash('message', 'Commande créée avec succès');
         return $this->render('commandes/new.html.twig', [
-            'controller_name' => 'CommandesController',
-            // 'commande' => $commande,
+            // 'controller_name' => 'CommandesController',
+            'commande' => $commande,
+            'cart' => $cart,
             // 'form' => $form,
         ]);
     }
@@ -162,4 +166,58 @@ class CommandesController extends AbstractController
 
         return $this->redirectToRoute('app_commandes_index', [], Response::HTTP_SEE_OTHER);
     }
+
+    // #[Route('/create', name: 'app_commande_create')]      
+    // /**
+    //  * createCommande
+    //  *
+    //  * @param  mixed $session
+    //  * @param  mixed $tmdbService
+    //  * @param  mixed $request
+    //  * @param  mixed $stockRepository
+    //  * @return Response
+    //  */
+    // public function createCommande(SessionInterface $session, TMDBService $tmdbService, Request $request, StockRepository $stockRepository): Response
+    // {
+
+    //     // Récupérer l'URL précédente
+    //     $previousUrl = $request->headers->get('referer');
+    //     // Stocker l'URL précédente dans la session
+    //     $session->set('previous_url', $previousUrl);
+
+    //     $cart = $session->get('cart', []);
+    //     dump($cart);
+
+    //     $cartDetails = [];
+    //     $montantTotal = 0;
+    //     foreach ($cart as $stockId => $quantity) {
+    //         $stock = $stockRepository->find($stockId);
+    //         if ($stock !== null) {
+
+    //             $filmId = $stock->getFilms()->getFilmsApiId();
+    //             $stock->titre = $tmdbService->getFilmTitle($filmId);
+    //             $filmDetails = $tmdbService->getFilmDetails($filmId);
+    //             $imageUrl = $tmdbService->getImageUrl() . 'w92' . $filmDetails['poster_path'];
+
+    //             $montant = $stock->getPrixReventeDefaut() * $quantity;
+    //             $montantTotal += $montant;
+
+    //             $cartDetails[] = [
+    //                 'imageUrl' => $imageUrl,
+    //                 'id' => $stock->getId(),
+    //                 'titre' => $stock->titre,
+    //                 'format' => $stock->getFormats()->getNomFormat(),
+    //                 'prix' => $stock->getPrixReventeDefaut(),
+    //                 'quantite' => $quantity,
+    //                 'montant' => $montant,
+    //             ];
+    //         }
+    //     }
+
+    //     return $this->render('commandes/create.html.twig', [
+    //         'cartDetails' => $cartDetails,
+    //         'montantTotal' => $montantTotal
+    //     ]);
+    // }
+
 }

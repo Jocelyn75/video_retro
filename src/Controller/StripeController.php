@@ -38,15 +38,18 @@ class StripeController extends AbstractController
      */
     public function getMontantTotal(): float
     {
-        $montant = 0;
-        $cart = $this->session->get('cart', []);
+        //Méthode à utiliser s'il n'y a pas de frais de livraison.
+        // $montant = 0;
+        // $cart = $this->session->get('cart', []);
 
-        foreach($cart as $idStock => $quantite){
-            $stock = $this->stockRepository->find($idStock);
-            $montant += ($stock->getPrixReventeDefaut() * 100) * $quantite;
-        }
-
-        return $montant;
+        // foreach($cart as $idStock => $quantite){
+        //     $stock = $this->stockRepository->find($idStock);
+        //     $montant += ($stock->getPrixReventeDefaut() * 100) * $quantite;
+        // }
+        
+        //Uniquement besoin de ce return pour récupérer le montant total de la commande dans le panier.  
+        // Si la clé n'est pas trouvée dans la session, la méthode renverra 0
+        return $this->session->get('montantTotalCommande', 0) * 100;
     }
 
     // Formulaire de paiement

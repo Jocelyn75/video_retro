@@ -21,6 +21,15 @@ class AdrLivraisonCmd
     #[ORM\OneToMany(mappedBy: 'adr_livraison_cmd', targetEntity: Commandes::class)]
     private Collection $commandes;
 
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $complement_adr = null;
+
+    #[ORM\Column(nullable: true)]
+    private ?int $code_postal = null;
+
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $ville = null;
+
     public function __construct()
     {
         $this->commandes = new ArrayCollection();
@@ -69,6 +78,42 @@ class AdrLivraisonCmd
                 $commande->setAdrLivraisonCmd(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getComplementAdr(): ?string
+    {
+        return $this->complement_adr;
+    }
+
+    public function setComplementAdr(?string $complement_adr): static
+    {
+        $this->complement_adr = $complement_adr;
+
+        return $this;
+    }
+
+    public function getCodePostal(): ?int
+    {
+        return $this->code_postal;
+    }
+
+    public function setCodePostal(?int $code_postal): static
+    {
+        $this->code_postal = $code_postal;
+
+        return $this;
+    }
+
+    public function getVille(): ?string
+    {
+        return $this->ville;
+    }
+
+    public function setVille(?string $ville): static
+    {
+        $this->ville = $ville;
 
         return $this;
     }

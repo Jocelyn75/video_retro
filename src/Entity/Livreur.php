@@ -21,6 +21,9 @@ class Livreur
     #[ORM\OneToMany(mappedBy: 'livreur', targetEntity: Commandes::class)]
     private Collection $commandes;
 
+    #[ORM\Column(nullable: true)]
+    private ?float $prix = null;
+
     public function __construct()
     {
         $this->commandes = new ArrayCollection();
@@ -69,6 +72,18 @@ class Livreur
                 $commande->setLivreur(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getPrix(): ?float
+    {
+        return $this->prix;
+    }
+
+    public function setPrix(?float $prix): static
+    {
+        $this->prix = $prix;
 
         return $this;
     }

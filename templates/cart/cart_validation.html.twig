@@ -1,0 +1,95 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}<title>Passer la commande - Video Retro</title>{% endblock %}
+
+{% block body %}
+    {% include '_header.html.twig' %}
+
+    {# Fil d'Ariane #}
+    {% if cartDetails is not empty %}
+        <nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item ms-3"><a class="aBreadCrumb" href="{{path('home')}}">Accueil</a></li>
+                <li class="breadcrumb-item"><a class="aBreadCrumb" href="{{ path('app_search', {'search[keyword]':'oppenheimer'}) }}">Résultats de la recherche</a></li>
+                <li class="breadcrumb-item"><a class="aBreadCrumb" href="{{ app.session.get('previous_url') }}">Dernier film ajouté</a></li>
+                <li class="breadcrumb-item"><a class="aBreadCrumb" href="{{path('app_cart')}}">Mon Panier</a></li>
+                <li class="breadcrumb-item active" aria-current="page">Passer la commande</li>
+            </ol>
+        </nav>
+    {% endif %}
+
+    <main class="container">{% block main %}
+
+        <h1 class="text-center fs-1 fst-italic">Passer la commande</h1>
+        {% if app.user %}
+            
+            {# Récapitulatif du panier #}
+            <div class="table-responsive pb-5">
+                <table class="table table-light table-bordered">
+                    <thead class="table-secondary">
+                        <tr class="table-secondary">
+                            <th class="myPrimary text-center imgCart">Affiche</th>
+                            <th class="myPrimary text-center">Titre</th>
+                            <th class="myPrimary text-center">Format</th>
+                            <th class="myPrimary text-center pe-3">Prix</th>
+                            <th class="myPrimary text-center">Quantité</th>
+                            <th class="myPrimary text-center">Total</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        {% for details in cartDetails %}
+                            <tr>
+                                <td class="text-center imgCart">
+                                    {% if details.imageUrl is not empty %}
+                                        <img src="{{ details.imageUrl }}" class="img-fluid rounded" alt="{{details.titre}} Poster">
+                                    {% else %}
+                                        <img src="{{asset('images/no_image_available_w92_h138')}}" class="img-fluid rounded" alt="Pas d'image disponible">
+                                    {% endif %}
+                                </td>
+                                <td class="align-middle text-center">{{ details.titre }}</td>
+                                <td class="align-middle text-center">{{ details.format }}</td>
+                                <td class="align-middle text-center">{{ details.prix }} €</td>
+                                <td class="align-middle text-center">{{ details.quantite }}</td>
+                                <td class="align-middle text-center">{{ details.montant }} €</td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            
+
+            {# Sélection du transporteur #}
+            <form action="{{ path('app_cart_validation') }}" method="post">
+                <div class="mb-3">
+                    <label for="livreur" class="fs-5 fw-bold fst-italic myPrimary mb-3">Choisir un transporteur</label>
+                    <select id="livreur" name="livreur" class="form-select" aria-label="Choisir un transporteur" required>
+                        <option value="" selected disabled>Choisir un transporteur</option>
+                        {% for livreur in livreurs %}
+                            <option value="{{ livreur.id }}">{{ livreur.nomLivreur }} - {{ livreur.prix }} €</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <button type="submit" class="btn bg-myPrimary text-white mb-5">Valider le choix du transporteur</button>
+            </form>
+
+            <h2 class="text-end fs-5 text-capitalize fst-italic pb-3">Montant total du panier : {{ montantTotal }} €</h2>
+            <h2 class="text-end fs-5 text-capitalize fst-italic pb-3">Montant total de la commande : {{ montantTotalCommande }} €</h2> 
+
+            <div class="d-flex justify-content-between mt-5">
+                <a class="btn bg-myPrimary text-white" href="{{ path('app_stripe') }}">Payer</a>
+                <a class="btn bg-secondary text-white" href="{{ path('app_cart') }}">Retour au panier</a>
+            </div>
+            {% else %}
+                <p class="text-center fs-3 fst-italic">Veuillez vous connecter pour passer votre commande.</p>
+                <div class="text-center pb-5">
+                    <a class="btn bg-myPrimary text-white" href="{{ path('app_login') }}">Connexion</a>
+                </div>
+        {% endif %}
+
+    {% endblock %}</main>
+
+    {% include "_footer.html.twig" %}
+
+{% endblock %}
+
