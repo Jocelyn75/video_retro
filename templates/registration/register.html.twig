@@ -41,10 +41,11 @@
             }) }} #}
 
             {{ form_row(registrationForm.agreeTerms, {
-                label : 'Accepter les termes et conditions d\'utilisation'
+                label: '<a href="' ~ path("app_cgu") ~ '">' ~ "Accepter les Conditions générales d'utilisation" ~ '</a>',
+                label_html: true
             }) }}
 
-            <button type="submit" class="btn bg-myPrimary text-white w-100">S'inscrire</button>
+            <button type="submit" class="btn bg-myPrimary text-white w-100 mb-5">S'inscrire</button>
         {{ form_end(registrationForm) }}
     {% endblock %}</main>
     {% include "_footer.html.twig" %}
