@@ -69,11 +69,8 @@
                         </td>
                         {# <td  class="text-center">{{ user.password }}</td> #}
                         <td class="text-center">
-                                    <a href="{{ path('app_user_show', {'id': user.id}) }}">
-                                        <i class="fa-solid fa-book fa-lg px-1" style="color: #6C757D;" data-toggle="tooltip" title="Consulter ce produit"></i></a>
-                                    <a href="{{ path('app_user_edit', {'id': user.id}) }}">
-                                        <i class="fa-solid fa-pen-to-square fa-lg px-1" style="color: #0B759B;" data-toggle="tooltip" title="Modifier ce produit"></i>
-                                    </a>
+                                    <a href="{{ path('app_user_show', {'id': user.id}) }}"><i class="fa-solid fa-book fa-lg px-1" style="color: #6C757D;" data-toggle="tooltip" title="Consulter cet utilisateur"></i></a>
+                                    <a href="{{ path('app_user_edit', {'id': user.id}) }}"><i class="fa-solid fa-pen-to-square fa-lg px-1" style="color: #0B759B;" data-toggle="tooltip" title="Modifier cet utilisateur"></i></a>
                                 </td>
                     </tr>
                 {% else %}

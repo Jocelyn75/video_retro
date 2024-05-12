@@ -1,4 +1,4 @@
 <form method="post" action="{{ path('app_livreur_delete', {'id': livreur.id}) }}" onsubmit="return confirm('Confirmer la suppression ? ');">
     <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ livreur.id) }}">
-    <button class="btn">Delete</button>
+    <button type="submit" class="btn btn-danger text-white">Supprimer</button>
 </form>

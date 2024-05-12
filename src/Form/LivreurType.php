@@ -16,13 +16,15 @@ class LivreurType extends AbstractType
     {
         $builder
             ->add('nom_livreur', TextType::class, [
+                'label' => 'Nom du transporteur',
                 'constraints' => [
                     new NotBlank([
-                        'message' => 'Veuillez entrer le nom d\'un livreur',
+                        'message' => 'Veuillez entrer le nom d\'un transporteur',
                     ])
                 ]
             ])
             ->add('prix', IntegerType::class, [
+                'label' => 'Prix (€)',
                 'constraints' => [
                     new NotBlank([
                         'message' => 'Veuillez entrer un prix',

@@ -50,6 +50,10 @@
                         <td> {{app.user.dateNaiss|date('d/m/Y')}} </td>
                     </tr>
                     <tr>
+                        <th class="myPrimary">Téléphone</th>
+                        <td> {{app.user.telUser}} </td>
+                    </tr>
+                    <tr>
                         <th class="myPrimary">Adresse</th>
                         <td> {{app.user.adrUser}} </td>
                     </tr>
@@ -65,10 +69,6 @@
                         <th class="myPrimary">Ville</th>
                         <td> {{app.user.ville}} </td>
                     </tr>
-                    <tr>
-                        <th class="myPrimary">Téléphone</th>
-                        <td> {{app.user.telUser}} </td>
-                    </tr>
 
                 </tbody>
             </table>
@@ -76,7 +76,9 @@
 
         <div class="mb-5">
             <a class="btn bg-myPrimary text-white m-2" href="{{ path("app_profil_edit")}}">Modifier mes informations</a>
+            <a class="btn bg-myPrimary text-white m-2" href="{{ path("app_adr_livraison_user_index")}}">Mes adresses de livraison</a>
             <a class="btn bg-myPrimary text-white m-2" href="{{ path("app_profil_edit_password")}}">Modifier mon mot de passe</a>
+
         </div>
 
     {% endblock %}</main>

@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}<title>Create new format</title>{% endblock %}
+{% block title %}<title>Ajouter un format - Video Retro</title>{% endblock %}
 
 {% block body %}
     {% include '_header.html.twig' %}
@@ -16,11 +16,11 @@
     </nav>
 
 
-    <h1>Create new format</h1>
+    <h1>Ajouter un format</h1>
     <main class="container">{% block main %}
         {{ include('formats/_form.html.twig') }}
 
-        <a href="{{ path('app_formats_index') }}">back to list</a>
+        {# <a href="{{ path('app_formats_index') }}">back to list</a> #}
     {% endblock %}</main>
     {% include "_footer.html.twig" %}
 {% endblock %}

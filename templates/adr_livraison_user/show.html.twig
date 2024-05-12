@@ -1,26 +1,54 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}AdrLivraisonUser{% endblock %}
+{% block title %}<title>Adresse : {{ adr_livraison_user.adrLivrUser }} - Video Retro</title>{% endblock %}
 
 {% block body %}
-    <h1>AdrLivraisonUser</h1>
+    {% include '_header.html.twig' %}
 
-    <table class="table">
-        <tbody>
-            <tr>
-                <th>Id</th>
-                <td>{{ adr_livraison_user.id }}</td>
-            </tr>
-            <tr>
-                <th>Adr_livr_user</th>
-                <td>{{ adr_livraison_user.adrLivrUser }}</td>
-            </tr>
-        </tbody>
-    </table>
+    <nav style="--bs-breadcrumb-divider:'>';" aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item ms-3"><a class="aBreadCrumb" href="{{path('home')}}">Accueil</a></li>
+            <li class="breadcrumb-item"><a class="aBreadCrumb" href=" {{path('app_profil')}}">Mon profil</a></li>
+            <li class="breadcrumb-item"><a class="aBreadCrumb" href=" {{path('app_adr_livraison_user_index')}}">Mes adresses de livraison</a></li>
+            <li class="breadcrumb-item active" aria-current="page">{{ adr_livraison_user.adrLivrUser }}</li>
+        </ol>
+    </nav>
 
-    <a href="{{ path('app_adr_livraison_user_index') }}">back to list</a>
+    <h1>{{ adr_livraison_user.adrLivrUser }}</h1>
+    <main class="container">{% block main %}
 
-    <a href="{{ path('app_adr_livraison_user_edit', {'id': adr_livraison_user.id}) }}">edit</a>
+        <div class="table-responsive">
+            <table class="table table-bordered mb-5">
+                <tbody>
+                    <tr>
+                        <th class="myPrimary bg-light">Adresse</th>
+                        <td class="bg-light">{{ adr_livraison_user.adresse }}</td>
+                    </tr>
+                    <tr>
+                        <th class="myPrimary">Complément d'adresse</th>
+                        <td>{{ adr_livraison_user.complementAdr }}</td>
+                    </tr>
+                    <tr>
+                        <th class="myPrimary bg-light">Code postal</th>
+                        <td class="bg-light">{{ adr_livraison_user.codePostal }}</td>
+                    </tr>
+                    <tr>
+                        <th class="myPrimary">Ville</th>
+                        <td>{{ adr_livraison_user.ville }}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
 
-    {{ include('adr_livraison_user/_delete_form.html.twig') }}
+
+    <div class="d-flex justify-content-between mb-5">
+        <a class="btn bg-myPrimary text-white" href="{{ path('app_adr_livraison_user_edit', {'id': adr_livraison_user.id}) }}">Modifier</a>
+        {{ include('adr_livraison_user/_delete_form.html.twig') }}
+    </div>
+
+    <a class="btn bg-secondary text-white mb-5" href="{{ path('app_adr_livraison_user_index') }}">Retour à la liste</a>
+
+    
+    {% endblock %}</main>
+    {% include "_footer.html.twig" %}
 {% endblock %}

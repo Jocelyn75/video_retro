@@ -1,11 +1,28 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}New AdrLivraisonUser{% endblock %}
+{% block title %}Ajouter une adresse de livraison - Video Retro{% endblock %}
 
 {% block body %}
-    <h1>Create new AdrLivraisonUser</h1>
+    {% include '_header.html.twig' %}
+
+    {# Fil d'Ariane #}
+    <nav style="--bs-breadcrumb-divider:'>';" aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item ms-3"><a class="aBreadCrumb" href="{{path('home')}}">Accueil</a></li>
+            <li class="breadcrumb-item"><a class="aBreadCrumb" href=" {{path('app_profil')}}">Mon profil</a></li>
+            <li class="breadcrumb-item"><a class="aBreadCrumb" href=" {{path('app_adr_livraison_user_index')}}">Mes adresses de livraison</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Ajouter une adresse de livraison</li>
+        </ol>
+    </nav>
+
+    <h1>Ajouter une adresse de livraison</h1>
+
+    <main class="container">{% block main %}
 
     {{ include('adr_livraison_user/_form.html.twig') }}
 
-    <a href="{{ path('app_adr_livraison_user_index') }}">back to list</a>
+    {# <a href="{{ path('app_adr_livraison_user_index') }}">Retour à la liste</a> #}
+    
+    {% endblock %}</main>
+    {% include "_footer.html.twig" %}
 {% endblock %}

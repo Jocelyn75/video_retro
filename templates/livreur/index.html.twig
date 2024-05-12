@@ -1,37 +1,58 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Livreur index{% endblock %}
+{% block title %}<title>Liste des transporteurs - Video Retro</title>{% endblock %}
 
 {% block body %}
-    <h1>Livreur index</h1>
 
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Id</th>
-                <th>Nom_livreur</th>
-                <th>Prix</th>
-                <th>actions</th>
-            </tr>
-        </thead>
-        <tbody>
-        {% for livreur in livreurs %}
-            <tr>
-                <td>{{ livreur.id }}</td>
-                <td>{{ livreur.nomLivreur }}</td>
-                <td>{{livreur.prix}}</td>
-                <td>
-                    <a href="{{ path('app_livreur_show', {'id': livreur.id}) }}">show</a>
-                    <a href="{{ path('app_livreur_edit', {'id': livreur.id}) }}">edit</a>
-                </td>
-            </tr>
-        {% else %}
-            <tr>
-                <td colspan="3">no records found</td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
+    {% include '_header.html.twig' %}
 
-    <a href="{{ path('app_livreur_new') }}">Create new</a>
+    {# Fil d'Ariane #}
+    <nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item ms-3"><a class="aBreadCrumb" href="{{path('home')}}">Accueil</a></li>
+            <li class="breadcrumb-item"><a class="aBreadCrumb" href="{{path('app_admin_home')}}">Back office</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Liste des transporteurs</li>
+        </ol>
+    </nav>
+    
+    <main class="container">{% block main %}
+
+
+    <h1>Liste des transporteurs</h1>
+
+        <div class="table-responsive pb-3">
+            <table class="table table-light table-bordered mb-3">
+                <thead class="table-secondary">
+                    <tr class="table-secondary">
+                        <th>Id</th>
+                        <th>Nom du transporteur</th>
+                        <th>Prix</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                {% for livreur in livreurs %}
+                <tr>
+                    <td>{{ livreur.id }}</td>
+                    <td>{{ livreur.nomLivreur }}</td>
+                    <td>{{livreur.prix}}</td>
+                    <td>
+                        <a href="{{ path('app_livreur_show', {'id': livreur.id}) }}"><i class="fa-solid fa-book fa-lg px-1" style="color: #6C757D;" data-toggle="tooltip" title="Consulter ce transporteur"></i></a>
+                        <a href="{{ path('app_livreur_edit', {'id': livreur.id}) }}"><i class="fa-solid fa-pen-to-square fa-lg px-1" style="color: #0B759B;" data-toggle="tooltip" title="Modifier ce transporteur"></i></a>
+                    </td>
+                </tr>
+                {% else %}
+                <tr>
+                    <td colspan="3">Aucun transporteur enregistré</td>
+                </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        <a class="btn bg-myPrimary text-white mb-1 mb-5" href="{{ path('app_livreur_new') }}">Ajouter un livreur</a>
+
+    {% endblock %}</main>
+
+{% include "_footer.html.twig" %}
+
 {% endblock %}

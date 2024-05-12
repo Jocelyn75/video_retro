@@ -33,6 +33,9 @@ class AdrLivraisonUser
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $ville = null;
 
+    #[ORM\Column(nullable: true)]
+    private ?int $user_id = null;
+
     public function __construct()
     {
         $this->users = new ArrayCollection();
@@ -126,6 +129,18 @@ class AdrLivraisonUser
     public function setVille(?string $ville): static
     {
         $this->ville = $ville;
+
+        return $this;
+    }
+
+    public function getUserId(): ?int
+    {
+        return $this->user_id;
+    }
+
+    public function setUserId(?int $user_id): static
+    {
+        $this->user_id = $user_id;
 
         return $this;
     }

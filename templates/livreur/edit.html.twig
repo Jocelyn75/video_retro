@@ -1,13 +1,34 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Edit Livreur{% endblock %}
+{% block title %}<title>Modifier {{livreur.nomLivreur}} - Video Retro</title>{% endblock %}
+
 
 {% block body %}
-    <h1>Edit Livreur</h1>
+    {% include '_header.html.twig' %}
+
+    {# Fil d'Ariane #}
+    <nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item ms-3"><a class="aBreadCrumb" href="{{path('home')}}">Accueil</a></li>
+            <li class="breadcrumb-item"><a class="aBreadCrumb" href="{{path('app_admin_home')}}">Back office</a></li>
+            <li class="breadcrumb-item"><a class="aBreadCrumb" href="{{path('app_livreur_index')}}">Liste des transporteurs</a></li>
+            <li class="breadcrumb-item"><a class="aBreadCrumb" href="{{path('app_livreur_show', {'id': livreur.id} )}}">{{livreur.nomLivreur}}</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Modifier {{ livreur.nomLivreur }}</li>
+        </ol>
+    </nav>
+
+    <h1>Modifier {{livreur.nomLivreur}}</h1>
+        <main class="container">{% block main %}
 
     {{ include('livreur/_form.html.twig', {'button_label': 'Update'}) }}
+    
+    <button type="submit" class="btn bg-myPrimary text-white w-100 mb-3">Enregistrer</button>
 
-    <a href="{{ path('app_livreur_index') }}">back to list</a>
+    <div class="d-flex justify-content-between mb-5">
+        <a class="btn bg-secondary text-white mb-1" href="{{ path('app_livreur_index') }}">Retour à la liste</a>
+        {{ include('livreur/_delete_form.html.twig') }}
+    </div>
 
-    {{ include('livreur/_delete_form.html.twig') }}
+    {% endblock %}</main>
+    {% include "_footer.html.twig" %}
 {% endblock %}
