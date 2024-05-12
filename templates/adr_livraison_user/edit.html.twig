@@ -1,13 +1,57 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Edit AdrLivraisonUser{% endblock %}
+{% block title %}<title>Modifier : {{ adr_livraison_user.adrLivrUser }} - Video Retro</title>{% endblock %}
 
 {% block body %}
-    <h1>Edit AdrLivraisonUser</h1>
+    {% include '_header.html.twig' %}
 
-    {{ include('adr_livraison_user/_form.html.twig', {'button_label': 'Update'}) }}
+    <nav style="--bs-breadcrumb-divider:'>';" aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item ms-3"><a class="aBreadCrumb" href="{{path('home')}}">Accueil</a></li>
+            <li class="breadcrumb-item"><a class="aBreadCrumb" href=" {{path('app_profil')}}">Mon profil</a></li>
+            <li class="breadcrumb-item"><a class="aBreadCrumb" href=" {{path('app_adr_livraison_user_index')}}">Mes adresses de livraison</a></li>
+            <li class="breadcrumb-item"><a class="aBreadCrumb" href=" {{path('app_adr_livraison_user_show', {'id': adr_livraison_user.id}) }}">{{ adr_livraison_user.adrLivrUser }}</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Modifier : {{ adr_livraison_user.adrLivrUser }}</li>
+        </ol>
+    </nav>
 
-    <a href="{{ path('app_adr_livraison_user_index') }}">back to list</a>
+    <h1>Modifier : {{ adr_livraison_user.adrLivrUser }}</h1>
+    <main class="container">{% block main %}
 
-    {{ include('adr_livraison_user/_delete_form.html.twig') }}
+
+        {{ form_errors(form) }}
+            {{ form_start(form, {'attr': {'novalidate': 'novalidate'}}) }}
+                {{ form_row(form.adr_livr_user, {
+                    label: 'Nom de l\'adresse'
+                }) }}
+
+                {{ form_row(form.adresse, {
+                    label: 'Adresse'
+                }) }}
+
+                {{ form_row(form.complement_adr, {
+                    label: 'Complément d\'adresse'
+                }) }}
+
+                {{ form_row(form.code_postal, {
+                    label: 'Code postal'
+                }) }}
+
+                {{ form_row(form.ville, {
+                    label: 'Ville'
+                }) }}
+
+                <button type="submit" class="btn bg-myPrimary text-white w-100 mb-3">Modifier mon adresse</button>
+            {{ form_end(form) }}
+            
+            <div class="d-flex justify-content-between mb-5">
+                <a class="btn bg-secondary text-white mb-1" href="{{ path('app_adr_livraison_user_index') }}">Retour à la liste</a>
+                {{ include('adr_livraison_user/_delete_form.html.twig') }}
+            </div>
+    
+
+    {% endblock %}</main>
+
+    {% include "_footer.html.twig" %}
+    
 {% endblock %}

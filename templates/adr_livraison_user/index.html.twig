@@ -1,35 +1,52 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}AdrLivraisonUser index{% endblock %}
+{% block title %}Mes adresses de livraison - Video Retro{% endblock %}
 
 {% block body %}
-    <h1>AdrLivraisonUser index</h1>
+    {% include '_header.html.twig' %}
 
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Id</th>
-                <th>Adr_livr_user</th>
-                <th>actions</th>
-            </tr>
-        </thead>
-        <tbody>
-        {% for adr_livraison_user in adr_livraison_users %}
-            <tr>
-                <td>{{ adr_livraison_user.id }}</td>
-                <td>{{ adr_livraison_user.adrLivrUser }}</td>
-                <td>
-                    <a href="{{ path('app_adr_livraison_user_show', {'id': adr_livraison_user.id}) }}">show</a>
-                    <a href="{{ path('app_adr_livraison_user_edit', {'id': adr_livraison_user.id}) }}">edit</a>
-                </td>
-            </tr>
-        {% else %}
-            <tr>
-                <td colspan="3">no records found</td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
+    <nav style="--bs-breadcrumb-divider:'>';" aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item ms-3"><a class="aBreadCrumb" href="{{path('home')}}">Accueil</a></li>
+            <li class="breadcrumb-item"><a class="aBreadCrumb" href=" {{path('app_profil')}}">Mon profil</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Mes adresses de livraison</li>
+        </ol>
+    </nav>
 
-    <a href="{{ path('app_adr_livraison_user_new') }}">Create new</a>
+    <h1>Mes adresses de livraison</h1>
+
+    <main class="container">{% block main %}
+
+        <table class="table table-light table-bordered mb-5">
+            <thead class="table-secondary">
+                <tr class="table-secondary">
+                    <th class="text-center myPrimary">Mes adresses</th>
+                    <th class="text-center myPrimary">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+            {% for adr_livraison_user in adr_livraison_users %}
+                <tr>
+                    <td class="text-center">{{ adr_livraison_user.adrLivrUser }}</td>
+                    <td class="text-center">
+                        <a href="{{ path('app_adr_livraison_user_show', {'id': adr_livraison_user.id}) }}">
+                            <i class="fa-solid fa-book fa-lg px-1" style="color: #6C757D;" data-toggle="tooltip" title="Consulter ce format"></i>
+                        </a>
+                        <a href="{{ path('app_adr_livraison_user_edit', {'id': adr_livraison_user.id}) }}">
+                            <i class="fa-solid fa-pen-to-square fa-lg px-1" style="color: #0B759B;" data-toggle="tooltip" title="Modifier ce format"></i>
+                        </a>
+                    </td>
+                </tr>
+            {% else %}
+                <tr>
+                    <td colspan="3">Aucune adresse renseignée</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+
+        <a class="btn bg-myPrimary text-white mb-1 mb-5" href="{{ path('app_adr_livraison_user_new') }}">Ajouter une adresse</a>
+    {% endblock %}</main>
+
+    {% include "_footer.html.twig" %}
 {% endblock %}

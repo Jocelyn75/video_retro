@@ -1,26 +1,53 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Livreur{% endblock %}
+{% block title %}<title>Liste des transporteurs - Video Retro</title>{% endblock %}
 
 {% block body %}
-    <h1>Livreur</h1>
+    {% include '_header.html.twig' %}
 
-    <table class="table">
-        <tbody>
-            <tr>
-                <th>Id</th>
-                <td>{{ livreur.id }}</td>
-            </tr>
-            <tr>
-                <th>Nom_livreur</th>
-                <td>{{ livreur.nomLivreur }}</td>
-            </tr>
-        </tbody>
-    </table>
+    {# Fil d'Ariane #}
+    <nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item ms-3"><a class="aBreadCrumb" href="{{path('home')}}">Accueil</a></li>
+            <li class="breadcrumb-item"><a class="aBreadCrumb" href="{{path('app_admin_home')}}">Back office</a></li>
+            <li class="breadcrumb-item"><a class="aBreadCrumb" href="{{path('app_livreur_index')}}">Liste des transporteurs</a></li>
+            <li class="breadcrumb-item active" aria-current="page">{{ livreur.nomLivreur }}</li>
+        </ol>
+    </nav>
 
-    <a href="{{ path('app_livreur_index') }}">back to list</a>
+    <h1>{{ livreur.nomLivreur }}</h1>
 
-    <a href="{{ path('app_livreur_edit', {'id': livreur.id}) }}">edit</a>
+    <main class="container">{% block main %}
 
-    {{ include('livreur/_delete_form.html.twig') }}
+        <div class="table-responsive">
+            <table class="table table-bordered mb-5">        
+                <tbody>
+                    <tr>
+                        <th class="myPrimary bg-light">Id</th>
+                        <td class="bg-light">{{ livreur.id }}</td>
+                    </tr>
+                    <tr>
+                        <th class="myPrimary">Nom du transporteur</th>
+                        <td>{{ livreur.nomLivreur }}</td>
+                    </tr>
+                    <tr>
+                        <th class="myPrimary bg-light">Prix</th>
+                        <td class="bg-light">{{ livreur.prix }}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="d-flex justify-content-between mb-5">
+
+            <a class="btn bg-myPrimary text-white" href="{{ path('app_livreur_edit', {'id': livreur.id}) }}">Modifier</a>
+            {{ include('livreur/_delete_form.html.twig') }}
+        </div>
+        
+        <a class="btn bg-secondary text-white mb-5" href="{{ path('app_livreur_index') }}">Retour à la liste</a>
+
+
+    {% endblock %}</main>
+    {% include "_footer.html.twig" %}
+
 {% endblock %}

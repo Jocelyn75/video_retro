@@ -10,6 +10,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Core\User\UserInterface;
 
 #[Route('/adr/livraison/user')]
 class AdrLivraisonUserController extends AbstractController
@@ -17,15 +18,23 @@ class AdrLivraisonUserController extends AbstractController
     #[Route('/', name: 'app_adr_livraison_user_index', methods: ['GET'])]
     public function index(AdrLivraisonUserRepository $adrLivraisonUserRepository): Response
     {
+        $user = $this->getUser(); // Récupérer l'utilisateur actuellement authentifié
+
+        // Récupérer uniquement les adresses de livraison de l'utilisateur connecté
+        $adrLivraisonUsers = $adrLivraisonUserRepository->findByUserId($user->getId());
+
         return $this->render('adr_livraison_user/index.html.twig', [
-            'adr_livraison_users' => $adrLivraisonUserRepository->findAll(),
+            'adr_livraison_users' => $adrLivraisonUsers,
         ]);
     }
 
     #[Route('/new', name: 'app_adr_livraison_user_new', methods: ['GET', 'POST'])]
     public function new(Request $request, EntityManagerInterface $entityManager): Response
     {
+        $user = $this->getUser(); // Récupérer l'utilisateur actuellement authentifié
+
         $adrLivraisonUser = new AdrLivraisonUser();
+        $adrLivraisonUser->setUserId($user->getId()); // Associer l'ID de l'utilisateur à l'adresse de livraison
         $form = $this->createForm(AdrLivraisonUserType::class, $adrLivraisonUser);
         $form->handleRequest($request);
 
@@ -38,7 +47,7 @@ class AdrLivraisonUserController extends AbstractController
 
         return $this->render('adr_livraison_user/new.html.twig', [
             'adr_livraison_user' => $adrLivraisonUser,
-            'form' => $form,
+            'form' => $form->createView(),
         ]);
     }
 

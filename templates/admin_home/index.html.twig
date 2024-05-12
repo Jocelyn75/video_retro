@@ -18,7 +18,7 @@
 
                 <div class="container">
                     <div class="row">
-                        <div class="col-lg-3 col-md-6 col-sm-6 col-12">
+                        <div class="col-lg-4 col-md-6 col-sm-6 col-12">
                             <ul class="list-group py-4">
                                 <li class="list-group-item list-group-item-secondary">
                                     <h2>Mon profil</h2>
@@ -30,6 +30,9 @@
                                     <a class="aBackOff" href="{{ path('app_profil_edit') }}">Modifier mes informations</a>
                                 </li>
                                 <li class="list-group-item list-group-item-action  list-group-item-light">
+                                    <a class="aBackOff" href="{{ path('app_adr_livraison_user_index') }}">Mes adresses de livraison</a>
+                                </li>
+                                <li class="list-group-item list-group-item-action  list-group-item-light">
                                     <a class="aBackOff" href="{{ path('app_profil_edit_password') }}">Modifier mon mot de passe</a>
                                 </li>
                                 <li class="list-group-item list-group-item-action  list-group-item-light">
@@ -37,7 +40,7 @@
                                 </li>
                             </ul>
                         </div>
-                        <div class="col-lg-3 col-md-6 col-sm-6 col-12">
+                        <div class="col-lg-4 col-md-6 col-sm-6 col-12">
                             <ul class="list-group py-4">
                                 <li class="list-group-item list-group-item-secondary">
                                     <h2>Utilisateurs</h2>
@@ -46,8 +49,19 @@
                                     <a class="aBackOff" href="{{ path('app_user_index') }}">Liste des utilisateurs</a>
                                 </li>
                             </ul>
+                            <ul class="list-group py-4">
+                                <li class="list-group-item list-group-item-secondary">
+                                    <h2>Transporteurs</h2>
+                                </li>
+                                <li class="list-group-item list-group-item-action  list-group-item-light">
+                                    <a class="aBackOff" href="{{ path('app_livreur_index') }}">Liste des transporteurs</a>
+                                </li>
+                                <li class="list-group-item list-group-item-action  list-group-item-light">
+                                    <a class="aBackOff" href="{{ path('app_livreur_new') }}">Ajouter un transporteur</a>
+                                </li>
+                            </ul>
                         </div>
-                        <div class="col-lg-3 col-md-6 col-sm-6 col-12">
+                        <div class="col-lg-4 col-md-6 col-sm-6 col-12">
                             <ul class="list-group py-4">
                                 <li class="list-group-item list-group-item-secondary">
                                     <h2>Produits</h2>
@@ -56,19 +70,18 @@
                                     <a class="aBackOff" href="{{ path('app_stock_index') }}">Catalogue</a>
                                 </li>
                             </ul>
-                        </div>
-                        <div class="col-lg-3 col-md-6 col-sm-6 col-12">
+                        {# </div>
+                        <div class="col-lg-4 col-md-6 col-sm-6 col-12"> #}
                             <ul class="list-group py-4">
                                 <li class="list-group-item list-group-item-secondary">
                                     <h2>Formats</h2>
                                 </li>
                                 <li class="list-group-item list-group-item-action  list-group-item-light">
-                                    <a class="aBackOff" href="{{ path('app_formats_index') }}">Liste</a>
+                                    <a class="aBackOff" href="{{ path('app_formats_index') }}">Liste des formats</a>
                                 </li>
                                 <li class="list-group-item list-group-item-action  list-group-item-light">
                                     <a class="aBackOff" href="{{ path('app_formats_new') }}">Ajouter un format</a>
                                 </li>
-
                             </ul>
                         </div>
                     </div>

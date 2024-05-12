@@ -10,6 +10,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\MoneyType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 
 class FormatsType extends AbstractType
 {
@@ -29,7 +30,7 @@ class FormatsType extends AbstractType
                     ])
                 ]
             ])
-            ->add('prix_rachat_defaut', MoneyType::class, [
+            ->add('prix_rachat_defaut', IntegerType::class, [
                 'label' => 'Prix de rachat',
                 'constraints' => [
                     new NotBlank([
