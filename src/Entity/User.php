@@ -59,11 +59,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(nullable: true)]
     private ?float $cagnotte = null;
 
-    #[ORM\ManyToOne(inversedBy: 'users')]
-    private ?AdrFacturationUser $adr_facturation_user = null;
 
-    #[ORM\ManyToMany(targetEntity: AdrLivraisonUser::class, inversedBy: 'users')]
-    private Collection $adr_livraison_user;
+
+
 
     #[ORM\OneToMany(mappedBy: 'user', targetEntity: Commandes::class)]
     private Collection $commandes;
@@ -71,10 +69,15 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $activation = null;
 
+    #[ORM\OneToOne(inversedBy: 'user', cascade: ['persist', 'remove'])]
+    private ?AdrFacturationUser $adr_facturation_user = null;
+
+    #[ORM\OneToMany(mappedBy: 'user', targetEntity: AdrLivraisonUser::class)]
+    private Collection $adr_livraison_user;
+
     public function __construct()
     {
         $this->adr_livraison_user = new ArrayCollection();
-        $this->commandes = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -255,42 +258,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
-    public function getAdrFacturationUser(): ?AdrFacturationUser
-    {
-        return $this->adr_facturation_user;
-    }
-
-    public function setAdrFacturationUser(?AdrFacturationUser $adr_facturation_user): static
-    {
-        $this->adr_facturation_user = $adr_facturation_user;
-
-        return $this;
-    }
-
-    /**
-     * @return Collection<int, AdrLivraisonUser>
-     */
-    public function getAdrLivraisonUser(): Collection
-    {
-        return $this->adr_livraison_user;
-    }
-
-    public function addAdrLivraisonUser(AdrLivraisonUser $adrLivraisonUser): static
-    {
-        if (!$this->adr_livraison_user->contains($adrLivraisonUser)) {
-            $this->adr_livraison_user->add($adrLivraisonUser);
-        }
-
-        return $this;
-    }
-
-    public function removeAdrLivraisonUser(AdrLivraisonUser $adrLivraisonUser): static
-    {
-        $this->adr_livraison_user->removeElement($adrLivraisonUser);
-
-        return $this;
-    }
-
     /**
      * @return Collection<int, Commandes>
      */
@@ -329,6 +296,48 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setActivation(?string $activation): static
     {
         $this->activation = $activation;
+
+        return $this;
+    }
+
+    public function getAdrFacturationUser(): ?AdrFacturationUser
+    {
+        return $this->adr_facturation_user;
+    }
+
+    public function setAdrFacturationUser(?AdrFacturationUser $adr_facturation_user): static
+    {
+        $this->adr_facturation_user = $adr_facturation_user;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, AdrLivraisonUser>
+     */
+    public function getAdrLivraisonUser(): Collection
+    {
+        return $this->adr_livraison_user;
+    }
+
+    public function addAdrLivraisonUser(AdrLivraisonUser $adrLivraisonUser): static
+    {
+        if (!$this->adr_livraison_user->contains($adrLivraisonUser)) {
+            $this->adr_livraison_user->add($adrLivraisonUser);
+            $adrLivraisonUser->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeAdrLivraisonUser(AdrLivraisonUser $adrLivraisonUser): static
+    {
+        if ($this->adr_livraison_user->removeElement($adrLivraisonUser)) {
+            // set the owning side to null (unless already changed)
+            if ($adrLivraisonUser->getUser() === $this) {
+                $adrLivraisonUser->setUser(null);
+            }
+        }
 
         return $this;
     }

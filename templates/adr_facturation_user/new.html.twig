@@ -1,11 +1,47 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}New AdrFacturationUser{% endblock %}
+{% block title %}<title>Ajouter mon adresse de facturation - Video Retro</title>{% endblock %}
 
 {% block body %}
-    <h1>Create new AdrFacturationUser</h1>
+    {% include '_header.html.twig' %}
 
-    {{ include('adr_facturation_user/_form.html.twig') }}
+    {# Fil d'Ariane #}
+    <nav style="--bs-breadcrumb-divider:'>';" aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item ms-3"><a class="aBreadCrumb" href="{{path('home')}}">Accueil</a></li>
+            <li class="breadcrumb-item"><a class="aBreadCrumb" href=" {{path('app_profil')}}">Mon profil</a></li>
+            <li class="breadcrumb-item"><a class="aBreadCrumb" href=" {{path('app_adr_facturation_user_show', {'id': app.user.id}) }}">Mon adresse de facturation</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Ajouter mon adresse de facturation</li>
+        </ol>
+    </nav>
 
-    <a href="{{ path('app_adr_facturation_user_index') }}">back to list</a>
+    <h1>Ajouter mon adresse de facturation</h1>
+
+    <main class="container">{% block main %}
+
+        {{ form_errors(form) }}
+            {{ form_start(form, {'attr': {'novalidate': 'novalidate'}}) }}
+                {{ form_row(form.adresse, {
+                    label: 'Adresse'
+                }) }}
+
+                {{ form_row(form.complement_adr, {
+                    label: 'Complément d\'adresse'
+                }) }}
+
+                {{ form_row(form.code_postal, {
+                    label: 'Code postal'
+                }) }}
+
+                {{ form_row(form.ville, {
+                    label: 'Ville'
+                }) }}
+
+                <button type="submit" class="btn bg-myPrimary text-white w-100 mb-3">Enregistrer mon adresse de facturation</button>
+            {{ form_end(form) }}
+
+    {% endblock %}</main>
+
+    {% include "_footer.html.twig" %}
+
 {% endblock %}

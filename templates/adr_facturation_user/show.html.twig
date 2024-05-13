@@ -1,26 +1,49 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}AdrFacturationUser{% endblock %}
+{% block title %}<title>Adresse de facturation - Video Retro</title>{% endblock %}
 
 {% block body %}
-    <h1>AdrFacturationUser</h1>
+    {% include '_header.html.twig' %}
 
-    <table class="table">
-        <tbody>
-            <tr>
-                <th>Id</th>
-                <td>{{ adr_facturation_user.id }}</td>
-            </tr>
-            <tr>
-                <th>Adr_fact_user</th>
-                <td>{{ adr_facturation_user.adrFactUser }}</td>
-            </tr>
-        </tbody>
-    </table>
+    <nav style="--bs-breadcrumb-divider:'>';" aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item ms-3"><a class="aBreadCrumb" href="{{path('home')}}">Accueil</a></li>
+            <li class="breadcrumb-item"><a class="aBreadCrumb" href=" {{path('app_profil')}}">Mon profil</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Mon adresse de facturation</li>
+        </ol>
+    </nav>
 
-    <a href="{{ path('app_adr_facturation_user_index') }}">back to list</a>
+    <h1>Mon adresse de facturation</h1>
+    <main class="container">{% block main %}
 
-    <a href="{{ path('app_adr_facturation_user_edit', {'id': adr_facturation_user.id}) }}">edit</a>
+        <div class="table-responsive">
+            <table class="table table-bordered mb-5">
+                <tbody>
+                    <tr>
+                        <th class="myPrimary bg-light">Adresse</th>
+                        <td class="bg-light">{{ adr_facturation_user.adresse }}</td>
+                    </tr>
+                    <tr>
+                        <th class="myPrimary">Complément d'adresse</th>
+                        <td>{{ adr_facturation_user.complementAdr }}</td>
+                    </tr>
+                    <tr>
+                        <th class="myPrimary bg-light">Code postal</th>
+                        <td class="bg-light">{{ adr_facturation_user.codePostal }}</td>
+                    </tr>
+                    <tr>
+                        <th class="myPrimary">Ville</th>
+                        <td>{{ adr_facturation_user.ville }}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
 
-    {{ include('adr_facturation_user/_delete_form.html.twig') }}
+
+    <div class="d-flex justify-content-between mb-5">
+        <a class="btn bg-myPrimary text-white" href="{{ path('app_adr_facturation_user_edit', {'id': adr_facturation_user.id}) }}">Modifier</a>
+    </div>
+    
+    {% endblock %}</main>
+    {% include "_footer.html.twig" %}
 {% endblock %}

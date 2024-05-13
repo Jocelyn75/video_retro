@@ -1,7 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Mes adresses de livraison - Video Retro{% endblock %}
-
+{% block title %}<title>Mes adresses de livraison - Video Retro</title>{% endblock %}
 {% block body %}
     {% include '_header.html.twig' %}
 
@@ -15,7 +14,15 @@
 
     <h1>Mes adresses de livraison</h1>
 
+
     <main class="container">{% block main %}
+
+        {% for message in app.flashes('success') %}
+            <div class="alert alert-success">
+                <p class="p-bold mb-3">{{ message }}</p>
+            </div>
+        {% endfor %}
+
 
         <table class="table table-light table-bordered mb-5">
             <thead class="table-secondary">
@@ -29,12 +36,8 @@
                 <tr>
                     <td class="text-center">{{ adr_livraison_user.adrLivrUser }}</td>
                     <td class="text-center">
-                        <a href="{{ path('app_adr_livraison_user_show', {'id': adr_livraison_user.id}) }}">
-                            <i class="fa-solid fa-book fa-lg px-1" style="color: #6C757D;" data-toggle="tooltip" title="Consulter ce format"></i>
-                        </a>
-                        <a href="{{ path('app_adr_livraison_user_edit', {'id': adr_livraison_user.id}) }}">
-                            <i class="fa-solid fa-pen-to-square fa-lg px-1" style="color: #0B759B;" data-toggle="tooltip" title="Modifier ce format"></i>
-                        </a>
+                        <a href="{{ path('app_adr_livraison_user_show', {'id': adr_livraison_user.id}) }}"><i class="fa-solid fa-book fa-lg px-1" style="color: #6C757D;" data-toggle="tooltip" title="Consulter ce format"></i></a>
+                        <a href="{{ path('app_adr_livraison_user_edit', {'id': adr_livraison_user.id}) }}"><i class="fa-solid fa-pen-to-square fa-lg px-1" style="color: #0B759B;" data-toggle="tooltip" title="Modifier ce format"></i></a>
                     </td>
                 </tr>
             {% else %}
@@ -45,7 +48,12 @@
             </tbody>
         </table>
 
-        <a class="btn bg-myPrimary text-white mb-1 mb-5" href="{{ path('app_adr_livraison_user_new') }}">Ajouter une adresse</a>
+
+        <div class="d-flex mb-5">
+            <a class="btn bg-myPrimary text-white me-3" href="{{ path('app_adr_livraison_user_new') }}">Ajouter une adresse</a>
+            <a class="btn bg-secondary text-white" href="{{ path('app_profil') }}">Retour au profil</a>
+        </div>
+
     {% endblock %}</main>
 
     {% include "_footer.html.twig" %}

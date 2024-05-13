@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Repository\AdrLivraisonUserRepository;
 use App\Repository\LivreurRepository;
 use App\Service\TMDBService;
 use App\Repository\StockRepository;
@@ -85,14 +86,19 @@ class CartController extends AbstractController
      * @param  mixed $livreurRepository
      * @return Response
      */
-    public function cartValidation(SessionInterface $session, TMDBService $tmdbService, Request $request, LivreurRepository $livreurRepository): Response
+    public function cartValidation(SessionInterface $session, TMDBService $tmdbService, Request $request, LivreurRepository $livreurRepository, AdrLivraisonUserRepository $adrLivraisonUserRepository): Response
     {
-        //Utilisation du referer dans le fil d'Ariane.
+        if ($request->isMethod('POST')) {
+        $livreurId = $request->request->get('livreur');
+        $adresseLivraisonId = $request->request->get('adresseLivraison');
+        }
+        //Utilisation du referer dans le FIL D'ARIANE.
         // Récupérer l'URL précédente
         $previousUrl = $request->headers->get('referer');
         // Stocker l'URL précédente dans la session
         $session->set('previous_url', $previousUrl);
 
+        // PANIER
         $cart = $session->get('cart', []);
 
         $cartDetails = [];
@@ -123,30 +129,50 @@ class CartController extends AbstractController
 
         // Initialiser le montant total de la commande au montant total du panier
         $montantTotalCommande = $montantTotal;
+        $livreurs = $livreurRepository->findAll();
 
-        // Traitement du formulaire de sélection du livreur
+        // ADRESSE DE LIVRAISON
+        $user = $this->getUser();
+        $adressesLivraison = $user->getAdrLivraisonUser();
+        $adressesFacturation = $user->getAdrFacturationUser();
+        
+        // LIVREUR
         if ($request->isMethod('POST')) {
             $livreurId = $request->request->get('livreur');
             $livreur = $livreurRepository->find($livreurId);
+            $this->addFlash('success', 'Vos choix ont bien été enregistrés.');
             if ($livreur !== null) {
                 // Ajouter les frais de livraison au montant total de la commande
                 $montantTotalCommande += $livreur->getPrix();
+            // } else {
+            //     // Gérer le cas où aucun livreur n'est sélectionné
+            //     // Peut-être afficher un message d'erreur ou prendre une autre action appropriée
+            }
+
+            // Stocker le montant total de la commande dans la session
+            $session->set('montantTotalCommande', $montantTotalCommande);
+
+            // ADRESSES DE LIVRAISON
+            $adresseLivraison = $adrLivraisonUserRepository->find($adresseLivraisonId);
+            if ($adresseLivraison !== null) {
+                // Utilisez l'adresse de livraison sélectionnée comme vous le souhaitez
+                // Par exemple, vous pouvez récupérer les détails de l'adresse et les utiliser dans votre logique de commande
             } else {
-                // Gérer le cas où aucun livreur n'est sélectionné
+                // Gérer le cas où aucune adresse de livraison n'est sélectionnée
                 // Peut-être afficher un message d'erreur ou prendre une autre action appropriée
             }
         }
 
-        $livreurs = $livreurRepository->findAll();
+        // Récupérer toutes les adresses de livraison
+        // $adressesLivraison = $adrLivraisonUserRepository->findAll();
 
-        // Stocker le montant total de la commande dans la session
-        $session->set('montantTotalCommande', $montantTotalCommande);
-   
         return $this->render('cart/cart_validation.html.twig', [
             'cartDetails' => $cartDetails,
             'montantTotal' => $montantTotal,
             'livreurs' => $livreurs, 
-            'montantTotalCommande' => $montantTotalCommande
+            'montantTotalCommande' => $montantTotalCommande,
+            'adressesLivraison' => $adressesLivraison,
+            'adressesFacturation' => $adressesFacturation
         ]);
     }
 
