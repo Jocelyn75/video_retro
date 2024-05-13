@@ -27,7 +27,10 @@
                 {{ form_row(form.date_naiss, {
                     label: 'Date de naissance'
                 }) }} 
-                {{ form_row(form.adr_user, {
+                {{ form_row(form.tel_user, {
+                    label: 'Numéro de téléphone'
+                }) }}
+                {# {{ form_row(form.adr_user, {
                     label: 'Adresse'
                 }) }}
 
@@ -42,10 +45,7 @@
                 {{ form_row(form.ville, {
                     label: 'Ville'
                 }) }}
-
-                {{ form_row(form.tel_user, {
-                    label: 'Numéro de téléphone'
-                }) }}
+                #}
 
                 <button type="submit" class="btn bg-myPrimary text-white w-100 mb-5">Modifier mon profil</button>
             {{ form_end(form) }}

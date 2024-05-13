@@ -18,9 +18,6 @@ class AdrLivraisonUser
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $adr_livr_user = null;
 
-    #[ORM\ManyToMany(targetEntity: User::class, mappedBy: 'adr_livraison_user')]
-    private Collection $users;
-
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $adresse = null;
 
@@ -36,10 +33,8 @@ class AdrLivraisonUser
     #[ORM\Column(nullable: true)]
     private ?int $user_id = null;
 
-    public function __construct()
-    {
-        $this->users = new ArrayCollection();
-    }
+    #[ORM\ManyToOne(inversedBy: 'adr_livraison_user')]
+    private ?User $user = null;
 
     public function getId(): ?int
     {
@@ -54,33 +49,6 @@ class AdrLivraisonUser
     public function setAdrLivrUser(?string $adr_livr_user): static
     {
         $this->adr_livr_user = $adr_livr_user;
-
-        return $this;
-    }
-
-    /**
-     * @return Collection<int, User>
-     */
-    public function getUsers(): Collection
-    {
-        return $this->users;
-    }
-
-    public function addUser(User $user): static
-    {
-        if (!$this->users->contains($user)) {
-            $this->users->add($user);
-            $user->addAdrLivraisonUser($this);
-        }
-
-        return $this;
-    }
-
-    public function removeUser(User $user): static
-    {
-        if ($this->users->removeElement($user)) {
-            $user->removeAdrLivraisonUser($this);
-        }
 
         return $this;
     }
@@ -141,6 +109,18 @@ class AdrLivraisonUser
     public function setUserId(?int $user_id): static
     {
         $this->user_id = $user_id;
+
+        return $this;
+    }
+
+    public function getUser(): ?User
+    {
+        return $this->user;
+    }
+
+    public function setUser(?User $user): static
+    {
+        $this->user = $user;
 
         return $this;
     }

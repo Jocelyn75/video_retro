@@ -1,13 +1,48 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Edit AdrFacturationUser{% endblock %}
+{% block title %}<title>Modifier mon adresse de facturation - Video Retro</title>{% endblock %}
 
 {% block body %}
-    <h1>Edit AdrFacturationUser</h1>
+    {% include '_header.html.twig' %}
 
-    {{ include('adr_facturation_user/_form.html.twig', {'button_label': 'Update'}) }}
+    <nav style="--bs-breadcrumb-divider:'>';" aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item ms-3"><a class="aBreadCrumb" href="{{path('home')}}">Accueil</a></li>
+            <li class="breadcrumb-item"><a class="aBreadCrumb" href=" {{path('app_profil')}}">Mon profil</a></li>
+            <li class="breadcrumb-item"><a class="aBreadCrumb" href=" {{path('app_adr_facturation_user_show', {'id': adr_facturation_user.id}) }}">Mon adresse de facturation</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Modifier mon adresse de livraison</li>
+        </ol>
+    </nav>
 
-    <a href="{{ path('app_adr_facturation_user_index') }}">back to list</a>
+    <h1>Modifier mon adresse de facturation</h1>
+    <main class="container">{% block main %}
 
-    {{ include('adr_facturation_user/_delete_form.html.twig') }}
+
+        {{ form_errors(form) }}
+            {{ form_start(form, {'attr': {'novalidate': 'novalidate'}}) }}
+                {{ form_row(form.adresse, {
+                    label: 'Adresse'
+                }) }}
+
+                {{ form_row(form.complement_adr, {
+                    label: 'Complément d\'adresse'
+                }) }}
+
+                {{ form_row(form.code_postal, {
+                    label: 'Code postal'
+                }) }}
+
+                {{ form_row(form.ville, {
+                    label: 'Ville'
+                }) }}
+
+            <button type="submit" class="btn bg-myPrimary text-white w-100 mb-3">Modifier mon adresse de facturation</button>
+            <a class="btn bg-secondary text-white mb-5" href="{{ path('app_profil') }}">Retour au profil</a>
+
+            {{ form_end(form) }}
+
+    {% endblock %}</main>
+
+    {% include "_footer.html.twig" %}
+    
 {% endblock %}

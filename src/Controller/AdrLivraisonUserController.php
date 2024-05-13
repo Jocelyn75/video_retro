@@ -34,7 +34,7 @@ class AdrLivraisonUserController extends AbstractController
         $user = $this->getUser(); // Récupérer l'utilisateur actuellement authentifié
 
         $adrLivraisonUser = new AdrLivraisonUser();
-        $adrLivraisonUser->setUserId($user->getId()); // Associer l'ID de l'utilisateur à l'adresse de livraison
+        $adrLivraisonUser->setUser($user); // Associer l'utilisateur à l'adresse de livraison
         $form = $this->createForm(AdrLivraisonUserType::class, $adrLivraisonUser);
         $form->handleRequest($request);
 
@@ -67,7 +67,8 @@ class AdrLivraisonUserController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager->flush();
-
+            
+            $this->addFlash('success', 'Votre adresse a bien été modifiée');
             return $this->redirectToRoute('app_adr_livraison_user_index', [], Response::HTTP_SEE_OTHER);
         }
 

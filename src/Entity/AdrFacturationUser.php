@@ -18,8 +18,6 @@ class AdrFacturationUser
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $adr_fact_user = null;
 
-    #[ORM\OneToMany(mappedBy: 'adr_facturation_user', targetEntity: User::class)]
-    private Collection $users;
 
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $adresse = null;
@@ -33,10 +31,11 @@ class AdrFacturationUser
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $ville = null;
 
-    public function __construct()
-    {
-        $this->users = new ArrayCollection();
-    }
+    #[ORM\OneToOne(mappedBy: 'adr_facturation_user', cascade: ['persist', 'remove'])]
+    private ?User $user = null;
+
+    #[ORM\Column(nullable: true)]
+    private ?int $user_id = null;
 
     public function getId(): ?int
     {
@@ -55,35 +54,7 @@ class AdrFacturationUser
         return $this;
     }
 
-    /**
-     * @return Collection<int, User>
-     */
-    public function getUsers(): Collection
-    {
-        return $this->users;
-    }
 
-    public function addUser(User $user): static
-    {
-        if (!$this->users->contains($user)) {
-            $this->users->add($user);
-            $user->setAdrFacturationUser($this);
-        }
-
-        return $this;
-    }
-
-    public function removeUser(User $user): static
-    {
-        if ($this->users->removeElement($user)) {
-            // set the owning side to null (unless already changed)
-            if ($user->getAdrFacturationUser() === $this) {
-                $user->setAdrFacturationUser(null);
-            }
-        }
-
-        return $this;
-    }
 
     public function getAdresse(): ?string
     {
@@ -129,6 +100,40 @@ class AdrFacturationUser
     public function setVille(?string $ville): static
     {
         $this->ville = $ville;
+
+        return $this;
+    }
+
+    public function getUser(): ?User
+    {
+        return $this->user;
+    }
+
+    public function setUser(?User $user): static
+    {
+        // unset the owning side of the relation if necessary
+        if ($user === null && $this->user !== null) {
+            $this->user->setAdrFacturationUser(null);
+        }
+
+        // set the owning side of the relation if necessary
+        if ($user !== null && $user->getAdrFacturationUser() !== $this) {
+            $user->setAdrFacturationUser($this);
+        }
+
+        $this->user = $user;
+
+        return $this;
+    }
+
+    public function getUserId(): ?int
+    {
+        return $this->user_id;
+    }
+
+    public function setUserId(?int $user_id): static
+    {
+        $this->user_id = $user_id;
 
         return $this;
     }

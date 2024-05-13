@@ -21,6 +21,17 @@ class AdrFacturationUserRepository extends ServiceEntityRepository
         parent::__construct($registry, AdrFacturationUser::class);
     }
 
+    // Méthode pour récupérer les adresses de livraison d'un utilisateur donné
+    public function findByUserId(int $userId): array
+    {
+        return $this->createQueryBuilder('a')
+            ->andWhere('a.user_id = :userId')
+            ->setParameter('userId', $userId)
+            ->getQuery()
+            ->getResult();
+
+    }
+
 //    /**
 //     * @return AdrFacturationUser[] Returns an array of AdrFacturationUser objects
 //     */

@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\AdrFacturationUser;
 use App\Entity\User;
 use App\Service\CodeManager;
 use App\Form\RegistrationFormType;
@@ -47,6 +48,9 @@ class RegistrationController extends AbstractController
 
             $user->setActivation($codeManager->getCode());
             $entityManager->persist($user);
+            $adrFacturationUser = new AdrFacturationUser;
+            $adrFacturationUser->setUser($user);
+            $entityManager->persist($adrFacturationUser);
             $entityManager->flush();
             $email = (new TemplatedEmail())
                 ->from(new Address('noreply@videoretro.fr', 'Video Retro'))

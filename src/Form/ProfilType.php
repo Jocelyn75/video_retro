@@ -53,27 +53,6 @@ class ProfilType extends AbstractType
         ->add('date_naiss', BirthdayType::class, [
             'widget' => 'single_text',        
         ])
-            
-        ->add('adr_user', TextType::class)
-
-        ->add('complement_adr')
-
-        ->add('code_postal', NumberType::class, [
-            'constraints' => [
-                new Positive ([
-                    'message' => 'Le code postal doit être un nombre positif',
-                ]),
-                new Length ([
-                    'min' => 5,
-                    'max' => 5,
-                    'minMessage' => 'Un code postal doit comprendre 5 chiffres',
-                    'maxMessage' => 'Un code postal doit comprendre 5 chiffres',
-                ])
-            ]
-        ])
-
-        ->add('ville', TextType::class)
-
         ->add('tel_user', TextType::class, [
             'constraints' => [
                 new NotBlank([
@@ -82,6 +61,26 @@ class ProfilType extends AbstractType
             ]
         ])
 
+            
+        // ->add('adr_user', TextType::class)
+
+        // ->add('complement_adr')
+
+        // ->add('code_postal', NumberType::class, [
+        //     'constraints' => [
+        //         new Positive ([
+        //             'message' => 'Le code postal doit être un nombre positif',
+        //         ]),
+        //         new Length ([
+        //             'min' => 5,
+        //             'max' => 5,
+        //             'minMessage' => 'Un code postal doit comprendre 5 chiffres',
+        //             'maxMessage' => 'Un code postal doit comprendre 5 chiffres',
+        //         ])
+        //     ]
+        // ])
+
+        // ->add('ville', TextType::class)
 
         ;
     }

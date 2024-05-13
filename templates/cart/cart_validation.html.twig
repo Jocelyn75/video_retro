@@ -9,10 +9,7 @@
     {% if cartDetails is not empty %}
         <nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
             <ol class="breadcrumb">
-                <li class="breadcrumb-item ms-3"><a class="aBreadCrumb" href="{{path('home')}}">Accueil</a></li>
-                <li class="breadcrumb-item"><a class="aBreadCrumb" href="{{ path('app_search', {'search[keyword]':'oppenheimer'}) }}">Résultats de la recherche</a></li>
-                <li class="breadcrumb-item"><a class="aBreadCrumb" href="{{ app.session.get('previous_url') }}">Dernier film ajouté</a></li>
-                <li class="breadcrumb-item"><a class="aBreadCrumb" href="{{path('app_cart')}}">Mon Panier</a></li>
+                <li class="breadcrumb-item ms-3"><a class="aBreadCrumb" href="{{path('app_cart')}}">Mon Panier</a></li>
                 <li class="breadcrumb-item active" aria-current="page">Passer la commande</li>
             </ol>
         </nav>
@@ -21,6 +18,13 @@
     <main class="container">{% block main %}
 
         <h1 class="text-center fs-1 fst-italic">Passer la commande</h1>
+
+        {% for message in app.flashes('success') %}
+            <div class="alert alert-success">
+                <p class="p-bold mb-3">{{ message }}</p>
+            </div>
+        {% endfor %}
+
         {% if app.user %}
             
             {# Récapitulatif du panier #}
@@ -58,11 +62,50 @@
                 </table>
             </div>
             
+            {# Adresse de facturation #}
+            <h2 class="fs-5 fw-bold fst-italic myPrimary mb-3">Adresse de facturation</h2>
+            {# <div class="mb-5"> #}
+            {# {% for adresseFacturation in adressesFacturation %} #}
+{# <pre>
+    {{ dump(app.user.adrFacturationUser.adrFactUser) }}
+</pre> #}
 
-            {# Sélection du transporteur #}
+            <div class="d-flex flex-column ms-5">
+                <p>{{ app.user.adrFacturationUser.adresse}}</p>
+                {% if app.user.adrFacturationUser.complementAdr %}
+                    <p>{{ app.user.adrFacturationUser.complementAdr}}</p>
+                {% endif %}
+                <p>{{ app.user.adrFacturationUser.codePostal}}</p>
+                <p>{{ app.user.adrFacturationUser.ville}}</p>
+            </div>
+
+
+
+                {# <p>{{ app.user.adr_facturation_user.adresse }}Test</p> #}
+                {# <p>{{ app.user.adresseFacturationUser.complementAdr }}</p>
+                <p>{{ app.user.adresseFacturationUser.codePostal }} {{ app.user.adresseFacturationUser.ville }}</p> #}
+            {# {% endfor %} #}
+            {# </div> #}
+
+            {# Formulaire Adresses et transporteur #}
             <form action="{{ path('app_cart_validation') }}" method="post">
+
+            {# <h2 class="fs-5 fw-bold fst-italic myPrimary mb-3">Adresses de livraison</h2> #}
                 <div class="mb-3">
-                    <label for="livreur" class="fs-5 fw-bold fst-italic myPrimary mb-3">Choisir un transporteur</label>
+                    <label for="adresseLivraison" class="fs-5 fw-bold fst-italic myPrimary text-uppercase mb-3">Choisir une adresse de livraison :</label>
+                    <select name="adresseLivraison" id="adresseLivraison" class="form-select" aria-label="Choisir une adresse de livraison" required>>
+                        <option value="" selected disabled>Choisir une adresse de livraison</option>
+                        {% for adresseLivraison in adressesLivraison %}
+                            <option value="{{ adresseLivraison.id }}">{{ adresseLivraison.adresse }} {{adresseLivraison.complementAdr}} - {{adresseLivraison.codePostal}} - {{adresseLivraison.ville}}</option>
+                        {% endfor %}
+                    </select>
+                    <div class="pt-3 pb-5">
+                    <a class="btn btn-secondary text-white" href="{{ path('app_adr_livraison_user_index') }}">Gérer mes adresses de livraison</a>
+                    </div>
+                </div>
+            {# Sélection du transporteur #}
+                <div class="mb-5">
+                    <label for="livreur" class="fs-5 fw-bold fst-italic myPrimary text-uppercase mb-3">Choisir un transporteur</label>
                     <select id="livreur" name="livreur" class="form-select" aria-label="Choisir un transporteur" required>
                         <option value="" selected disabled>Choisir un transporteur</option>
                         {% for livreur in livreurs %}
@@ -70,7 +113,7 @@
                         {% endfor %}
                     </select>
                 </div>
-                <button type="submit" class="btn bg-myPrimary text-white mb-5">Valider le choix du transporteur</button>
+                <button type="submit" class="btn bg-myPrimary text-white mb-5">Valider mes choix</button>
             </form>
 
             <h2 class="text-end fs-5 text-capitalize fst-italic pb-3">Montant total du panier : {{ montantTotal }} €</h2>
