@@ -33,7 +33,7 @@
 <ul>
     {% for detailsCommande in commande.detailsCommandes %}
         <li>Stock ID : {{ detailsCommande.stockId }}</li>
-        <li>Prix unitaire : {{ detailsCommande.prixUnitaire }}</li>
+        <li>Prix unitaire (€) : {{ detailsCommande.prixUnitaire }}</li>
         <li>Quantité commandée : {{ detailsCommande.quantiteCmd }}</li>
     {% endfor %}
 </ul>
