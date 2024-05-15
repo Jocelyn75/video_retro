@@ -37,6 +37,9 @@ class AdrFacturationUserType extends AbstractType
             ])
             ->add('code_postal', NumberType::class, [
                 'constraints' => [
+                    new NotBlank([
+                        'message' => 'Veuillez saisir un code postal',
+                    ]),
                     new Positive ([
                         'message' => 'Le code postal doit être un nombre positif',
                     ]),

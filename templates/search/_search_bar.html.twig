@@ -5,6 +5,6 @@
     {# On génère le widget pour le champ keyword du formulaire, et on le style. #}
     {{form_widget(form.keyword, {'attr': {'class': 'form-control me-1', 'placeholder': 'Rechercher un film', 'aria-label':'Recherche'}})}}
     {# Bouton de lancement de la recherche #}
-    <button class="btn btn-outline-light me-auto" type="submit"><i class="fa-solid fa-magnifying-glass"></i></button>
+    <button class="btn btn-outline-light me-auto" type="submit" aria-label="Rechercher"><i class="fa-solid fa-magnifying-glass"></i></button>
     </div>
 {{form_end(form)}}

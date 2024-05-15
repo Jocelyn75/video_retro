@@ -88,6 +88,9 @@ class CartController extends AbstractController
      */
     public function cartValidation(SessionInterface $session, TMDBService $tmdbService, Request $request, LivreurRepository $livreurRepository, AdrLivraisonUserRepository $adrLivraisonUserRepository): Response
     {
+
+        $this->denyAccessUnlessGranted('ROLE_USER');
+        
         if ($request->isMethod('POST')) {
         $livreurId = $request->request->get('livreur');
         $adresseLivraisonId = $request->request->get('adresseLivraison');

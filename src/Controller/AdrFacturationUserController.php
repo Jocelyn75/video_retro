@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\AdrFacturationUser;
+use App\Entity\User;
 use App\Form\AdrFacturationUserType;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -31,10 +32,15 @@ class AdrFacturationUserController extends AbstractController
     }
 
     #[Route('/new', name: 'app_adr_facturation_user_new', methods: ['GET', 'POST'])]
-    public function new(Request $request, EntityManagerInterface $entityManager, AdrFacturationUserRepository $adrFacturationUserRepository): Response
+    public function new(Request $request, EntityManagerInterface $entityManager, AdrFacturationUserRepository $adrFacturationUserRepository, AdrFacturationUser $adrFacturationUser): Response
     {
 
         $user = $this->getUser(); // Récupérer l'utilisateur actuellement authentifié
+        // // dump($adrFacturationUser);
+        // // dd($user);
+        // if ($adrFacturationUser->getUser() !== $user) {
+        //     throw $this->createAccessDeniedException('Vous n\'avez pas accès à cette page.');
+        // }
 
         // Vérifier si l'utilisateur a déjà une adresse de facturation enregistrée
         $existingAddress = $adrFacturationUserRepository->findOneBy(['user_id' => $user->getId()]);
@@ -63,18 +69,27 @@ class AdrFacturationUserController extends AbstractController
         ]);
     }
 
-    #[Route('/{id}', name: 'app_adr_facturation_user_show', methods: ['GET'])]
+    #[Route('/', name: 'app_adr_facturation_user_show', methods: ['GET'])]
     public function show(AdrFacturationUser $adrFacturationUser): Response
     {
+
+        $user = $this->getUser();
+        if ($adrFacturationUser->getUser() !== $user) {
+            throw $this->createAccessDeniedException('Vous n\'avez pas accès à cette page.');
+        }
+
         return $this->render('adr_facturation_user/show.html.twig', [
             'adr_facturation_user' => $adrFacturationUser,
         ]);
     }
 
-    #[Route('/{id}/edit', name: 'app_adr_facturation_user_edit', methods: ['GET', 'POST'])]
-    public function edit(Request $request, AdrFacturationUser $adrFacturationUser, EntityManagerInterface $entityManager): Response
+    #[Route('/edit/test', name: 'app_adr_facturation_user_edit', methods: ['GET', 'POST'])]
+    public function edit(Request $request, EntityManagerInterface $entityManager): Response
     {
-        $form = $this->createForm(AdrFacturationUserType::class, $adrFacturationUser);
+
+        $user = $this->getUser();
+
+        $form = $this->createForm(AdrFacturationUserType::class, $user->getAdrFacturationUser());
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -85,7 +100,6 @@ class AdrFacturationUserController extends AbstractController
         }
 
         return $this->render('adr_facturation_user/edit.html.twig', [
-            'adr_facturation_user' => $adrFacturationUser,
             'form' => $form,
         ]);
     }

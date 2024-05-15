@@ -22,7 +22,7 @@ class EditPasswordType extends AbstractType
             ->add('currentPassword', PasswordType::class, [
                 'required' => false,
                 'mapped' => false,
-                'label' => 'Mot de passe actuel<span class=\'text-danger\'>*</span>',
+                'label' => 'Mot de passe actuel',
                 'label_html'=> true,
                 'attr' => [
                     'class' => 'password-field-alone'
@@ -32,7 +32,7 @@ class EditPasswordType extends AbstractType
             ->add('newPassword', PasswordType::class, [
                 'required' => false,
                 'mapped' => false,
-                'label' => 'Nouveau mot de passe<span class=\'text-danger\'>*</span>',
+                'label' => 'Nouveau mot de passe',
                 'label_html'=> true,
                 'attr' => [
                     'class' => 'password-field-first'

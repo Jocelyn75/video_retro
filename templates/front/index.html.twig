@@ -19,7 +19,7 @@
         </div>
     {% endfor %}
 
-    <div id="carouselHome" class="carousel slide" data-bs-ride="carousel">
+    <div id="carouselHome" class="carousel slide my-3" data-bs-ride="carousel">
         <div class="carousel-inner">
             <div class="carousel-item active">
                 <img src="{{ asset('images/posters_carousel/ET-Extraterrestre_800x300.jpg')}}" class="d-block w-100" alt="...">
@@ -52,37 +52,77 @@
                 <img src="{{ asset('images/posters_carousel/pulpFiction_800x300.jpg')}}" class="d-block w-100" alt="...">
             </div>
         </div>
-        <button class="carousel-control-prev" type="button" data-bs-target="#carouselHome" data-bs-slide="prev">
+        <button class="carousel-control-prev" type="button" data-bs-target="#carouselHome" data-bs-slide="prev" aria-label="Image précédente">
             <span class="carousel-control-prev-icon" aria-hidden="true"></span>
             <span class="visually-hidden">Previous</span>
         </button>
-        <button class="carousel-control-next" type="button" data-bs-target="#carouselHome" data-bs-slide="next">
+        <button class="carousel-control-next" type="button" data-bs-target="#carouselHome" data-bs-slide="next" aria-label="Image suivante">
             <span class="carousel-control-next-icon" aria-hidden="true"></span>
             <span class="visually-hidden">Next</span>
         </button>
     </div>
 
-    <div class="searchBar-container d-flex justify-content-center align-items-center w-100">
-    {# On rend la méthode GetSearchBar du controller SearchController. Les :: permettent d'appeler getSearchBar de manière statique. Les \\ sont une convention, cela ne fonctionne pas avec un seul \ #}
-    {{ render(controller("App\\Controller\\SearchController::getSearchByYear")) }}  
-    </div>    
 
-<div class="row">
-        {% for results in popularFilms %}
-            <div class="col-md-3 mb-4">
-                <div class="card">
-                    {% if results.poster_path %}
-                        <img src="{{ imageUrl ~ 'w92' ~ results.poster_path }}" class="card-img-top" alt="{{ results.title }} Poster">
-                    {% else %}
-                        <div class="card-img-top text-center">Image non disponible</div>
-                    {% endif %}
-                    <div class="card-body">
-                        <p class="card-title">{{ results.title }}</p>
-                    </div>
-                </div>
+<div class="container-fluid">
+    <div class="row">
+        <!-- Colonne pour la barre de recherche -->
+        <div class="col-md-3 col-lg-2 searchBar-container d-flex flex-column align-items-stretch border rounded bg-light shadow mt-5 pt-3">
+            <div class="sticky-content">
+                <p class="text-center myPrimary fst-italic fw-bold">Il y avait quoi au ciné quand vous êtes né ?...</p>
+                {{ render(controller("App\\Controller\\SearchController::getSearchByYear")) }}
+                <p class="text-center myPrimary fst-italic fw-bold pt-3">... ou n'importe quelle autre année !</p>
             </div>
-        {% endfor %}
+        </div>
+        
+        <!-- Colonne pour les résultats -->
+        <div class="col-md-9 col-lg-10 d-flex flex-column pb">
+            <h2 class="text-center pb-3 pt-5">Notre sélection de classiques de l'ère VHS</h2>
+            <!-- Div avec la boucle newFilms et bordure -->
+            <div class="d-flex justify-content-center flex-wrap pb-5">
+                {% for results in classicFilms %}
+                    <div class="m-3" style="width: 150px;">
+                        <div class="card homeCard">
+                            {% if results.poster_path is not empty %}
+                                    <a href="{{ path('app_films_show', {'id': results.id}) }}">
+                                    <img src="{{ imageUrl ~ 'w185' ~ results.poster_path }}" class="img-fluid rounded shadow my-3" alt="Affiche du film : {{ results.title }}">
+                                    </a>
+                                {% else %}
+                                    <a href="{{ path('app_films_show', {'id': results.id}) }}">
+                                    <img src="{{asset('images/no_image_available/no_image_available_w185_h278.png')}}" class="img-fluid rounded" alt="Pas d'image disponible">
+                                    </a>
+                                {% endif %}
+                            <div class="card-body cardHome text-center p-0">
+                                <p class="card-title fw-bold text-secondary">{{ results.title }}</p>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+            <h2 class="text-center pb-3">Les films populaires en ce moment</h2>
+            <!-- Div avec la boucle popularFilms et bordure -->
+            <div class="d-flex justify-content-center flex-wrap">
+                {% for results in popularFilms %}
+                    <div class="m-3" style="width: 150px;">
+                        <div class="card homeCard">
+                            {% if results.poster_path is not empty %}
+                                    <a href="{{ path('app_films_show', {'id': results.id}) }}">
+                                    <img src="{{ imageUrl ~ 'w185' ~ results.poster_path }}" class="img-fluid rounded shadow my-3" alt="Affiche du film : {{ results.title }}">
+                                    </a>
+                                {% else %}
+                                    <a href="{{ path('app_films_show', {'id': results.id}) }}">
+                                    <img src="{{asset('images/no_image_available/no_image_available_w185_h278.png')}}" class="img-fluid rounded" alt="Pas d'image disponible">
+                                    </a>
+                                {% endif %}
+                            <div class="card-body cardHome text-center p-0">
+                                <p class="card-title fw-bold text-secondary">{{ results.title }}</p>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
     </div>
+</div>
 
 
         {# Si un utlisateur est connecté, le message de bienvenue s'affiche

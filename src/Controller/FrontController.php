@@ -20,13 +20,14 @@ class FrontController extends AbstractController
         {
         // Récupérez la liste des dix films les plus populaires
         $popularFilms = $tmdbService->getPopularFilms();
-
+        $classicFilms = $tmdbService->getClassicFilms();
         $imageUrl = $tmdbService->getImageUrl();
 
 
         // Vous pouvez maintenant passer cette liste à votre template Twig
         return $this->render('/front/index.html.twig', [
             'popularFilms' => $popularFilms,
+            'classicFilms' => $classicFilms,
             'imageUrl' => $imageUrl,
         ]);
     }

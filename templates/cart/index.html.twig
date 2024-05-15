@@ -49,9 +49,9 @@
                                 <tr>
                                     <td class="text-center imgCart">
                                         {% if details.imageUrl is not empty %}
-                                            <img src="{{ details.imageUrl }}" class="img-fluid rounded" alt="{{details.titre}} Poster">
+                                            <img src="{{ details.imageUrl }}" class="img-fluid rounded" alt="Affiche du film : {{details.titre}}">
                                         {% else %}
-                                            <img src="{{asset('images/no_image_available_w92_h138')}}" class="img-fluid rounded" alt="Pas d'image disponible">
+                                            <img src="{{asset('images/no_image_available/no_image_available_w92_h138')}}" class="img-fluid rounded" alt="Pas d'image disponible">
                                         {% endif %}
                                     </td>
                                     <td class="align-middle text-center">{{ details.titre }}</td>
@@ -60,13 +60,13 @@
                                     <td class="align-middle text-center">
                                         <form action="{{ path('app_cart_update_quantity') }}" method="post">
                                             <input type="hidden" name="stockId" value="{{ details.id }}">
-                                            <button type="submit" class="btn btn-sm bg-myPrimary text-white px-1" name="changeQuantity" value="-1">
+                                            <button type="submit" class="btn btn-sm bg-myPrimary text-white px-1" name="changeQuantity" value="-1" aria-label="Retirer une unité">
                                                 <i class="fa-solid fa-minus "></i>
                                             </button>
                                             {# <button class="btn update-quantity" data-stock-id="{{ details.id }}" data-change-quantity="-1">-</button> #}
                                             {{ details.quantite }}
                                             {# <button class="btn update-quantity" data-stock-id="{{ details.id }}" data-change-quantity="1">+</button> #}
-                                            <button type="submit" class="btn btn-sm bg-myPrimary text-white px-1" name="changeQuantity" value="1">
+                                            <button type="submit" class="btn btn-sm bg-myPrimary text-white px-1" name="changeQuantity" value="1" aria-label="Ajouter une unité">
                                                 <i class="fa-solid fa-plus "></i>
                                             </button>
                                         </form>
@@ -74,7 +74,7 @@
                                     <td class="align-middle text-center">{{ details.montant }} €</td>
                                     <td class="align-middle text-center">
                                         <form action="{{ path('app_cart_remove', {'stockId': details.id}) }}" method="post" onsubmit="return confirm('Êtes-vous sûr de vouloir supprimer ce produit du panier ?');">
-                                            <button type="submit" class="btn btn-sm btn-danger">
+                                            <button type="submit" class="btn btn-sm btn-danger" aria-label="Supprimer ce produit du panier">
                                                 <i class="fa-solid fa-x"></i>
                                             </button>
                                         </form>

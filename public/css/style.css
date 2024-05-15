@@ -70,6 +70,22 @@ main{
     border-radius: 10px;
 }
 
+.homeCard{
+    border: none;
+}
+
+/* Conteneur qui défile avec la page */
+.scrollable-container {
+    overflow-y: auto; /* Permet le défilement vertical */
+}
+
+/* Contenu fixe à l'intérieur du conteneur */
+.sticky-content {
+    position: sticky;
+    top: 30%;
+    z-index: 1000; /* Assure que le contenu fixe est au-dessus du contenu défilant */
+}
+
 /* Usage général */
 .h1{
     font-family: "VcrOsd";

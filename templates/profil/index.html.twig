@@ -47,7 +47,11 @@
                     </tr>
                     <tr>
                         <th class="myPrimary">Date de naissance</th>
-                        <td> {{app.user.dateNaiss|date('d/m/Y')}} </td>
+                        <td>
+                        {% if app.user.dateNaiss %}
+                            {{app.user.dateNaiss|date('d/m/Y')}}
+                        {% endif %}
+                        </td>
                     </tr>
                     <tr>
                         <th class="myPrimary">Téléphone</th>
@@ -78,8 +82,7 @@
             <a class="btn bg-myPrimary text-white m-2" href="{{ path("app_profil_edit")}}">Modifier mes informations</a>
             <a class="btn bg-myPrimary text-white m-2" href="{{ path("app_adr_livraison_user_index")}}">Mes adresses de livraison</a>
             {# <a class="btn bg-myPrimary text-white m-2" href=" {{path('app_adr_facturation_user_show', {'id': app.user.id}) }}">Mon adresse de facturation</a> #}
-            <a class="btn bg-myPrimary text-white m-2" href=" {{path('app_adr_facturation_user_new')}}">Mon adresse de facturation</a>
-
+            <a class="btn bg-myPrimary text-white m-2" href=" {{path('app_adr_facturation_user_edit')}}">Mon adresse de facturation</a>
             <a class="btn bg-myPrimary text-white m-2" href="{{ path("app_profil_edit_password")}}">Modifier mon mot de passe</a>
 
         </div>

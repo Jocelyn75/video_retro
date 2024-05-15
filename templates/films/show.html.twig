@@ -15,16 +15,16 @@
     </nav>
 
     <main class="container">
-        <div class="card bg-light shadow movieCard"> {# Ajout d'une seule carte pour englober l'ensemble du contenu #}
+        <div class="card bg-light shadow movieCard"> {# Carte pour englober l'ensemble du contenu #}
             <div class="card-body">
                 {% block main %}
                     <div class="row mb-5"> {# Ajout d'une première rangée pour l'image et les métadonnées #}
                         <div class="col-md-4 col-xs-12"> {# Colonne pour la partie image #}
                             <div class="text-center">
                                 {% if filmsShow.poster_path is not empty %}
-                                    <img class="imgFilm img-fluid mb-3 shadow rounded" src="{{ imageUrl ~ 'w342' ~ filmsShow.poster_path }}" alt="{{ filmsShow.title }} Poster">
+                                    <img class="imgFilm img-fluid mb-3 shadow rounded" src="{{ imageUrl ~ 'w342' ~ filmsShow.poster_path }}" alt="Affiche du film : {{ filmsShow.title }}">
                                 {% else %}
-                                    <img class="shadow rounded" src="{{ asset('images/no_image_available_w342_h513.png') }}" class="img-fluid rounded mb-3" alt="Pas d'image disponible">
+                                    <img src="{{ asset('images/no_image_available/no_image_available_w342_h513.png') }}" class="img-fluid shadow rounded mb-3" alt="Pas d'image disponible">
                                 {% endif %}
                             </div>
                         </div>
@@ -81,7 +81,7 @@
                                                 <img class="logoFormats mb-2 shadow rounded" src="{{ asset('images/logosFormats/' ~ image) }}" alt="Logo VHS">
                                                 {% if stock.quantiteStock > 0 %}
                                                     <form method="post" action="{{ path("app_cart_new")}}" class="text-center">
-                                                        <select name="quantite">
+                                                        <select name="quantite" aria-label="choisir la quantité">
                                                             {% set quantity = stock.quantiteStock > 9 ? 9 : stock.quantiteStock %}
                                                             {% for i in 1 .. quantity %}
                                                                 <option value="{{i}}">{{i}}</option>
@@ -93,7 +93,7 @@
                                                     </form>
                                                 {% else %}
                                                     <form method="post" action="" class="d-flex flex-column text-center">
-                                                        <input type="submit" value="Rupture de stock" class="btn btn-secondary text-white disabled m-1">
+                                                        <input type="submit" value="Indisponible" class="btn btn-secondary text-white disabled m-1">
                                                         <input type="submit" value="Je vends mon exemplaire" class="btn bg-myPrimary text-white m-1">
                                                     </form>
                                                 {% endif %}
@@ -104,7 +104,7 @@
                             {% else %}
                                 <form method="post" action="" class="text-center m-4">
                                     <div class="d-flex flex-column flex-md-row align-items-center justify-content-center">
-                                        <input type="submit" value="Rupture de stock" class="btn btn-secondary text-white disabled mb-2 mb-md-0 me-md-2">
+                                        <input type="submit" value="Indisponible" class="btn btn-secondary text-white disabled mb-2 mb-md-0 me-md-2">
                                         <input type="submit" value="Je vends mon exemplaire" class="btn bg-myPrimary text-white">
                                     </div>
                                 </form>

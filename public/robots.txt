@@ -1,0 +1,13 @@
+User-agent: *
+Disallow: /user/
+Disallow: /profil/
+Disallow: /stripe/
+Disallow: /security/
+Disallow: /reset-password/
+Disallow: /livreur/
+Disallow: /admin_home/
+Allow: /films/
+Allow: /stock/
+Allow: /legal/
+Allow: /front/
+Allow: /cart/

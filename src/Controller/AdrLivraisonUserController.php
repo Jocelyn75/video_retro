@@ -54,6 +54,12 @@ class AdrLivraisonUserController extends AbstractController
     #[Route('/{id}', name: 'app_adr_livraison_user_show', methods: ['GET'])]
     public function show(AdrLivraisonUser $adrLivraisonUser): Response
     {
+
+        $user = $this->getUser();
+        if ($adrLivraisonUser->getUser() !== $user) {
+            throw $this->createAccessDeniedException();
+        }
+
         return $this->render('adr_livraison_user/show.html.twig', [
             'adr_livraison_user' => $adrLivraisonUser,
         ]);
@@ -62,6 +68,12 @@ class AdrLivraisonUserController extends AbstractController
     #[Route('/{id}/edit', name: 'app_adr_livraison_user_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, AdrLivraisonUser $adrLivraisonUser, EntityManagerInterface $entityManager): Response
     {
+
+        $user = $this->getUser();
+        if ($adrLivraisonUser->getUser() !== $user) {
+            throw $this->createAccessDeniedException();
+        }
+
         $form = $this->createForm(AdrLivraisonUserType::class, $adrLivraisonUser);
         $form->handleRequest($request);
 

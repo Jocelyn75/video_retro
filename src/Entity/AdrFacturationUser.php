@@ -34,9 +34,6 @@ class AdrFacturationUser
     #[ORM\OneToOne(mappedBy: 'adr_facturation_user', cascade: ['persist', 'remove'])]
     private ?User $user = null;
 
-    #[ORM\Column(nullable: true)]
-    private ?int $user_id = null;
-
     public function getId(): ?int
     {
         return $this->id;
@@ -126,15 +123,4 @@ class AdrFacturationUser
         return $this;
     }
 
-    public function getUserId(): ?int
-    {
-        return $this->user_id;
-    }
-
-    public function setUserId(?int $user_id): static
-    {
-        $this->user_id = $user_id;
-
-        return $this;
-    }
 }

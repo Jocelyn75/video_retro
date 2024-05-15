@@ -46,9 +46,9 @@
                             <tr>
                                 <td class="text-center imgCart">
                                     {% if details.imageUrl is not empty %}
-                                        <img src="{{ details.imageUrl }}" class="img-fluid rounded" alt="{{details.titre}} Poster">
+                                        <img src="{{ details.imageUrl }}" class="img-fluid rounded" alt="Affiche du film : {{details.titre}}">
                                     {% else %}
-                                        <img src="{{asset('images/no_image_available_w92_h138')}}" class="img-fluid rounded" alt="Pas d'image disponible">
+                                        <img src="{{asset('images/no_image_available/no_image_available_w92_h138')}}" class="img-fluid rounded" alt="Pas d'image disponible">
                                     {% endif %}
                                 </td>
                                 <td class="align-middle text-center">{{ details.titre }}</td>
@@ -70,13 +70,15 @@
     {{ dump(app.user.adrFacturationUser.adrFactUser) }}
 </pre> #}
 
-            <div class="d-flex flex-column ms-5">
+            <div class="d-flex flex-column">
                 <p>{{ app.user.adrFacturationUser.adresse}}</p>
                 {% if app.user.adrFacturationUser.complementAdr %}
                     <p>{{ app.user.adrFacturationUser.complementAdr}}</p>
                 {% endif %}
-                <p>{{ app.user.adrFacturationUser.codePostal}}</p>
-                <p>{{ app.user.adrFacturationUser.ville}}</p>
+                <p>{{ app.user.adrFacturationUser.codePostal}} - {{ app.user.adrFacturationUser.ville}}</p>
+                <div class="pt-3 pb-5">
+                    <a class="btn btn-secondary text-white" href="{{ path('app_adr_facturation_user_edit') }}">Ajouter une adresse de facturation</a>
+                </div>
             </div>
 
 
@@ -100,7 +102,7 @@
                         {% endfor %}
                     </select>
                     <div class="pt-3 pb-5">
-                    <a class="btn btn-secondary text-white" href="{{ path('app_adr_livraison_user_index') }}">Gérer mes adresses de livraison</a>
+                        <a class="btn btn-secondary text-white" href="{{ path('app_adr_livraison_user_index') }}">Gérer mes adresses de livraison</a>
                     </div>
                 </div>
             {# Sélection du transporteur #}
