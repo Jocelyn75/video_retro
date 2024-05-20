@@ -20,7 +20,10 @@
         <section class="d-flex justify-content-center">
             <div style="width: 80%;">
                 {% if films is empty %}
-                        <h2 class="text-center pb-5 mb-5">Aucun résultat</h2>
+                        <h2 class="text-center pb-5">Aucun résultat</h2>
+                        {% if error %}
+                            <div class="alert alert-danger text-center mb-5">{{ error }}</div>
+                        {% endif %}
                 {% else %}
                     {% for results in films %}
                     <div class="card mb-3 bg-light shadow" style="max-width: 100%;">

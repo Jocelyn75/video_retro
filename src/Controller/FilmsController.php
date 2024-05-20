@@ -66,27 +66,26 @@ class FilmsController extends AbstractController
         $credits = $this->tmdbService->getFilmCredits($id);
         $data = $this->tmdbService->getFilmProviders($id);
 
+        // Vérification des erreurs dans les requêtes.
+        if (isset($filmsShow['error'])) {
+            $this->addFlash('error', $filmsShow['error']);
+            return $this->redirectToRoute('app_films_show');
+        }
+
+        if (isset($credits['error'])) {
+            $this->addFlash('error', $credits['error']);
+            return $this->redirectToRoute('app_films_show');
+        }
+
+        if (isset($data['error'])) {
+            $this->addFlash('error', $data['error']);
+            return $this->redirectToRoute('app_films_show');
+        }
 
         // // Récupérer l'entité Films correspondant à l'$id fourni
         $film = $filmsRepository->findOneBy(['films_api_id' => $id]);
         $stock = $stockRepository->findAll();
         $format = $formatsRepository->findAll();
-
-        // // Vérifier si le film existe
-        // if (!$film) {
-        //     throw $this->createNotFoundException('Film non trouvé');
-        // }
-
-        // // Récupérer les stocks correspondant à chaque format spécifique
-        // $vhsStock = $stockRepository->findOneBy(['films' => $film, 'formats_id' => 1]);
-        // $dvdStock = $stockRepository->findOneBy(['films' => $film, 'formats_id' => 2]);
-        // $bluRayStock = $stockRepository->findOneBy(['films' => $film, 'formats_id' => 3]);
-
-        // // Vérifier si les stocks sont null et ajouter un message flash le cas échéant
-        // if (!$vhsStock || !$dvdStock || !$bluRayStock) {
-        //     $flashMessage = "Le produit n'est pas disponible pour le moment.";
-        //     $this->addFlash('warning', $flashMessage);
-        // }
 
         $imageUrl = $this->tmdbService->getImageUrl();
 
@@ -118,7 +117,7 @@ class FilmsController extends AbstractController
             'flatrate' => $flatrate,
             'film' => $film,
             'stock' => $stock,
-            'format' => $format
+            'format' => $format, 
         ]);
     }
 

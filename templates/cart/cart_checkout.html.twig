@@ -21,7 +21,7 @@
 
         {% for message in app.flashes('success') %}
             <div class="alert alert-success">
-                <p class="p-bold mb-3">{{ message }}</p>
+                <p class="p-bold mb-3 text-center">{{ message }}</p>
             </div>
         {% endfor %}
 
@@ -64,65 +64,59 @@
             
             {# Adresse de facturation #}
             <h2 class="fs-5 fw-bold fst-italic myPrimary mb-3">Adresse de facturation</h2>
-            {# <div class="mb-5"> #}
-            {# {% for adresseFacturation in adressesFacturation %} #}
-{# <pre>
-    {{ dump(app.user.adrFacturationUser.adrFactUser) }}
-</pre> #}
-
             <div class="d-flex flex-column">
-                <p>{{ app.user.adrFacturationUser.adresse}}</p>
-                {% if app.user.adrFacturationUser.complementAdr %}
-                    <p>{{ app.user.adrFacturationUser.complementAdr}}</p>
-                {% endif %}
-                <p>{{ app.user.adrFacturationUser.codePostal}} - {{ app.user.adrFacturationUser.ville}}</p>
+                <div class="bg-light border rounded p-3">
+                    <p>{{ app.user.adrFacturationUser.prenom}} {{ app.user.adrFacturationUser.nom|upper}}</p>
+                    <p>{{ app.user.adrFacturationUser.adresse}}</p>
+                    {% if app.user.adrFacturationUser.complementAdr %}
+                        <p>{{ app.user.adrFacturationUser.complementAdr}}</p>
+                    {% endif %}
+                    <p class="m-0">{{ app.user.adrFacturationUser.codePostal}} - {{ app.user.adrFacturationUser.ville}}</p>
+                </div>
                 <div class="pt-3 pb-5">
-                    <a class="btn btn-secondary text-white" href="{{ path('app_adr_facturation_user_edit') }}">Ajouter une adresse de facturation</a>
+                    <a class="btn btn-secondary text-white" href="{{ path('app_adr_facturation_user_edit') }}">Gérer mon adresse de facturation</a>
                 </div>
             </div>
 
-
-
-                {# <p>{{ app.user.adr_facturation_user.adresse }}Test</p> #}
-                {# <p>{{ app.user.adresseFacturationUser.complementAdr }}</p>
-                <p>{{ app.user.adresseFacturationUser.codePostal }} {{ app.user.adresseFacturationUser.ville }}</p> #}
-            {# {% endfor %} #}
-            {# </div> #}
-
             {# Formulaire Adresses et transporteur #}
-            <form action="{{ path('app_cart_validation') }}" method="post">
-
-            {# <h2 class="fs-5 fw-bold fst-italic myPrimary mb-3">Adresses de livraison</h2> #}
+            {# Sélection de l'adresse #}
+            <form action="{{ path('app_cart_checkout') }}" method="post">
                 <div class="mb-3">
-                    <label for="adresseLivraison" class="fs-5 fw-bold fst-italic myPrimary text-uppercase mb-3">Choisir une adresse de livraison :</label>
-                    <select name="adresseLivraison" id="adresseLivraison" class="form-select" aria-label="Choisir une adresse de livraison" required>>
-                        <option value="" selected disabled>Choisir une adresse de livraison</option>
-                        {% for adresseLivraison in adressesLivraison %}
-                            <option value="{{ adresseLivraison.id }}">{{ adresseLivraison.adresse }} {{adresseLivraison.complementAdr}} - {{adresseLivraison.codePostal}} - {{adresseLivraison.ville}}</option>
+                    <label for="adrLivraisonUser" class="fs-5 fw-bold fst-italic myPrimary text-uppercase mb-3">Choisir une adresse de livraison :</label>
+                    <select name="adrLivraisonUser" id="adrLivraisonUser" class="form-select" aria-label="Choisir une adresse de livraison" required>
+                        {% for adrLivraisonUser in adrsLivraisonUser %}
+                            <option value="{{ adrLivraisonUser.id }}">{{ adrLivraisonUser.prenom }} {{ adrLivraisonUser.nom|upper }} - {{ adrLivraisonUser.adresse }} {{adrLivraisonUser.complementAdr}} - {{adrLivraisonUser.codePostal}} - {{adrLivraisonUser.ville}}
+                            </option>
                         {% endfor %}
                     </select>
                     <div class="pt-3 pb-5">
                         <a class="btn btn-secondary text-white" href="{{ path('app_adr_livraison_user_index') }}">Gérer mes adresses de livraison</a>
                     </div>
                 </div>
-            {# Sélection du transporteur #}
+                {# Sélection du transporteur #}
                 <div class="mb-5">
                     <label for="livreur" class="fs-5 fw-bold fst-italic myPrimary text-uppercase mb-3">Choisir un transporteur</label>
                     <select id="livreur" name="livreur" class="form-select" aria-label="Choisir un transporteur" required>
-                        <option value="" selected disabled>Choisir un transporteur</option>
                         {% for livreur in livreurs %}
                             <option value="{{ livreur.id }}">{{ livreur.nomLivreur }} - {{ livreur.prix }} €</option>
                         {% endfor %}
                     </select>
                 </div>
+
+                {# Bouton de validation #}
                 <button type="submit" class="btn bg-myPrimary text-white mb-5">Valider mes choix</button>
             </form>
-
-            <h2 class="text-end fs-5 text-capitalize fst-italic pb-3">Montant total du panier : {{ montantTotal }} €</h2>
-            <h2 class="text-end fs-5 text-capitalize fst-italic pb-3">Montant total de la commande : {{ montantTotalCommande }} €</h2> 
+            {# <pre>
+                {{ dump(app.session.get('adrLivraisonUserId')) }}
+                {{ dump(app.session.get('adrLivraisonUser')) }}
+                {{ dump(app.session.get('livreur')) }}
+                {{ dump(app.session.get('adrFacturationUser')) }}
+            </pre> #}
+            <h2 class="text-end fs-5 fst-italic pb-3">Montant total du panier : {{ montantTotal }} €</h2>
+            <h2 class="text-end fs-5 fst-italic pb-3">Montant total de la commande : {{ montantTotalCommande }} €</h2> 
 
             <div class="d-flex justify-content-between mt-5">
-                <a class="btn bg-myPrimary text-white" href="{{ path('app_stripe') }}">Payer</a>
+                <a class="btn bg-myPrimary text-white" href="{{ path('app_stripe') }}">Passer au paiement</a>
                 <a class="btn bg-secondary text-white" href="{{ path('app_cart') }}">Retour au panier</a>
             </div>
             {% else %}
@@ -135,6 +129,8 @@
     {% endblock %}</main>
 
     {% include "_footer.html.twig" %}
+
+
 
 {% endblock %}
 

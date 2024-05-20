@@ -37,13 +37,13 @@ class Commandes
     #[ORM\ManyToOne(inversedBy: 'commandes')]
     private ?User $user = null;
 
-    #[ORM\ManyToOne(inversedBy: 'commandes')]
+    #[ORM\OneToOne(mappedBy: 'commandes', cascade: ['persist', 'remove'])]
     private ?AdrFacturationCmd $adr_facturation_cmd = null;
 
-    #[ORM\ManyToOne(inversedBy: 'commandes')]
+    #[ORM\OneToOne(mappedBy: 'commandes', cascade: ['persist', 'remove'])]
     private ?AdrLivraisonCmd $adr_livraison_cmd = null;
 
-    #[ORM\ManyToOne(inversedBy: 'commandes')]
+    #[ORM\ManyToOne(inversedBy: 'commandes', cascade: ['persist', 'remove'])]
     private ?Livreur $livreur = null;
 
     #[ORM\OneToMany(mappedBy: 'commandes', targetEntity: DetailsCommandes::class, orphanRemoval:true, cascade:['persist'])]
@@ -149,29 +149,29 @@ class Commandes
         return $this;
     }
 
-    public function getAdrFacturationCmd(): ?AdrFacturationCmd
-    {
-        return $this->adr_facturation_cmd;
-    }
+    // public function getAdrFacturationCmd(): ?AdrFacturationCmd
+    // {
+    //     return $this->adr_facturation_cmd;
+    // }
 
-    public function setAdrFacturationCmd(?AdrFacturationCmd $adr_facturation_cmd): static
-    {
-        $this->adr_facturation_cmd = $adr_facturation_cmd;
+    // public function setAdrFacturationCmd(?AdrFacturationCmd $adr_facturation_cmd): static
+    // {
+    //     $this->adr_facturation_cmd = $adr_facturation_cmd;
 
-        return $this;
-    }
+    //     return $this;
+    // }
 
-    public function getAdrLivraisonCmd(): ?AdrLivraisonCmd
-    {
-        return $this->adr_livraison_cmd;
-    }
+    // public function getAdrLivraisonCmd(): ?AdrLivraisonCmd
+    // {
+    //     return $this->adr_livraison_cmd;
+    // }
 
-    public function setAdrLivraisonCmd(?AdrLivraisonCmd $adr_livraison_cmd): static
-    {
-        $this->adr_livraison_cmd = $adr_livraison_cmd;
+    // public function setAdrLivraisonCmd(?AdrLivraisonCmd $adr_livraison_cmd): static
+    // {
+    //     $this->adr_livraison_cmd = $adr_livraison_cmd;
 
-        return $this;
-    }
+    //     return $this;
+    // }
 
     public function getLivreur(): ?Livreur
     {
@@ -235,6 +235,50 @@ class Commandes
     public function setCreatedAt(?\DateTimeImmutable $createdAt): static
     {
         $this->createdAt = $createdAt;
+
+        return $this;
+    }
+
+    public function getAdrLivraisonCmd(): ?AdrLivraisonCmd
+    {
+        return $this->adr_livraison_cmd;
+    }
+
+    public function setAdrLivraisonCmd(?AdrLivraisonCmd $adr_livraison_cmd): static
+    {
+        // unset the owning side of the relation if necessary
+        if ($adr_livraison_cmd === null && $this->adr_livraison_cmd !== null) {
+            $this->adr_livraison_cmd->setCommandes(null);
+        }
+
+        // set the owning side of the relation if necessary
+        if ($adr_livraison_cmd !== null && $adr_livraison_cmd->getCommandes() !== $this) {
+            $adr_livraison_cmd->setCommandes($this);
+        }
+
+        $this->adr_livraison_cmd = $adr_livraison_cmd;
+
+        return $this;
+    }
+
+    public function getAdrFacturationCmd(): ?AdrFacturationCmd
+    {
+        return $this->adr_facturation_cmd;
+    }
+
+    public function setAdrFacturationCmd(?AdrFacturationCmd $adr_facturation_cmd): static
+    {
+        // unset the owning side of the relation if necessary
+        if ($adr_facturation_cmd === null && $this->adr_facturation_cmd !== null) {
+            $this->adr_facturation_cmd->setCommandes(null);
+        }
+
+        // set the owning side of the relation if necessary
+        if ($adr_facturation_cmd !== null && $adr_facturation_cmd->getCommandes() !== $this) {
+            $adr_facturation_cmd->setCommandes($this);
+        }
+
+        $this->adr_facturation_cmd = $adr_facturation_cmd;
 
         return $this;
     }

@@ -54,11 +54,6 @@ class ProfilType extends AbstractType
             'widget' => 'single_text',        
         ])
         ->add('tel_user', TextType::class, [
-            'constraints' => [
-                new NotBlank([
-                    'message' => 'Veuillez saisir votre numéro de téléphone',
-                ])
-            ]
         ])
 
             

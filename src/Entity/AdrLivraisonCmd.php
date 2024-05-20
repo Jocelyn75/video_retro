@@ -18,8 +18,8 @@ class AdrLivraisonCmd
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $adr_livr_cmd = null;
 
-    #[ORM\OneToMany(mappedBy: 'adr_livraison_cmd', targetEntity: Commandes::class)]
-    private Collection $commandes;
+    #[ORM\OneToOne(inversedBy: 'adr_livraison_cmd', cascade: ['persist', 'remove'])]
+    private ?Commandes $commandes = null;
 
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $complement_adr = null;
@@ -30,9 +30,15 @@ class AdrLivraisonCmd
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $ville = null;
 
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $nom = null;
+
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $prenom = null;
+
     public function __construct()
     {
-        $this->commandes = new ArrayCollection();
+        // $this->commandes = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -52,32 +58,14 @@ class AdrLivraisonCmd
         return $this;
     }
 
-    /**
-     * @return Collection<int, Commandes>
-     */
-    public function getCommandes(): Collection
+    public function getCommandes(): ?Commandes
     {
         return $this->commandes;
     }
 
-    public function addCommande(Commandes $commande): static
+    public function setCommandes(?Commandes $commandes): static
     {
-        if (!$this->commandes->contains($commande)) {
-            $this->commandes->add($commande);
-            $commande->setAdrLivraisonCmd($this);
-        }
-
-        return $this;
-    }
-
-    public function removeCommande(Commandes $commande): static
-    {
-        if ($this->commandes->removeElement($commande)) {
-            // set the owning side to null (unless already changed)
-            if ($commande->getAdrLivraisonCmd() === $this) {
-                $commande->setAdrLivraisonCmd(null);
-            }
-        }
+        $this->commandes = $commandes;
 
         return $this;
     }
@@ -114,6 +102,30 @@ class AdrLivraisonCmd
     public function setVille(?string $ville): static
     {
         $this->ville = $ville;
+
+        return $this;
+    }
+
+    public function getNom(): ?string
+    {
+        return $this->nom;
+    }
+
+    public function setNom(?string $nom): static
+    {
+        $this->nom = $nom;
+
+        return $this;
+    }
+
+    public function getPrenom(): ?string
+    {
+        return $this->prenom;
+    }
+
+    public function setPrenom(?string $prenom): static
+    {
+        $this->prenom = $prenom;
 
         return $this;
     }

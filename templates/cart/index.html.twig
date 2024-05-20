@@ -63,9 +63,7 @@
                                             <button type="submit" class="btn btn-sm bg-myPrimary text-white px-1" name="changeQuantity" value="-1" aria-label="Retirer une unité">
                                                 <i class="fa-solid fa-minus "></i>
                                             </button>
-                                            {# <button class="btn update-quantity" data-stock-id="{{ details.id }}" data-change-quantity="-1">-</button> #}
                                             {{ details.quantite }}
-                                            {# <button class="btn update-quantity" data-stock-id="{{ details.id }}" data-change-quantity="1">+</button> #}
                                             <button type="submit" class="btn btn-sm bg-myPrimary text-white px-1" name="changeQuantity" value="1" aria-label="Ajouter une unité">
                                                 <i class="fa-solid fa-plus "></i>
                                             </button>
@@ -87,7 +85,7 @@
                 
                 <h2 id="montantTotal" class="text-center fs-2 fst-italic pb-3">Montant total : {{ montantTotal}} €</h2>
                 <div class="d-flex justify-content-between">
-                    <a class="btn bg-myPrimary text-white mb-1" href="{{ path('app_cart_validation') }}">Valider le panier</a>
+                    <a class="btn bg-myPrimary text-white mb-1" href="{{ path('app_cart_checkout') }}">Valider le panier</a>
                     <form action="{{ path('app_cart_empty') }}" method="post" onsubmit="return confirm('Êtes-vous sûr de vouloir vider le panier ?');">
                         <button type="submit" class="btn btn-danger">Vider le panier</button>
                     </form>
@@ -103,6 +101,9 @@
     {% endblock %}</main>
     {% include "_footer.html.twig" %}
 {% endblock %}
+
+
+
 
 {# {% block javascript %}
 

@@ -18,7 +18,7 @@ class AdrLivraisonUserType extends AbstractType
     {
         $builder
             ->add('adr_livr_user', TextType::class, [
-                'label' => 'Nom de cette adresse',
+                'label' => 'Intitulé de cette adresse',
                 'attr' => [
                     'placeholder' => 'Domicile', 
                 ],
@@ -28,6 +28,22 @@ class AdrLivraisonUserType extends AbstractType
                     ])
                 ]
             ])
+            ->add('prenom', TextType::class, [
+                'label' => 'Prénom',
+                'constraints' => [
+                    new NotBlank([
+                        'message' => 'Veuillez saisir un prénom',
+                    ])
+                ]
+            ])
+            ->add('nom', TextType::class, [
+                'label' => 'Nom',
+                'constraints' => [
+                    new NotBlank([
+                        'message' => 'Veuillez saisir un nom de famille',
+                    ])
+                ]
+            ])    
             ->add('adresse', TextType::class, [
                 'label' => 'Adresse',
                 'constraints' => [

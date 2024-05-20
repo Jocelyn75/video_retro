@@ -2,11 +2,13 @@
 
 namespace App\Controller;
 
-use App\Repository\AdrLivraisonUserRepository;
-use App\Repository\LivreurRepository;
 use App\Service\TMDBService;
+use App\Entity\AdrLivraisonUser;
 use App\Repository\StockRepository;
+use App\Repository\LivreurRepository;
 use Symfony\Component\HttpFoundation\Request;
+use App\Repository\AdrLivraisonUserRepository;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -14,7 +16,7 @@ use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
-#[Route('/cart')]
+#[Route('/profile/cart')]
 class CartController extends AbstractController
 {
     private $stockRepository;
@@ -41,8 +43,7 @@ class CartController extends AbstractController
         $session->set('previous_url', $previousUrl);
 
         $cart = $session->get('cart', []);
-        dump($cart);
-
+        
         $cartDetails = [];
         $montantTotal = 0;
         foreach ($cart as $stockId => $quantity) {
@@ -75,49 +76,41 @@ class CartController extends AbstractController
         ]);
     }
 
-    #[Route('/cart-validation', name: 'app_cart_validation')]    
+    #[Route('/checkout', name: 'app_cart_checkout')]    
         
-    /**
-     * cartValidation
-     *
-     * @param  mixed $session
-     * @param  mixed $tmdbService
-     * @param  mixed $request
-     * @param  mixed $livreurRepository
-     * @return Response
-     */
-    public function cartValidation(SessionInterface $session, TMDBService $tmdbService, Request $request, LivreurRepository $livreurRepository, AdrLivraisonUserRepository $adrLivraisonUserRepository): Response
-    {
-
-        $this->denyAccessUnlessGranted('ROLE_USER');
+    public function cartCheckout(SessionInterface $session, Request $request, LivreurRepository $livreurRepository, AdrLivraisonUserRepository $adrLivraisonUserRepository, TMDBService $tmdbService, EntityManagerInterface $em): Response {
         
-        if ($request->isMethod('POST')) {
-        $livreurId = $request->request->get('livreur');
-        $adresseLivraisonId = $request->request->get('adresseLivraison');
-        }
-        //Utilisation du referer dans le FIL D'ARIANE.
-        // Récupérer l'URL précédente
-        $previousUrl = $request->headers->get('referer');
-        // Stocker l'URL précédente dans la session
-        $session->set('previous_url', $previousUrl);
-
-        // PANIER
+        $user = $this->getUser();
+        
+        // Récupérer le contenu du panier depuis la session
         $cart = $session->get('cart', []);
-
+    
         $cartDetails = [];
         $montantTotal = 0;
+        $livreurs = $livreurRepository->findAll();
+        $adrsLivraisonUser = $em->getRepository(AdrLivraisonUser::class)->findBy(['user' => $user]);
+        
+        
+    // Vérifier si l'adresse de facturation existe pour l'utilisateur
+    $adrFacturationUser = $user->getAdrFacturationUser();
+    if ($adrFacturationUser === null) {
+        // Gérer le cas où l'adresse de facturation n'existe pas
+        // Peut-être rediriger l'utilisateur vers une page pour qu'il ajoute une adresse de facturation
+    } else {
+        $session->set('adrFacturationUser', $adrFacturationUser);
+    }
+    
+        // Traiter les éléments du panier
         foreach ($cart as $stockId => $quantity) {
             $stock = $this->stockRepository->find($stockId);
             if ($stock !== null) {
-
                 $filmId = $stock->getFilms()->getFilmsApiId();
                 $stock->titre = $tmdbService->getFilmTitle($filmId);
                 $filmDetails = $tmdbService->getFilmDetails($filmId);
                 $imageUrl = $tmdbService->getImageUrl() . 'w92' . $filmDetails['poster_path'];
-
                 $montant = $stock->getPrixReventeDefaut() * $quantity;
                 $montantTotal += $montant;
-
+    
                 $cartDetails[] = [
                     'imageUrl' => $imageUrl,
                     'id' => $stock->getId(),
@@ -130,55 +123,136 @@ class CartController extends AbstractController
             }
         }
 
-        // Initialiser le montant total de la commande au montant total du panier
-        $montantTotalCommande = $montantTotal;
-        $livreurs = $livreurRepository->findAll();
+        $montantTotalCommande = $montantTotal;        
 
-        // ADRESSE DE LIVRAISON
-        $user = $this->getUser();
-        $adressesLivraison = $user->getAdrLivraisonUser();
-        $adressesFacturation = $user->getAdrFacturationUser();
-        
-        // LIVREUR
+        // Traiter les sélections de livreur et d'adresse de livraison
         if ($request->isMethod('POST')) {
             $livreurId = $request->request->get('livreur');
             $livreur = $livreurRepository->find($livreurId);
-            $this->addFlash('success', 'Vos choix ont bien été enregistrés.');
+            $adrLivraisonUserId = $request->request->get('adrLivraisonUser');
+            $adrLivraisonUser = $adrLivraisonUserRepository->find($adrLivraisonUserId);
+        
             if ($livreur !== null) {
                 // Ajouter les frais de livraison au montant total de la commande
                 $montantTotalCommande += $livreur->getPrix();
-            // } else {
-            //     // Gérer le cas où aucun livreur n'est sélectionné
-            //     // Peut-être afficher un message d'erreur ou prendre une autre action appropriée
+                $this->addFlash('success', 'Vos choix ont bien été enregistrés.');
             }
 
-            // Stocker le montant total de la commande dans la session
+            if ($adrLivraisonUser !== null) {
+                $session->set('adrLivraisonUser', $adrLivraisonUser);
+                $session->set('adrLivraisonUserId', $adrLivraisonUserId);
+            }
+
+            $session->set('livreur', $livreur); 
             $session->set('montantTotalCommande', $montantTotalCommande);
-
-            // ADRESSES DE LIVRAISON
-            $adresseLivraison = $adrLivraisonUserRepository->find($adresseLivraisonId);
-            if ($adresseLivraison !== null) {
-                // Utilisez l'adresse de livraison sélectionnée comme vous le souhaitez
-                // Par exemple, vous pouvez récupérer les détails de l'adresse et les utiliser dans votre logique de commande
-            } else {
-                // Gérer le cas où aucune adresse de livraison n'est sélectionnée
-                // Peut-être afficher un message d'erreur ou prendre une autre action appropriée
-            }
+        
         }
 
-        // Récupérer toutes les adresses de livraison
-        // $adressesLivraison = $adrLivraisonUserRepository->findAll();
-
-        return $this->render('cart/cart_validation.html.twig', [
+        return $this->render('cart/cart_checkout.html.twig', [
             'cartDetails' => $cartDetails,
             'montantTotal' => $montantTotal,
-            'livreurs' => $livreurs, 
+            'livreurs' => $livreurs,
             'montantTotalCommande' => $montantTotalCommande,
-            'adressesLivraison' => $adressesLivraison,
-            'adressesFacturation' => $adressesFacturation
+            'adrsLivraisonUser' => $adrsLivraisonUser,
+            'adrFacturationUser' => $adrFacturationUser,            
         ]);
     }
 
+
+
+    // public function cartValidation(SessionInterface $session, TMDBService $tmdbService, Request $request, LivreurRepository $livreurRepository, AdrLivraisonUserRepository $adrLivraisonUserRepository): Response
+    // {
+
+    //     $this->denyAccessUnlessGranted('ROLE_USER');
+        
+    //     if ($request->isMethod('POST')) {
+    //     $livreurId = $request->request->get('livreur');
+    //     $adresseLivraisonId = $request->request->get('adresseLivraison');
+    //     }
+    //     //Utilisation du referer dans le FIL D'ARIANE.
+    //     // Récupérer l'URL précédente
+    //     $previousUrl = $request->headers->get('referer');
+    //     // Stocker l'URL précédente dans la session
+    //     $session->set('previous_url', $previousUrl);
+
+    //     // PANIER
+    //     $cart = $session->get('cart', []);
+
+    //     $cartDetails = [];
+    //     $montantTotal = 0;
+    //     foreach ($cart as $stockId => $quantity) {
+    //         $stock = $this->stockRepository->find($stockId);
+    //         if ($stock !== null) {
+
+    //             $filmId = $stock->getFilms()->getFilmsApiId();
+    //             $stock->titre = $tmdbService->getFilmTitle($filmId);
+    //             $filmDetails = $tmdbService->getFilmDetails($filmId);
+    //             $imageUrl = $tmdbService->getImageUrl() . 'w92' . $filmDetails['poster_path'];
+
+    //             $montant = $stock->getPrixReventeDefaut() * $quantity;
+    //             $montantTotal += $montant;
+
+    //             $cartDetails[] = [
+    //                 'imageUrl' => $imageUrl,
+    //                 'id' => $stock->getId(),
+    //                 'titre' => $stock->titre,
+    //                 'format' => $stock->getFormats()->getNomFormat(),
+    //                 'prix' => $stock->getPrixReventeDefaut(),
+    //                 'quantite' => $quantity,
+    //                 'montant' => $montant,
+    //             ];
+    //         }
+    //     }
+
+    //     // Initialiser le montant total de la commande au montant total du panier
+    //     $montantTotalCommande = $montantTotal;
+    //     $livreurs = $livreurRepository->findAll();
+
+    //     // ADRESSE DE LIVRAISON
+    //     $user = $this->getUser();
+    //     $adressesLivraison = $user->getAdrLivraisonUser();
+    //     $adressesFacturation = $user->getAdrFacturationUser();
+        
+    //     // LIVREUR
+    //     if ($request->isMethod('POST')) {
+    //         $livreurId = $request->request->get('livreur');
+    //         $livreur = $livreurRepository->find($livreurId);
+    //         $this->addFlash('success', 'Vos choix ont bien été enregistrés.');
+    //         if ($livreur !== null) {
+    //             // Ajouter les frais de livraison au montant total de la commande
+    //             $montantTotalCommande += $livreur->getPrix();
+    //         // } else {
+    //         //     // Gérer le cas où aucun livreur n'est sélectionné
+    //         //     // Peut-être afficher un message d'erreur ou prendre une autre action appropriée
+    //         }
+
+    //         // Stocker le montant total de la commande dans la session
+    //         $session->set('montantTotalCommande', $montantTotalCommande);
+
+    //         // ADRESSES DE LIVRAISON
+    //         $adresseLivraison = $adrLivraisonUserRepository->find($adresseLivraisonId);
+    //         if ($adresseLivraison !== null) {
+    //             // Utilisez l'adresse de livraison sélectionnée comme vous le souhaitez
+    //             // Par exemple, vous pouvez récupérer les détails de l'adresse et les utiliser dans votre logique de commande
+    //         } else {
+    //             // Gérer le cas où aucune adresse de livraison n'est sélectionnée
+    //             // Peut-être afficher un message d'erreur ou prendre une autre action appropriée
+    //         }
+    //     }
+
+    //     // Récupérer toutes les adresses de livraison
+    //     // $adressesLivraison = $adrLivraisonUserRepository->findAll();
+
+    //     return $this->render('cart/cart_checkout.html.twig', [
+    //         'cartDetails' => $cartDetails,
+    //         'montantTotal' => $montantTotal,
+    //         'livreurs' => $livreurs, 
+    //         'montantTotalCommande' => $montantTotalCommande,
+    //         'adressesLivraison' => $adressesLivraison,
+    //         'adressesFacturation' => $adressesFacturation
+    //     ]);
+    // }
+    
     #[Route('/add', name: 'app_cart_new', methods: ['POST'])]    
     /**
      * add

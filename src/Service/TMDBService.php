@@ -32,10 +32,14 @@ class TMDBService
                 'page' => 1,
                 ]
             ]);
-        $apiResponseArray = $apiResponse->toArray();
-        return $apiResponseArray['results'];
-    }
-
+            if ($apiResponse->getStatusCode() === 200) {
+                $apiResponseArray = $apiResponse->toArray();
+                return $apiResponseArray['results'];
+            } else {
+                return ['error' => 'La recherche n\'a pas pu aboutir, veuillez réessayer plus tard.'];
+            }
+        }
+    
     //Méthode pour récupérer la liste des films populaires par année
     public function getPopularFilmsByYear($year): array
     {
@@ -51,8 +55,12 @@ class TMDBService
             ],
         ]);
 
-        $apiResponseArray = $apiResponse->toArray();
-        return $apiResponseArray['results'];
+        if ($apiResponse->getStatusCode() === 200) {
+            $apiResponseArray = $apiResponse->toArray();
+            return $apiResponseArray['results'];
+        } else {
+            return ['error' => 'La recherche n\'a pas pu aboutir, veuillez réessayer plus tard.'];
+        }
     }
 
     // Méthode pour récupérer les films populaires au moment de la requête
@@ -67,12 +75,15 @@ class TMDBService
             ],
         ]);
 
-        $apiResponseArray = $apiResponse->toArray();
-        // Limiter les résultats aux 10 premiers films
-        $popularFilms = array_slice($apiResponseArray['results'], 0, 10);
-        return $popularFilms;
+        if ($apiResponse->getStatusCode() === 200) {
+            $apiResponseArray = $apiResponse->toArray();
+            return array_slice($apiResponseArray['results'], 0, 10);
+        } else {
+            return ['error' => 'La requête n\'a pas pu aboutir, veuillez réessayer plus tard.'];
+        }
     }
 
+    //Méthode pour récupérer les classiques des années 1980 et 1990.
     public function getClassicFilms(): array
     {
         $apiResponse = $this->client->request('GET', 'https://api.themoviedb.org/3/discover/movie', [
@@ -86,31 +97,48 @@ class TMDBService
             ],
         ]);
 
-        $apiResponseArray = $apiResponse->toArray();
-        $classicFilms = array_slice($apiResponseArray['results'], 1, 10);
-        return $classicFilms;
-
+        if ($apiResponse->getStatusCode() === 200) {
+            $apiResponseArray = $apiResponse->toArray();
+            return array_slice($apiResponseArray['results'], 1, 10);
+        } else {
+            return ['error' => 'La requête n\'a pas pu aboutir, veuillez réessayer plus tard.'];
+        }
     }
 
     // Méthode pour la fiche film : récupération des données d'un film à partir de son id
     public function getFilmDetails(string $id): array
     {
         $apiResponse = $this->client->request('GET', "https://api.themoviedb.org/3/movie/{$id}?&language=fr-FR&region=FR&api_key={$_ENV['TMDB_API']}");
-        return $apiResponse->toArray();
+
+        if ($apiResponse->getStatusCode() === 200) {
+            return $apiResponse->toArray();
+        } else {
+            return ['error' => 'La requête n\'a pas pu aboutir, veuillez réessayer plus tard.'];
+        }
     }
 
     // Méthode pour la fiche film : récupérer les crédits d'un film à partir de son id
     public function getFilmCredits(string $id): array
     {
         $apiResponse = $this->client->request('GET', "https://api.themoviedb.org/3/movie/{$id}/credits?language=fr-FR&region=FR&api_key={$_ENV['TMDB_API']}");
-        return $apiResponse->toArray();
+
+        if ($apiResponse->getStatusCode() === 200) {
+            return $apiResponse->toArray();
+        } else {
+            return ['error' => 'La requête n\'a pas pu aboutir, veuillez réessayer plus tard.'];
+        }
     }
 
     // Méthode pour la fiche film : récupérer les services de VOD et SVOD sur lesquels le film est disponible, à partir de l'id du film
     public function getFilmProviders(string $id): array
     {
         $apiResponse = $this->client->request('GET', "https://api.themoviedb.org/3/movie/{$id}/watch/providers?language=fr-FR&region=FR&api_key={$_ENV['TMDB_API']}");
-        return $apiResponse->toArray();
+
+        if ($apiResponse->getStatusCode() === 200) {
+            return $apiResponse->toArray();
+        } else {
+            return ['error' => 'La requête n\'a pas pu aboutir, veuillez réessayer plus tard.'];
+        }
     }
 
     // Méthode pour récupérer le titre des films 
@@ -123,10 +151,4 @@ class TMDBService
             return 'Titre non disponible';
         }
     }
-
-    // Méthode pour afficher les films populaires
-
-    // Méthode pour rechercher une liste de films par noms de personnes
 }
-
-    //Ajouter la requête pour récupérer les images à partir de l'id d'un films

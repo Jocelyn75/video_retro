@@ -8,7 +8,7 @@ use App\Entity\User;
 use App\Form\CommandesType;
 use App\Repository\CommandesRepository;
 use App\Repository\StockRepository;
-use App\Service\CommandeRefGenerator;
+use App\Service\CommandeRefGeneratorService;
 use App\Service\TMDBService;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -17,7 +17,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\Routing\Annotation\Route;
 
-#[Route('/commandes')]
+#[Route('profile/commandes')]
 class CommandesController extends AbstractController
 {
     #[Route('/', name: 'app_commandes_index', methods: ['GET'])]    
@@ -35,49 +35,38 @@ class CommandesController extends AbstractController
     }
 
     #[Route('/new', name: 'app_commandes_new', methods: ['GET', 'POST'])]    
-    /**
-     * new
-     *
-     * @param  mixed $request
-     * @param  mixed $em
-     * @param  mixed $session
-     * @param  mixed $stockRepository
-     * @param  mixed $tmdbService
-     * @param  mixed $commandeRef
-     * @return Response
-     */
-    public function new(Request $request, EntityManagerInterface $em, SessionInterface $session, StockRepository $stockRepository, TMDBService $tmdbService, CommandeRefGenerator $commandeRef): Response
+    public function new(Request $request, EntityManagerInterface $em, SessionInterface $session, StockRepository $stockRepository, TMDBService $tmdbService, CommandeRefGeneratorService $commandeRef): Response
     {
-        //On récupère le panier
-        $cart = $session->get('cart', []);
+        // //On récupère le panier
+        // $cart = $session->get('cart', []);
 
-        // On crée une nouvelle commande
-        $commande = new Commandes();
+        // // On crée une nouvelle commande
+        // $commande = new Commandes();
 
-        // On remplit la commande
-        $commande->setUser($this->getUser());
-        $commande->setCreatedAt(new \DateTimeImmutable('now'));
-        $commande->setReference($commandeRef->generateReference());
+        // // On remplit la commande
+        // $commande->setUser($this->getUser());
+        // $commande->setCreatedAt(new \DateTimeImmutable('now'));
+        // $commande->setReference($commandeRef->generateReference());
         
-        //On boucle le panier pour créer les détails de la commande.
-        foreach ($cart as $stockId => $quantity) {
-            $detailsCommandes = new DetailsCommandes();
+        // //On boucle le panier pour créer les détails de la commande.
+        // foreach ($cart as $stockId => $quantity) {
+        //     $detailsCommandes = new DetailsCommandes();
 
-            // On va chercher le produit (avec la requête API pour obtenir le titre).
-            $stock = $stockRepository->find($stockId);
-            $filmId = $stock->getFilms()->getFilmsApiId();
-            $stock->titre = $tmdbService->getFilmTitle($filmId);
+        //     // On va chercher le produit (avec la requête API pour obtenir le titre).
+        //     $stock = $stockRepository->find($stockId);
+        //     $filmId = $stock->getFilms()->getFilmsApiId();
+        //     $stock->titre = $tmdbService->getFilmTitle($filmId);
             
-            $prix = $stock->getPrixReventeDefaut();
+        //     $prix = $stock->getPrixReventeDefaut();
 
-            //On crée le détails de commande
-            $detailsCommandes->setStockId($stockId);
-            $detailsCommandes->setPrixUnitaire($prix);
-            $detailsCommandes->setQuantiteCmd($quantity);
+        //     //On crée le détails de commande
+        //     $detailsCommandes->setStockId($stockId);
+        //     $detailsCommandes->setPrixUnitaire($prix);
+        //     $detailsCommandes->setQuantiteCmd($quantity);
 
-            //On ajoute dans la commande les détails de la commande.
-            $commande->addDetailsCommande($detailsCommandes);
-        }
+        //     //On ajoute dans la commande les détails de la commande.
+        //     $commande->addDetailsCommande($detailsCommandes);
+        // }
         // ---------------
         // Persist et flush à faire à la validation de la commande par l'utilisateur pour ne pas injecter les données de la commande en BDD tant que la commande n'est pas validée. 
         // Avec persist on crée les requêtes.
@@ -96,16 +85,17 @@ class CommandesController extends AbstractController
         //     $entityManager->persist($commande);
         //     $entityManager->flush();
 
-        //     return $this->redirectToRoute('app_commandes_index', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('app_commandes_index', [], Response::HTTP_SEE_OTHER);
         // -------------
         
-        $this->addFlash('message', 'Commande créée avec succès');
-        return $this->render('commandes/new.html.twig', [
-            // 'controller_name' => 'CommandesController',
-            'commande' => $commande,
-            'cart' => $cart,
-            // 'form' => $form,
-        ]);
+    //     $this->addFlash('message', 'Commande créée avec succès');
+    //     return $this->render('commandes/new.html.twig', [
+    //         // 'controller_name' => 'CommandesController',
+    //         'commande' => $commande,
+    //         'cart' => $cart,
+    //         // 'form' => $form,
+    //     ]);
+    //    }
     }
 
     #[Route('/{id}', name: 'app_commandes_show', methods: ['GET'])]    

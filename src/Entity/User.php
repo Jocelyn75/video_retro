@@ -59,10 +59,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(nullable: true)]
     private ?float $cagnotte = null;
 
-
-
-
-
     #[ORM\OneToMany(mappedBy: 'user', targetEntity: Commandes::class)]
     private Collection $commandes;
 

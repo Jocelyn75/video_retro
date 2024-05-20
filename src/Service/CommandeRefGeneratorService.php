@@ -2,11 +2,11 @@
 
 namespace App\Service;
 
-class CommandeRefGenerator
+class CommandeRefGeneratorService
 {
     private $codeManager;
 
-    public function __construct(CodeManager $codeManager)
+    public function __construct(CodeManagerService $codeManager)
     {
         $this->codeManager = $codeManager;
     }

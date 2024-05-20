@@ -13,22 +13,19 @@
         {% endblock %}
     </head>
 
-    <body>{% block body %}
-        
-        {% for notification in app.flashes('success') %}
-            <div class="notification alert alert-sucess my2" id="notification">
-                <span class="notifMessage">{{ notification|raw }}</span>
-            </div>
-        {% endfor %}
-        
-        <main class="container">{% block main %}{% endblock %}</main>
+    <body>
+        {% block body %}
+                
+            <main class="container">
+                {% block main %}{% endblock %}
+            </main>
 
         {% block javascript %}
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.3/js/bootstrap.min.js" integrity="sha512-ykZ1QQr0Jy/4ZkvKuqWn4iF3lqPZyij9iRv6sGqLRdTPkY69YX6+7wvVGmsdBbiIfN/8OdsI7HABjvEok6ZopQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-        <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha384-KyZXEAg3QhqLMpG8r+Knujsl5+KEbI7/0KjVl5K44EIlqLsCjM1gk5+1VP4M4Hp4" crossorigin="anonymous"></script>
-        <script src="{{ asset('js/tooltip.js') }}"></script>
-{% endblock %}
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.3/js/bootstrap.min.js" integrity="sha512-ykZ1QQr0Jy/4ZkvKuqWn4iF3lqPZyij9iRv6sGqLRdTPkY69YX6+7wvVGmsdBbiIfN/8OdsI7HABjvEok6ZopQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+            <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha384-KyZXEAg3QhqLMpG8r+Knujsl5+KEbI7/0KjVl5K44EIlqLsCjM1gk5+1VP4M4Hp4" crossorigin="anonymous"></script>
+            <script src="{{ asset('js/tooltip.js') }}"></script>
+        {% endblock %}
 
-    {% endblock %}
+        {% endblock %}
     </body>
 </html>

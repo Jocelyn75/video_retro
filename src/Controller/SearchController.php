@@ -32,18 +32,26 @@ class SearchController extends AbstractController
         $data = $request->query->all();
         $search = isset($data['search']['keyword']) ? $data['search']['keyword'] : null;
 
-        // Utiliser le service TMDBService pour effectuer la recherche de films
+        // 'error' est défini dans TMDBService.
         if ($search) {
-            $films = $this->tmdbService->searchFilms($search);
+            $response = $this->tmdbService->searchFilms($search);
+            if (isset($response['error'])) {
+                $error = $response['error'];
+                $films = [];
+            } else {
+                $films = $response;
+            }
         } else {
             $films = [];
-        }
-        
+            $error = 'Aucun mot-clé de recherche fourni.';
+        }        
         $imageUrl = $this->tmdbService->getImageUrl();
+
 
         return $this->render('search/index.html.twig', [
             'films' => $films,
             'imageUrl' => $imageUrl,
+            'error' => $error ?? null,
         ]);
     }
 
@@ -54,13 +62,14 @@ class SearchController extends AbstractController
      */
     public function getSearchBar() : Response
     {
+        
         $form = $this->createForm(SearchType::class, null, [
             'keyword' =>true,
             "method" => "GET",
             "csrf_protection" => false
         ]);
         return $this->render('search/_search_bar.html.twig', [
-            'form' => $form->createView()
+            'form' => $form->createView()            
         ]);
     }
 
@@ -78,9 +87,10 @@ class SearchController extends AbstractController
             //Si une année est renseignée, alors $search prend la valeur renseignée, sinon $search est nul.
             $search = isset($data['search']['year']) ? $data['search']['year'] : null;
 
-                // if (!is_numeric($search) || intval($search) != $search) {
-                // return new Response('Veuillez entrer une année valide.', Response::HTTP_BAD_REQUEST);
-                // }
+            if (!is_numeric($search) || intval($search) != $search || strlen($search) !== 4)  {
+                $this->addFlash('error', 'Veuillez entrer une année valide.');
+                return $this->redirectToRoute('home');
+            }
 
             if ($search) {
                 $films = $this->tmdbService->getPopularFilmsByYear($search);
@@ -98,7 +108,7 @@ class SearchController extends AbstractController
 
 
         /**
-     * getSearchBar
+     * getSearchByYear
      *
      * @return Response
      */

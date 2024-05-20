@@ -22,7 +22,13 @@
         {{ form_errors(form) }}
             {{ form_start(form, {'attr': {'novalidate': 'novalidate'}}) }}
                 {{ form_row(form.adr_livr_user, {
-                    label: 'Nom de l\'adresse'
+                    label: 'Intitulé de l\'adresse'
+                }) }}
+                {{ form_row(form.prenom, {
+                    label: 'Prénom'
+                }) }}
+                {{ form_row(form.nom, {
+                    label: 'Nom'
                 }) }}
 
                 {{ form_row(form.adresse, {

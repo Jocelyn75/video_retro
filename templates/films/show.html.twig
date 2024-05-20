@@ -6,7 +6,7 @@
     {% include '_header.html.twig' %}
 
     {# Fil d'Ariane #}
-    <nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
+    <nav style="--bs-breadcrumb-divider: '>';" aria-label="Fil d'Ariane">
         <ol class="breadcrumb">
             <li class="breadcrumb-item ms-3"><a class="aBreadCrumb" href="{{path('home')}}">Accueil</a></li>
             <li class="breadcrumb-item"><a class="aBreadCrumb" href="{{ path('app_search', {'search[keyword]': filmsShow.title }) }}">Résultats de la recherche</a></li>
@@ -14,155 +14,160 @@
         </ol>
     </nav>
 
-    <main class="container">
+    {% block main %}<main class="container">
+
+    {# Message d'erreur requête API #}
+    {% for flashError in app.flashes('error') %}
+        <div class="alert alert-danger" role="alert">
+            {{ flashError }}
+        </div>
+    {% endfor %}
+
         <div class="card bg-light shadow movieCard"> {# Carte pour englober l'ensemble du contenu #}
             <div class="card-body">
-                {% block main %}
-                    <div class="row mb-5"> {# Ajout d'une première rangée pour l'image et les métadonnées #}
-                        <div class="col-md-4 col-xs-12"> {# Colonne pour la partie image #}
-                            <div class="text-center">
-                                {% if filmsShow.poster_path is not empty %}
-                                    <img class="imgFilm img-fluid mb-3 shadow rounded" src="{{ imageUrl ~ 'w342' ~ filmsShow.poster_path }}" alt="Affiche du film : {{ filmsShow.title }}">
-                                {% else %}
-                                    <img src="{{ asset('images/no_image_available/no_image_available_w342_h513.png') }}" class="img-fluid shadow rounded mb-3" alt="Pas d'image disponible">
-                                {% endif %}
-                            </div>
-                        </div>
-
-                        <div class="col-md-8 col-xs-12"> {# Colonne pour la partie métadonnées #}
-                            <div class="text-center">
-                                <h1>{{ filmsShow.title|upper }}</h1>
-                                <div class="d-flex justify-content-center">
-                                    {% if director is defined %}
-                                        {% set directors = [] %}
-                                        {% for person in director %}
-                                            {% if person.job == 'Director' %}
-                                                {% set directors = directors|merge([person.name]) %}
-                                            {% endif %}
-                                        {% endfor %}
-                                        {% if directors %}
-                                            {% if directors|length > 1 %}
-                                                <p class="p-bold myPrimary">Réalisation :&nbsp;</p> {{ directors|join(', ') }}
-                                            {% else %}
-                                                <p class="p-bold myPrimary">Réalisation :&nbsp;</p>{{ directors[0] }}
-                                            {% endif %}
-                                        {% else %}
-                                            <p class="p-bold myPrimary">Réalisation :&nbsp;</p>Non renseigné
-                                        {% endif %}
-                                    {% else %}
-                                        <p class="p-bold myPrimary">Réalisation :&nbsp;</p>Non renseigné
-                                    {% endif %}
-                                </div>
-                                <div class="d-flex justify-content-center">
-                                    <p class="p-bold myPrimary">Durée :&nbsp;</p> {{ filmsShow.runtime }} mn
-                                </div>
-                                <div class="d-flex justify-content-center">
-                                    <p class="p-bold myPrimary">Année de sortie :&nbsp;</p> {{ filmsShow.release_date|slice(0,4) }}
-                                </div>
-                                <p class="mb-4 overview">{{ filmsShow.overview }}</p>
-                                <p class="p-bold myPrimary mb-0">Têtes d'affiche</p>
-                                <div class="d-flex justify-content-center">
-                                    {% for actor in cast|slice(0, 5) %}
-                                        {{ actor.name }}{% if not loop.last %},&nbsp;{% endif %}
-                                    {% endfor %}
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="row"> {# Nouvelle rangée pour la partie VHS, DVD, Blu-Ray #}
-                        <div class="col-12"> 
-                            {% if film is not null %}
-                                <div class="row logoFormatsContainer mb-3">
-                                    {% for stock in film.stocks %}
-                                        <div class="col-md-4">
-                                            <div class="d-flex flex-column align-items-center justify-content-center">
-                                                {% set image = (stock.formats.id == 1) ? 'vhs_logo_w100.png' : (stock.formats.id == 2) ? 'dvd_logo_w100.png' : 'bluray_logo_w100.png' %}
-                                                <img class="logoFormats mb-2 shadow rounded" src="{{ asset('images/logosFormats/' ~ image) }}" alt="Logo VHS">
-                                                {% if stock.quantiteStock > 0 %}
-                                                    <form method="post" action="{{ path("app_cart_new")}}" class="text-center">
-                                                        <select name="quantite" aria-label="choisir la quantité">
-                                                            {% set quantity = stock.quantiteStock > 9 ? 9 : stock.quantiteStock %}
-                                                            {% for i in 1 .. quantity %}
-                                                                <option value="{{i}}">{{i}}</option>
-                                                            {% endfor %}
-                                                        </select>
-                                                        <input type="hidden" name="stock" value="{{stock.id}}">
-                                                        <input type="submit" value="Ajouter au panier" class="btn bg-myPrimary text-white m-1">
-                                                        <input type="submit" value="Je vends mon exemplaire" class="btn bg-myPrimary text-white m-1">
-                                                    </form>
-                                                {% else %}
-                                                    <form method="post" action="" class="d-flex flex-column text-center">
-                                                        <input type="submit" value="Indisponible" class="btn btn-secondary text-white disabled m-1">
-                                                        <input type="submit" value="Je vends mon exemplaire" class="btn bg-myPrimary text-white m-1">
-                                                    </form>
-                                                {% endif %}
-                                            </div>
-                                        </div>
-                                    {% endfor %}
-                                </div>
+                <div class="row mb-5"> {# Ajout d'une première rangée pour l'image et les métadonnées #}
+                    <div class="col-md-4 col-xs-12"> {# Colonne pour la partie image #}
+                        <div class="text-center">
+                            {% if filmsShow.poster_path is not empty %}
+                                <img class="imgFilm img-fluid mb-3 shadow rounded" src="{{ imageUrl ~ 'w342' ~ filmsShow.poster_path }}" alt="Affiche du film : {{ filmsShow.title }}">
                             {% else %}
-                                <form method="post" action="" class="text-center m-4">
-                                    <div class="d-flex flex-column flex-md-row align-items-center justify-content-center">
-                                        <input type="submit" value="Indisponible" class="btn btn-secondary text-white disabled mb-2 mb-md-0 me-md-2">
-                                        <input type="submit" value="Je vends mon exemplaire" class="btn bg-myPrimary text-white">
-                                    </div>
-                                </form>
+                                <img src="{{ asset('images/no_image_available/no_image_available_w342_h513.png') }}" class="img-fluid shadow rounded mb-3" alt="Pas d'image disponible">
                             {% endif %}
                         </div>
                     </div>
 
-                    
-                        <div class="row"> {# Nouvelle rangée pour la partie des services VOD/SVOD #}
-                            <div class="col-12">
-                                <div class="pt-3 text-center">
-                                    {% if (buy is defined and buy is not empty) or (rent is defined and rent is not empty) or (flatrate is defined and flatrate is not empty) %}
-                                        <p class="p-bold myPrimary">Regarder ce film sur les plateformes :</p>
-                                    {% endif %}
-                                    {% if buy is defined and buy is not empty %}
-                                        <p class="p-bold myPrimary">A l'achat</p>
-                                        <ul class="providers d-flex flex-wrap justify-content-center me-1 ps-0">
-                                            {% for provider in buy %}
-                                                {% if provider.logo_path is defined %}
-                                                    <li class="provider ms-1"><img src="{{ imageUrl ~ 'w45' ~ provider.logo_path }}" class="img-fluid rounded mb-1" data-toggle="tooltip" title="{{ provider.provider_name}}" alt="{{ provider.provider_name }} logo"></li>
-                                                {% endif %}
-                                            {% endfor %}
-                                        </ul>
-                                    {% endif %}
-                                </div>
-
-                                <div class="text-center">
-                                    {% if rent is defined and rent is not empty %}
-                                        <p class="p-bold myPrimary">En location</p>
-                                        <ul class="providers d-flex flex-wrap justify-content-center me-1 ps-0">
-                                            {% for provider in rent %}
-                                                {% if provider.logo_path is defined %}
-                                                    <li class="provider ms-1"><img src="{{ imageUrl ~ 'w45' ~ provider.logo_path }}" class="img-fluid rounded mb-1" data-toggle="tooltip" title="{{ provider.provider_name}}" alt="{{ provider.provider_name }} logo"></li>
-                                                {% endif %}
-                                            {% endfor %}
-                                        </ul>
-                                    {% endif %}
-                                </div>
-
-                                <div class="text-center">
-                                    {% if flatrate is defined and flatrate is not empty %}
-                                        <p class="p-bold myPrimary">En streaming avec abonnement</p>
-                                        <ul class="providers d-flex flex-wrap justify-content-center me-1 ps-0">
-                                            {% for provider in flatrate %}
-                                                {% if provider.logo_path is defined %}
-                                                    <li class="provider ms-1"><img src="{{ imageUrl ~ 'w45' ~ provider.logo_path }}" class="img-fluid rounded mb-1" data-toggle="tooltip" title="{{ provider.provider_name}}" alt="{{ provider.provider_name }} logo"></li>
-                                                {% endif %}
-                                            {% endfor %}
-                                        </ul>
+                    <div class="col-md-8 col-xs-12"> {# Colonne pour la partie métadonnées #}
+                        <div class="text-center">
+                            <h1>{{ filmsShow.title|upper }}</h1>
+                            <div class="d-flex justify-content-center">
+                                {% if director is defined %}
+                                    {% set directors = [] %}
+                                    {% for person in director %}
+                                        {% if person.job == 'Director' %}
+                                            {% set directors = directors|merge([person.name]) %}
+                                        {% endif %}
+                                    {% endfor %}
+                                    {% if directors %}
+                                        {% if directors|length > 1 %}
+                                            <p class="p-bold myPrimary">Réalisation :&nbsp;</p> {{ directors|join(', ') }}
+                                        {% else %}
+                                            <p class="p-bold myPrimary">Réalisation :&nbsp;</p>{{ directors[0] }}
+                                        {% endif %}
                                     {% else %}
+                                        <p class="p-bold myPrimary">Réalisation :&nbsp;</p>Non renseigné
                                     {% endif %}
-                                </div>
+                                {% else %}
+                                    <p class="p-bold myPrimary">Réalisation :&nbsp;</p>Non renseigné
+                                {% endif %}
+                            </div>
+                            <div class="d-flex justify-content-center">
+                                <p class="p-bold myPrimary">Durée :&nbsp;</p> {{ filmsShow.runtime }} mn
+                            </div>
+                            <div class="d-flex justify-content-center">
+                                <p class="p-bold myPrimary">Année de sortie :&nbsp;</p> {{ filmsShow.release_date|slice(0,4) }}
+                            </div>
+                            <p class="mb-4 overview">{{ filmsShow.overview }}</p>
+                            <p class="p-bold myPrimary mb-0">Têtes d'affiche</p>
+                            <div class="d-flex justify-content-center">
+                                {% for actor in cast|slice(0, 5) %}
+                                    {{ actor.name }}{% if not loop.last %},&nbsp;{% endif %}
+                                {% endfor %}
                             </div>
                         </div>
-                {% endblock %}
+                    </div>
+                </div>
+
+                <div class="row"> {# Nouvelle rangée pour la partie VHS, DVD, Blu-Ray #}
+                    <div class="col-12"> 
+                        {% if film is not null %}
+                            <div class="row logoFormatsContainer mb-3">
+                                {% for stock in film.stocks %}
+                                    <div class="col-md-4">
+                                        <div class="d-flex flex-column align-items-center justify-content-center">
+                                            {% set image = (stock.formats.id == 1) ? 'vhs_logo_w100.png' : (stock.formats.id == 2) ? 'dvd_logo_w100.png' : 'bluray_logo_w100.png' %}
+                                            <img class="logoFormats mb-2 shadow rounded" src="{{ asset('images/logosFormats/' ~ image) }}" alt="Logo du format">
+                                            {% if stock.quantiteStock > 0 %}
+                                            <form method="post" action="{{ path("app_cart_new")}}" class="text-center">
+                                                <div class="d-flex flex-column align-items-center">
+                                                    <select name="quantite" aria-label="choisir la quantité" class="mb-1">
+                                                        {% set quantity = stock.quantiteStock > 9 ? 9 : stock.quantiteStock %}
+                                                        {% for i in 1 .. quantity %}
+                                                        <option value="{{i}}">{{i}}</option>
+                                                        {% endfor %}
+                                                    </select>
+                                                    <input type="hidden" name="stock" value="{{stock.id}}">
+                                                    <input type="submit" value="Ajouter au panier" class="btn bg-myPrimary text-white mb-3">
+                                                </div>
+                                            </form>
+                                            {% else %}
+                                            <form method="post" action="" class="d-flex flex-column text-center pt-4 mt-2">
+                                                <input type="submit" value="Indisponible" class="btn btn-secondary text-white disabled mb-1">
+                                            </form>
+                                            {% endif %}
+                                        </div>
+                                    </div>
+                                {% endfor %}
+                            </div>
+                        {% else %}
+                            <form method="post" action="" class="text-center m-4">
+                                <div class="d-flex flex-column flex-md-row align-items-center justify-content-center">
+                                    <input type="submit" value="Indisponible" class="btn btn-secondary text-white disabled mb-2 mb-md-0 me-md-2">
+                                </div>
+                            </form>
+                        {% endif %}
+                    </div>
+                </div>
+
+                
+                <div class="row"> {# Nouvelle rangée pour la partie des services VOD/SVOD #}
+                    <div class="col-12">
+                        <div class="pt-3 text-center">
+                            {% if (buy is defined and buy is not empty) or (rent is defined and rent is not empty) or (flatrate is defined and flatrate is not empty) %}
+                                <p class="p-bold myPrimary">Regarder ce film sur les plateformes :</p>
+                            {% endif %}
+                            {% if buy is defined and buy is not empty %}
+                                <p class="p-bold myPrimary">A l'achat</p>
+                                <ul class="providers d-flex flex-wrap justify-content-center me-1 ps-0">
+                                    {% for provider in buy %}
+                                        {% if provider.logo_path is defined %}
+                                            <li class="provider ms-1"><img src="{{ imageUrl ~ 'w45' ~ provider.logo_path }}" class="img-fluid rounded mb-1" data-toggle="tooltip" title="{{ provider.provider_name}}" alt="{{ provider.provider_name }} logo"></li>
+                                        {% endif %}
+                                    {% endfor %}
+                                </ul>
+                            {% endif %}
+                        </div>
+
+                        <div class="text-center">
+                            {% if rent is defined and rent is not empty %}
+                                <p class="p-bold myPrimary">En location</p>
+                                <ul class="providers d-flex flex-wrap justify-content-center me-1 ps-0">
+                                    {% for provider in rent %}
+                                        {% if provider.logo_path is defined %}
+                                            <li class="provider ms-1"><img src="{{ imageUrl ~ 'w45' ~ provider.logo_path }}" class="img-fluid rounded mb-1" data-toggle="tooltip" title="{{ provider.provider_name}}" alt="{{ provider.provider_name }} logo"></li>
+                                        {% endif %}
+                                    {% endfor %}
+                                </ul>
+                            {% endif %}
+                        </div>
+
+                        <div class="text-center">
+                            {% if flatrate is defined and flatrate is not empty %}
+                                <p class="p-bold myPrimary">En streaming avec abonnement</p>
+                                <ul class="providers d-flex flex-wrap justify-content-center me-1 ps-0">
+                                    {% for provider in flatrate %}
+                                        {% if provider.logo_path is defined %}
+                                            <li class="provider ms-1"><img src="{{ imageUrl ~ 'w45' ~ provider.logo_path }}" class="img-fluid rounded mb-1" data-toggle="tooltip" title="{{ provider.provider_name}}" alt="{{ provider.provider_name }} logo"></li>
+                                        {% endif %}
+                                    {% endfor %}
+                                </ul>
+                            {% else %}
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
-    </main>
+    </main>{% endblock %}
     {% include "_footer.html.twig" %}
 
 </body>{% endblock %}

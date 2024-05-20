@@ -4,7 +4,7 @@ namespace App\Controller;
 
 use App\Entity\AdrFacturationUser;
 use App\Entity\User;
-use App\Service\CodeManager;
+use App\Service\CodeManagerService;
 use App\Form\RegistrationFormType;
 use App\Repository\UserRepository;
 use Symfony\Component\Mime\Address;
@@ -27,11 +27,11 @@ class RegistrationController extends AbstractController
      * @param  mixed $request
      * @param  mixed $userPasswordHasher
      * @param  mixed $entityManager
-     * @param  mixed $codeManager
+     * @param  mixed $codeManagerService
      * @param  mixed $mailer
      * @return Response
      */
-    public function register(Request $request, UserPasswordHasherInterface $userPasswordHasher, EntityManagerInterface $entityManager, CodeManager $codeManager, MailerInterface $mailer): Response
+    public function register(Request $request, UserPasswordHasherInterface $userPasswordHasher, EntityManagerInterface $entityManager, CodeManagerService $codeManager, MailerInterface $mailer): Response
     {
         $user = new User();
         $form = $this->createForm(RegistrationFormType::class, $user);

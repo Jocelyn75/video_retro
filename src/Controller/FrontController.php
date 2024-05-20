@@ -23,12 +23,30 @@ class FrontController extends AbstractController
         $classicFilms = $tmdbService->getClassicFilms();
         $imageUrl = $tmdbService->getImageUrl();
 
+        // Initialiser la variable pour les erreurs
+        $error = null;
 
-        // Vous pouvez maintenant passer cette liste à votre template Twig
+        // Vérifiez s'il y a des erreurs dans les réponses
+        // 'error' est défini dans TMDBService.
+        if (isset($popularFilms['error'])) {
+            $error = $popularFilms['error'];
+            $popularFilms = [];
+        } else {
+            $popularFilms = $popularFilms;
+        }
+
+        if (isset($classicFilms['error'])) {
+            $error = $classicFilms['error'];
+            $classicFilms = [];
+        } else {
+            $classicFilms = $classicFilms;
+        }
+        
         return $this->render('/front/index.html.twig', [
             'popularFilms' => $popularFilms,
             'classicFilms' => $classicFilms,
             'imageUrl' => $imageUrl,
+            'error' => $error,
         ]);
     }
 }

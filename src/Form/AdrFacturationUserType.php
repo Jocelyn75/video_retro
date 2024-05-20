@@ -24,6 +24,21 @@ class AdrFacturationUserType extends AbstractType
             //         ])
             //     ]
             // ])
+
+            ->add('nom', TextType::class, [
+                'constraints' => [
+                    new NotBlank([
+                        'message' => 'Veuillez saisir un nom de famille',
+                    ])
+                ]
+            ])
+            ->add('prenom', TextType::class, [
+                'constraints' => [
+                    new NotBlank([
+                        'message' => 'Veuillez saisir un prénom',
+                    ])
+                ]
+            ])    
             ->add('adresse', TextType::class, [
                 'label' => 'Adresse',
                 'constraints' => [
