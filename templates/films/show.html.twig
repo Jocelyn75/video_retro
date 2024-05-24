@@ -16,10 +16,10 @@
 
     {% block main %}<main class="container">
 
-    {# Message d'erreur requête API #}
-    {% for flashError in app.flashes('error') %}
+    {# Message d'erreur requêtes API !200 #}
+    {% for error in app.flashes('error') %}
         <div class="alert alert-danger" role="alert">
-            {{ flashError }}
+            {{ error }}
         </div>
     {% endfor %}
 
@@ -39,39 +39,50 @@
                     <div class="col-md-8 col-xs-12"> {# Colonne pour la partie métadonnées #}
                         <div class="text-center">
                             <h1>{{ filmsShow.title|upper }}</h1>
-                            <div class="d-flex justify-content-center">
-                                {% if director is defined %}
-                                    {% set directors = [] %}
-                                    {% for person in director %}
-                                        {% if person.job == 'Director' %}
-                                            {% set directors = directors|merge([person.name]) %}
-                                        {% endif %}
-                                    {% endfor %}
-                                    {% if directors %}
-                                        {% if directors|length > 1 %}
-                                            <p class="p-bold myPrimary">Réalisation :&nbsp;</p> {{ directors|join(', ') }}
+                            <div>
+                                <div class="d-flex justify-content-center">
+                                    {% if director is defined %}
+                                        {% set directors = [] %}
+                                        {% for person in director %}
+                                            {% if person.job == 'Director' %}
+                                                {% set directors = directors|merge([person.name]) %}
+                                            {% endif %}
+                                        {% endfor %}
+                                        {% if directors %}
+                                            {% if directors|length > 1 %}
+                                                <p class="p-bold myPrimary">Réalisation :&nbsp;</p>
+                                                <span>{{ directors|join(', ') }}</span>
+                                            {% else %}
+                                                <p class="p-bold myPrimary">Réalisation :&nbsp;</p>
+                                                <span>{{ directors[0] }}</span>
+                                            {% endif %}
                                         {% else %}
-                                            <p class="p-bold myPrimary">Réalisation :&nbsp;</p>{{ directors[0] }}
+                                            <p class="p-bold myPrimary">Réalisation :&nbsp;</p>
+                                            <span>Non renseigné</span>
                                         {% endif %}
                                     {% else %}
                                         <p class="p-bold myPrimary">Réalisation :&nbsp;</p>Non renseigné
                                     {% endif %}
-                                {% else %}
-                                    <p class="p-bold myPrimary">Réalisation :&nbsp;</p>Non renseigné
-                                {% endif %}
-                            </div>
-                            <div class="d-flex justify-content-center">
-                                <p class="p-bold myPrimary">Durée :&nbsp;</p> {{ filmsShow.runtime }} mn
-                            </div>
-                            <div class="d-flex justify-content-center">
-                                <p class="p-bold myPrimary">Année de sortie :&nbsp;</p> {{ filmsShow.release_date|slice(0,4) }}
-                            </div>
-                            <p class="mb-4 overview">{{ filmsShow.overview }}</p>
-                            <p class="p-bold myPrimary mb-0">Têtes d'affiche</p>
-                            <div class="d-flex justify-content-center">
-                                {% for actor in cast|slice(0, 5) %}
-                                    {{ actor.name }}{% if not loop.last %},&nbsp;{% endif %}
-                                {% endfor %}
+                                </div>
+                                <div class="d-flex justify-content-center">
+                                    <p class="p-bold myPrimary">Durée :&nbsp;</p>
+                                    <span>{{ filmsShow.runtime }} mn</span>
+                                    
+                                </div>
+                                <div class="d-flex justify-content-center">
+                                    <p class="p-bold myPrimary">Année de sortie :&nbsp;</p>
+                                    <span>{{ filmsShow.release_date|slice(0,4) }}</span>
+                                </div>
+                                <p class="mb-4 overview">{{ filmsShow.overview }}</p>
+                                <p class="p-bold myPrimary mb-0">Têtes d'affiche</p>
+                                <div class="d-flex justify-content-center">
+                                    {% for actor in cast %}
+                                        {{ actor.name }}
+                                        {% if not loop.last %}
+                                            <span>,&nbsp;</span>
+                                        {% endif %}
+                                    {% endfor %}
+                                </div>
                             </div>
                         </div>
                     </div>

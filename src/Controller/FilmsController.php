@@ -22,13 +22,7 @@ class FilmsController extends AbstractController
 {
     private $tmdbService;
 
-    // Injectez le service TMDBService dans le constructeur    
-    /**
-     * __construct
-     *
-     * @param  mixed $tmdbService
-     * @return void
-     */
+    // Injecter le service TMDBService dans le constructeur    
     public function __construct(TMDBService $tmdbService)
     {
         $this->tmdbService = $tmdbService;
@@ -47,8 +41,6 @@ class FilmsController extends AbstractController
             'films' => $filmsRepository->findAll(),
         ]);
     }
-
-
 
     #[Route('films/{id}', name: 'app_films_show', methods: ['GET'])]    
     /**
@@ -82,7 +74,7 @@ class FilmsController extends AbstractController
             return $this->redirectToRoute('app_films_show');
         }
 
-        // // Récupérer l'entité Films correspondant à l'$id fourni
+        // // Récupérer le film correspondant à l'$id fourni
         $film = $filmsRepository->findOneBy(['films_api_id' => $id]);
         $stock = $stockRepository->findAll();
         $format = $formatsRepository->findAll();
@@ -94,7 +86,7 @@ class FilmsController extends AbstractController
             return $crewMember['job'] === 'Director';
         });
         
-        $cast = array_slice($credits['cast'], 0, 10);
+        $cast = array_slice($credits['cast'], 0, 5);
 
         //Providers
         $providers = $data['results']['FR'] ?? "";
@@ -165,33 +157,31 @@ class FilmsController extends AbstractController
 
         return $this->redirectToRoute('app_films_index', [], Response::HTTP_SEE_OTHER);
     }
-}
-
 
     /**
      * Route désactivée pour n'ajouter de nouveaux produits que via l'API.
      * 
      * */
-    // #[Route('/admin/films/new', name: 'app_films_new', methods: ['GET', 'POST'])]
-    // public function new(Request $request, EntityManagerInterface $entityManager): Response
-    // {
-    //     $film = new Films();
-    //     $form = $this->createForm(FilmsType::class, $film);
-    //     $form->handleRequest($request);
+    #[Route('/admin/films/new', name: 'app_films_new', methods: ['GET', 'POST'])]
+    public function new(Request $request, EntityManagerInterface $entityManager): Response
+    {
+        $film = new Films();
+        $form = $this->createForm(FilmsType::class, $film);
+        $form->handleRequest($request);
 
-    //     if ($form->isSubmitted() && $form->isValid()) {
-    //         $entityManager->persist($film);
-    //         $entityManager->flush();
+        if ($form->isSubmitted() && $form->isValid()) {
+            $entityManager->persist($film);
+            $entityManager->flush();
 
-    //         return $this->redirectToRoute('app_films_index', [], Response::HTTP_SEE_OTHER);
-    //     }
+            return $this->redirectToRoute('app_films_index', [], Response::HTTP_SEE_OTHER);
+        }
 
-    //     return $this->render('films/new.html.twig', [
-    //         'film' => $film,
-    //         'form' => $form,
-    //     ]);
-    // }
-
+        return $this->render('films/new.html.twig', [
+            'film' => $film,
+            'form' => $form,
+        ]);
+    }
+}
     
     /**
      * Route show originelle du controller.

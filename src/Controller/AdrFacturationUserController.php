@@ -13,7 +13,7 @@ use App\Repository\AdrFacturationUserRepository;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
-#[Route('/adr/facturation/user')]
+#[Route('/profile/adr/facturation/user')]
 class AdrFacturationUserController extends AbstractController
 {
     #[Route('/', name: 'app_adr_facturation_user_index', methods: ['GET'])]

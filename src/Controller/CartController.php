@@ -26,14 +26,6 @@ class CartController extends AbstractController
     }
 
     #[Route('/', name: 'app_cart')]    
-    /**
-     * index
-     *
-     * @param  mixed $session
-     * @param  mixed $tmdbService
-     * @param  mixed $request
-     * @return Response
-     */
     public function index(SessionInterface $session, TMDBService $tmdbService, Request $request): Response
     {
 
@@ -94,8 +86,8 @@ class CartController extends AbstractController
     // Vérifier si l'adresse de facturation existe pour l'utilisateur
     $adrFacturationUser = $user->getAdrFacturationUser();
     if ($adrFacturationUser === null) {
-        // Gérer le cas où l'adresse de facturation n'existe pas
-        // Peut-être rediriger l'utilisateur vers une page pour qu'il ajoute une adresse de facturation
+        $this->addFlash('error', 'Veuillez ajouter une adresse de facturation pour pouvoir passer la commande');
+    return $this->redirectToRoute('app_adr_facturation_user_show');
     } else {
         $session->set('adrFacturationUser', $adrFacturationUser);
     }
@@ -157,101 +149,6 @@ class CartController extends AbstractController
             'adrFacturationUser' => $adrFacturationUser,            
         ]);
     }
-
-
-
-    // public function cartValidation(SessionInterface $session, TMDBService $tmdbService, Request $request, LivreurRepository $livreurRepository, AdrLivraisonUserRepository $adrLivraisonUserRepository): Response
-    // {
-
-    //     $this->denyAccessUnlessGranted('ROLE_USER');
-        
-    //     if ($request->isMethod('POST')) {
-    //     $livreurId = $request->request->get('livreur');
-    //     $adresseLivraisonId = $request->request->get('adresseLivraison');
-    //     }
-    //     //Utilisation du referer dans le FIL D'ARIANE.
-    //     // Récupérer l'URL précédente
-    //     $previousUrl = $request->headers->get('referer');
-    //     // Stocker l'URL précédente dans la session
-    //     $session->set('previous_url', $previousUrl);
-
-    //     // PANIER
-    //     $cart = $session->get('cart', []);
-
-    //     $cartDetails = [];
-    //     $montantTotal = 0;
-    //     foreach ($cart as $stockId => $quantity) {
-    //         $stock = $this->stockRepository->find($stockId);
-    //         if ($stock !== null) {
-
-    //             $filmId = $stock->getFilms()->getFilmsApiId();
-    //             $stock->titre = $tmdbService->getFilmTitle($filmId);
-    //             $filmDetails = $tmdbService->getFilmDetails($filmId);
-    //             $imageUrl = $tmdbService->getImageUrl() . 'w92' . $filmDetails['poster_path'];
-
-    //             $montant = $stock->getPrixReventeDefaut() * $quantity;
-    //             $montantTotal += $montant;
-
-    //             $cartDetails[] = [
-    //                 'imageUrl' => $imageUrl,
-    //                 'id' => $stock->getId(),
-    //                 'titre' => $stock->titre,
-    //                 'format' => $stock->getFormats()->getNomFormat(),
-    //                 'prix' => $stock->getPrixReventeDefaut(),
-    //                 'quantite' => $quantity,
-    //                 'montant' => $montant,
-    //             ];
-    //         }
-    //     }
-
-    //     // Initialiser le montant total de la commande au montant total du panier
-    //     $montantTotalCommande = $montantTotal;
-    //     $livreurs = $livreurRepository->findAll();
-
-    //     // ADRESSE DE LIVRAISON
-    //     $user = $this->getUser();
-    //     $adressesLivraison = $user->getAdrLivraisonUser();
-    //     $adressesFacturation = $user->getAdrFacturationUser();
-        
-    //     // LIVREUR
-    //     if ($request->isMethod('POST')) {
-    //         $livreurId = $request->request->get('livreur');
-    //         $livreur = $livreurRepository->find($livreurId);
-    //         $this->addFlash('success', 'Vos choix ont bien été enregistrés.');
-    //         if ($livreur !== null) {
-    //             // Ajouter les frais de livraison au montant total de la commande
-    //             $montantTotalCommande += $livreur->getPrix();
-    //         // } else {
-    //         //     // Gérer le cas où aucun livreur n'est sélectionné
-    //         //     // Peut-être afficher un message d'erreur ou prendre une autre action appropriée
-    //         }
-
-    //         // Stocker le montant total de la commande dans la session
-    //         $session->set('montantTotalCommande', $montantTotalCommande);
-
-    //         // ADRESSES DE LIVRAISON
-    //         $adresseLivraison = $adrLivraisonUserRepository->find($adresseLivraisonId);
-    //         if ($adresseLivraison !== null) {
-    //             // Utilisez l'adresse de livraison sélectionnée comme vous le souhaitez
-    //             // Par exemple, vous pouvez récupérer les détails de l'adresse et les utiliser dans votre logique de commande
-    //         } else {
-    //             // Gérer le cas où aucune adresse de livraison n'est sélectionnée
-    //             // Peut-être afficher un message d'erreur ou prendre une autre action appropriée
-    //         }
-    //     }
-
-    //     // Récupérer toutes les adresses de livraison
-    //     // $adressesLivraison = $adrLivraisonUserRepository->findAll();
-
-    //     return $this->render('cart/cart_checkout.html.twig', [
-    //         'cartDetails' => $cartDetails,
-    //         'montantTotal' => $montantTotal,
-    //         'livreurs' => $livreurs, 
-    //         'montantTotalCommande' => $montantTotalCommande,
-    //         'adressesLivraison' => $adressesLivraison,
-    //         'adressesFacturation' => $adressesFacturation
-    //     ]);
-    // }
     
     #[Route('/add', name: 'app_cart_new', methods: ['POST'])]    
     /**
@@ -435,4 +332,99 @@ class CartController extends AbstractController
     //     }
 
     //     return $montantTotal;
+    // }
+
+
+
+        // public function cartValidation(SessionInterface $session, TMDBService $tmdbService, Request $request, LivreurRepository $livreurRepository, AdrLivraisonUserRepository $adrLivraisonUserRepository): Response
+    // {
+
+    //     $this->denyAccessUnlessGranted('ROLE_USER');
+        
+    //     if ($request->isMethod('POST')) {
+    //     $livreurId = $request->request->get('livreur');
+    //     $adresseLivraisonId = $request->request->get('adresseLivraison');
+    //     }
+    //     //Utilisation du referer dans le FIL D'ARIANE.
+    //     // Récupérer l'URL précédente
+    //     $previousUrl = $request->headers->get('referer');
+    //     // Stocker l'URL précédente dans la session
+    //     $session->set('previous_url', $previousUrl);
+
+    //     // PANIER
+    //     $cart = $session->get('cart', []);
+
+    //     $cartDetails = [];
+    //     $montantTotal = 0;
+    //     foreach ($cart as $stockId => $quantity) {
+    //         $stock = $this->stockRepository->find($stockId);
+    //         if ($stock !== null) {
+
+    //             $filmId = $stock->getFilms()->getFilmsApiId();
+    //             $stock->titre = $tmdbService->getFilmTitle($filmId);
+    //             $filmDetails = $tmdbService->getFilmDetails($filmId);
+    //             $imageUrl = $tmdbService->getImageUrl() . 'w92' . $filmDetails['poster_path'];
+
+    //             $montant = $stock->getPrixReventeDefaut() * $quantity;
+    //             $montantTotal += $montant;
+
+    //             $cartDetails[] = [
+    //                 'imageUrl' => $imageUrl,
+    //                 'id' => $stock->getId(),
+    //                 'titre' => $stock->titre,
+    //                 'format' => $stock->getFormats()->getNomFormat(),
+    //                 'prix' => $stock->getPrixReventeDefaut(),
+    //                 'quantite' => $quantity,
+    //                 'montant' => $montant,
+    //             ];
+    //         }
+    //     }
+
+    //     // Initialiser le montant total de la commande au montant total du panier
+    //     $montantTotalCommande = $montantTotal;
+    //     $livreurs = $livreurRepository->findAll();
+
+    //     // ADRESSE DE LIVRAISON
+    //     $user = $this->getUser();
+    //     $adressesLivraison = $user->getAdrLivraisonUser();
+    //     $adressesFacturation = $user->getAdrFacturationUser();
+        
+    //     // LIVREUR
+    //     if ($request->isMethod('POST')) {
+    //         $livreurId = $request->request->get('livreur');
+    //         $livreur = $livreurRepository->find($livreurId);
+    //         $this->addFlash('success', 'Vos choix ont bien été enregistrés.');
+    //         if ($livreur !== null) {
+    //             // Ajouter les frais de livraison au montant total de la commande
+    //             $montantTotalCommande += $livreur->getPrix();
+    //         // } else {
+    //         //     // Gérer le cas où aucun livreur n'est sélectionné
+    //         //     // Peut-être afficher un message d'erreur ou prendre une autre action appropriée
+    //         }
+
+    //         // Stocker le montant total de la commande dans la session
+    //         $session->set('montantTotalCommande', $montantTotalCommande);
+
+    //         // ADRESSES DE LIVRAISON
+    //         $adresseLivraison = $adrLivraisonUserRepository->find($adresseLivraisonId);
+    //         if ($adresseLivraison !== null) {
+    //             // Utilisez l'adresse de livraison sélectionnée comme vous le souhaitez
+    //             // Par exemple, vous pouvez récupérer les détails de l'adresse et les utiliser dans votre logique de commande
+    //         } else {
+    //             // Gérer le cas où aucune adresse de livraison n'est sélectionnée
+    //             // Peut-être afficher un message d'erreur ou prendre une autre action appropriée
+    //         }
+    //     }
+
+    //     // Récupérer toutes les adresses de livraison
+    //     // $adressesLivraison = $adrLivraisonUserRepository->findAll();
+
+    //     return $this->render('cart/cart_checkout.html.twig', [
+    //         'cartDetails' => $cartDetails,
+    //         'montantTotal' => $montantTotal,
+    //         'livreurs' => $livreurs, 
+    //         'montantTotalCommande' => $montantTotalCommande,
+    //         'adressesLivraison' => $adressesLivraison,
+    //         'adressesFacturation' => $adressesFacturation
+    //     ]);
     // }

@@ -15,6 +15,13 @@
 
     <h1>Mon adresse de facturation</h1>
     <main class="container">{% block main %}
+    
+    {% for message in app.flashes("error")%}
+        <div class="text-center alert alert-danger" role="alert">
+            <p>{{message}}</p>
+        </div>
+    {% endfor %}  
+
 
         <div class="table-responsive">
             <table class="table table-bordered mb-5">

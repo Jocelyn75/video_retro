@@ -99,6 +99,13 @@ main{
     font-size: 40px;
 }
 
+.h3{
+    font-style: italic;
+    font-size: 25px;
+    color: #5c5c68;
+}
+
+
 .myPrimary{
     color: #0B759B !important;
 }

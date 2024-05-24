@@ -1,16 +1,16 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}<title>Create new film</title>{% endblock %}
+{% block title %}<title>Ajouter un film - Video Retro</title>{% endblock %}
 
 {% block body %}
     {% include '_header.html.twig' %}
-    <h1>Create new film</h1>
+    <h1>Ajouter un film</h1>
     <main class="container">{% block main %}
 
 
         {{ include('films/_form.html.twig') }}
 
-        <a href="{{ path('app_films_index') }}">back to list</a>
+        
     {% endblock %}</main>
     {% include "_footer.html.twig" %}
 {% endblock %}

@@ -4,6 +4,7 @@ namespace App\Form;
 
 use App\Entity\Films;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -12,7 +13,10 @@ class FilmsType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('films_api_id')
+            ->add('films_api_id', IntegerType::class, [
+                'required' => true,
+                'label' => 'Id du film dans l\'API TMDB',
+            ])
         ;
     }
 

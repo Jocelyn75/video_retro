@@ -34,9 +34,6 @@ class RegistrationFormType extends AbstractType
                     ])
                 ]
             ])
-            
-            
-
             // La class RepeatedType permet de créer un champ de vérification du mot de passe. 
             ->add('plainPassword', RepeatedType::class, [
                                 // instead of being set onto the object directly,
@@ -68,9 +65,9 @@ class RegistrationFormType extends AbstractType
                         'message' => 'Votre mot de passe doit être composé d\'au moins 12 caractères et contenir au moins 1 chiffre, 1 majuscule, 1 minuscule et 1 caractère spécial.',
                     ]),
 
-                    // NotCompromisedPassword permet de vérifier sur "Have I Been Pwned" que le mot de passe n'a pas été compromis. S'il a été compromis, le message "Ce mot de passe est faible s'affiche".
+                    // NotCompromisedPassword permet de vérifier sur "Have I Been Pwned" que le mot de passe n'a pas été compromis. S'il a été compromis, le message "Ce mot de passe est compromis s'affiche".
                     new Assert\NotCompromisedPassword([
-                        'message' => "Ce mot de passe est faible"
+                        'message' => "Ce mot de passe est compromis"
                     ])
                 ],
             ])

@@ -58,8 +58,6 @@ class StockController extends AbstractController
         $stock->titre = $this->tmdbService->getFilmTitle($filmId);
     }
 
-    // dd($filmTitles);
-
     return $this->render('stock/index.html.twig', [
         'pagination' => $pagination, // **Modification du passage de variable à la vue**
     ]);

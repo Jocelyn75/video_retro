@@ -50,8 +50,10 @@ class RegistrationController extends AbstractController
             $entityManager->persist($user);
             $adrFacturationUser = new AdrFacturationUser;
             $adrFacturationUser->setUser($user);
+            
             $entityManager->persist($adrFacturationUser);
             $entityManager->flush();
+
             $email = (new TemplatedEmail())
                 ->from(new Address('noreply@videoretro.fr', 'Video Retro'))
                 ->to($user->getEmail())

@@ -20,7 +20,7 @@ class AdrLivraisonUserType extends AbstractType
             ->add('adr_livr_user', TextType::class, [
                 'label' => 'Intitulé de cette adresse',
                 'attr' => [
-                    'placeholder' => 'Domicile', 
+                    'placeholder' => 'Ex : Domicile', 
                 ],
                 'constraints' => [
                     new NotBlank([

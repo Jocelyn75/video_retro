@@ -26,10 +26,9 @@ class SecurityController extends AbstractController
                 $this->addFlash('success', "Vous êtes connecté·e.");
                 return $this->redirectToRoute('home');
             }
-            // elseif (in_array('ROLE_ADMIN', $roles)) {
-            //     $this->addFlash('success', "Vous êtes connecté en tant qu'administrateur.");
-            //     return $this->redirectToRoute('app_admin_home');
-            // } 
+            elseif (in_array('ROLE_ADMIN', $roles)) {
+                return $this->redirectToRoute('app_admin_home');
+            } 
 
         }
 

@@ -85,13 +85,13 @@
                 
                 <h2 id="montantTotal" class="text-center fs-2 fst-italic pb-3">Montant total : {{ montantTotal}} €</h2>
                 <div class="d-flex justify-content-between">
-                    <a class="btn bg-myPrimary text-white mb-1" href="{{ path('app_cart_checkout') }}">Valider le panier</a>
+                    <a class="btn bg-myPrimary text-white mb-5" href="{{ path('app_cart_checkout') }}">Passer à la commande</a>
                     <form action="{{ path('app_cart_empty') }}" method="post" onsubmit="return confirm('Êtes-vous sûr de vouloir vider le panier ?');">
-                        <button type="submit" class="btn btn-danger">Vider le panier</button>
+                        <button type="submit" class="btn btn-danger mb-5">Vider le panier</button>
                     </form>
                 </div>
                 
-                <a class="btn bg-myPrimary text-white" href="{{path('app_stripe')}}">Payer</a>
+                {# <a class="btn bg-myPrimary text-white" href="{{path('app_stripe')}}">Payer</a> #}
 
                 {% endif %}            
             {% else %}

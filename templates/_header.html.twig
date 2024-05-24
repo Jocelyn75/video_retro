@@ -1,5 +1,5 @@
 <header>
-            {# Navbar 1 pour contenir le logo, les onglets Accueil, Inscription, Connexion, Déconnexion et produits qui sera à rajouter. #}
+    {# Navbar 1 pour contenir le logo, les onglets Accueil, Inscription, Connexion, Déconnexion et produits qui sera à rajouter. #}
     <nav class="navbar navbar-expand-md bg-secondary bg-gradient navbar-dark">
         <div class="container-fluid">
             <a href="{{ path('home')}}"><img class="imgLogo pe-3" src="{{asset('images/cassette.svg')}}" alt="Logo Video Retro : lien vers l'accueil" /></a>
@@ -21,7 +21,7 @@
 
                         {% if is_granted('ROLE_USER') and not is_granted('ROLE_ADMIN') %}
                             <li class="nav-item">
-                                <a class="nav-link {{ app.request.get('_route') == 'app_profil' ? 'active' : '' }} text-end" href="{{path('app_profil')}}">Mon profil</a>
+                                <a class="nav-link {{ app.request.get('_route') == 'app_profil' ? 'active' : '' }} text-end" href="{{path('app_profil')}}">Mon compte</a>
                             </li>
                         {% endif %}
                         

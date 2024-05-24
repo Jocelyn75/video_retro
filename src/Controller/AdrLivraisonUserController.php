@@ -12,7 +12,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\User\UserInterface;
 
-#[Route('/adr/livraison/user')]
+#[Route('/profile/adr/livraison/user')]
 class AdrLivraisonUserController extends AbstractController
 {
     #[Route('/', name: 'app_adr_livraison_user_index', methods: ['GET'])]
@@ -42,6 +42,7 @@ class AdrLivraisonUserController extends AbstractController
             $entityManager->persist($adrLivraisonUser);
             $entityManager->flush();
 
+            $this->addFlash('success', 'Votre adresse a bien été ajoutée');
             return $this->redirectToRoute('app_adr_livraison_user_index', [], Response::HTTP_SEE_OTHER);
         }
 
