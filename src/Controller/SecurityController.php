@@ -19,7 +19,7 @@ class SecurityController extends AbstractController
     public function login(AuthenticationUtils $authenticationUtils): Response
     {
         if ($this->getUser()) {
-            // On récupère les rôles de l'utilisateur connecté
+            
             $roles = $this->getUser()->getRoles();
 
             if (in_array('ROLE_USER', $roles)){

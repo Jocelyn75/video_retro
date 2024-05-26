@@ -6,14 +6,14 @@
     {% include '_header.html.twig' %}
 
     {# Fil d'Ariane #}
-    {% if cartDetails is not empty %}
+    {# {% if cartDetails is not empty %}
         <nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
             <ol class="breadcrumb">
                 <li class="breadcrumb-item ms-3"><a class="aBreadCrumb" href="{{path('app_cart')}}">Mon Panier</a></li>
                 <li class="breadcrumb-item active" aria-current="page">Passer la commande</li>
             </ol>
         </nav>
-    {% endif %}
+    {% endif %} #}
 
     <main class="container">{% block main %}
 
@@ -27,6 +27,16 @@
 
         {% if app.user %}
             
+            <div class="d-flex justify-content-center mb-5">
+                <ul class="list-group list-group-horizontal">
+                    <li class="list-group-item"><a class="aBreadCrumb aCart" href="{{path('app_cart')}}">Panier</a></li>
+                    <li class="list-group-item list-group-item-secondary">Commande</li>
+                    <li class="list-group-item list-group-item-light aCartInactive">Paiement</li>
+                </ul>
+            </div>
+
+
+
             {# Récapitulatif du panier #}
             <div class="table-responsive pb-5">
                 <table class="table table-light table-bordered">

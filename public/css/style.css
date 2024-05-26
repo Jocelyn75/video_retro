@@ -59,6 +59,14 @@ main{
     color: darkslategrey;
 }
 
+.aCart{
+    color: darkslategray;
+}
+
+.aCartInactive{
+    color: gray;
+}
+
 /* Home */
 #carouselHome {
     width: 50%;
@@ -74,16 +82,11 @@ main{
     border: none;
 }
 
-/* Conteneur qui défile avec la page */
-.scrollable-container {
-    overflow-y: auto; /* Permet le défilement vertical */
-}
-
-/* Contenu fixe à l'intérieur du conteneur */
-.sticky-content {
+/* Barre de recherche fixe par année*/
+.stickyYear {
     position: sticky;
     top: 30%;
-    z-index: 1000; /* Assure que le contenu fixe est au-dessus du contenu défilant */
+    z-index: 10;
 }
 
 /* Usage général */

@@ -11,7 +11,6 @@ use App\Repository\AdrLivraisonUserRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -38,7 +37,8 @@ class CartController extends AbstractController
         
         $cartDetails = [];
         $montantTotal = 0;
-        foreach ($cart as $stockId => $quantity) {
+        // k => v : stockID = k ; quantity = v
+        foreach ($cart as $stockId => $quantity) { 
             $stock = $this->stockRepository->find($stockId);
             if ($stock !== null) {
 
@@ -72,9 +72,8 @@ class CartController extends AbstractController
         
     public function cartCheckout(SessionInterface $session, Request $request, LivreurRepository $livreurRepository, AdrLivraisonUserRepository $adrLivraisonUserRepository, TMDBService $tmdbService, EntityManagerInterface $em): Response {
         
-        $user = $this->getUser();
-        
         // Récupérer le contenu du panier depuis la session
+        $user = $this->getUser();
         $cart = $session->get('cart', []);
     
         $cartDetails = [];
@@ -82,16 +81,16 @@ class CartController extends AbstractController
         $livreurs = $livreurRepository->findAll();
         $adrsLivraisonUser = $em->getRepository(AdrLivraisonUser::class)->findBy(['user' => $user]);
         
-        
-    // Vérifier si l'adresse de facturation existe pour l'utilisateur
-    $adrFacturationUser = $user->getAdrFacturationUser();
-    if ($adrFacturationUser === null) {
-        $this->addFlash('error', 'Veuillez ajouter une adresse de facturation pour pouvoir passer la commande');
-    return $this->redirectToRoute('app_adr_facturation_user_show');
-    } else {
-        $session->set('adrFacturationUser', $adrFacturationUser);
-    }
-    
+        // Vérifier si l'adresse de facturation existe pour l'utilisateur
+        $adrFacturationUser = $user->getAdrFacturationUser();
+        if ($adrFacturationUser === null) {
+            $this->addFlash('error', 'Veuillez ajouter une adresse de facturation pour pouvoir passer la commande');
+            return $this->redirectToRoute('app_adr_facturation_user_show');
+        } else {
+            //1er paramètre = clé de la valeur stockée, 2e paramètre = valeur stockée
+            $session->set('adrFacturationUser', $adrFacturationUser);
+        }
+
         // Traiter les éléments du panier
         foreach ($cart as $stockId => $quantity) {
             $stock = $this->stockRepository->find($stockId);
@@ -125,7 +124,7 @@ class CartController extends AbstractController
             $adrLivraisonUser = $adrLivraisonUserRepository->find($adrLivraisonUserId);
         
             if ($livreur !== null) {
-                // Ajouter les frais de livraison au montant total de la commande
+                 // Ajouter les frais de livraison au montant total de la commande
                 $montantTotalCommande += $livreur->getPrix();
                 $this->addFlash('success', 'Vos choix ont bien été enregistrés.');
             }
@@ -151,20 +150,10 @@ class CartController extends AbstractController
     }
     
     #[Route('/add', name: 'app_cart_new', methods: ['POST'])]    
-    /**
-     * add
-     *
-     * @param  mixed $request
-     * @param  mixed $session
-     * @return void
-     */
     public function add(Request $request, SessionInterface $session)
     {
         $stockId = $request->request->get('stock');
         $quantite = $request->request->get('quantite');
-
-        // dump($stockId);
-        // dd($quantite);
 
         $cart = $session->get('cart', []);
 
@@ -178,6 +167,7 @@ class CartController extends AbstractController
 
         return $this->redirectToRoute('app_cart');
 
+        
         // $panier = [
         //     7 => 3,
         //     9 => 12,
@@ -185,17 +175,10 @@ class CartController extends AbstractController
         // ]
         // Key : id du produit
         // Value : quantité
+
     }
 
     #[Route('/update-quantity', name: 'app_cart_update_quantity', methods: ['POST'])]    
-    /**
-     * updateQuantity
-     *
-     * @param  mixed $request
-     * @param  mixed $session
-     * @param  mixed $stockRepository
-     * @return void
-     */
     public function updateQuantity(Request $request, SessionInterface $session, StockRepository $stockRepository)
     {
         $stockId = $request->request->get('stockId');
@@ -204,7 +187,7 @@ class CartController extends AbstractController
         $cart = $session->get('cart', []);
 
         if (isset($cart[$stockId])) {
-            // Récupérer le stock correspondant
+            // Récupérer le stock correspondant à l'id
             $stock = $stockRepository->find($stockId);
     
             // Vérifier si le stock existe et s'il y a suffisamment de quantité en stock
@@ -212,7 +195,7 @@ class CartController extends AbstractController
                 // Mettre à jour la quantité dans le panier
                 $cart[$stockId] += $changeQuantity;
                 if ($cart[$stockId] <= 0) {
-                    unset($cart[$stockId]); // Remove item if quantity becomes zero or negative
+                    unset($cart[$stockId]); //Enlever le produit du panier si la quantité arrive à zéro ou moins
                 }
     
                 $session->set('cart', $cart);
@@ -224,35 +207,20 @@ class CartController extends AbstractController
                 return $this->redirectToRoute('app_cart');
             }
         }
-    
         // Redirection par défaut
         return $this->redirectToRoute('app_cart');
     }
 
     #[Route('/empty', name: 'app_cart_empty')]    
-    /**
-     * emptyCart
-     *
-     * @param  mixed $session
-     * @return RedirectResponse
-     */
     public function emptyCart(SessionInterface $session): RedirectResponse
     {
-        // Supprimer tous les éléments du panier
+         // Supprimer tous les éléments du panier
         $session->remove('cart');
 
-        // Rediriger vers la page du panier
         return $this->redirectToRoute('app_cart');
     }
 
     #[Route('/remove/{stockId}', name: 'app_cart_remove')]    
-    /**
-     * removeProduct
-     *
-     * @param  mixed $session
-     * @param  mixed $stockId
-     * @return RedirectResponse
-     */
     public function removeProduct(SessionInterface $session, $stockId): RedirectResponse
     {
         $cart = $session->get('cart', []);

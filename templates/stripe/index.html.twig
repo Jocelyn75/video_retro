@@ -7,7 +7,16 @@
     <main class="container">{% block main %}
         <h1>Formulaire de paiement</h1>
 
-            <form action="{{path('process_payment')}}" method="post">
+            <div class="d-flex justify-content-center mb-5">
+                <ul class="list-group list-group-horizontal">
+                    <li class="list-group-item"><a class="aBreadCrumb aCart" href="{{path('app_cart')}}">Panier</a></li>
+                    <li class="list-group-item"><a class="aBreadCrumb aCart" href="{{path('app_cart_checkout')}}">Commande</a></li>
+                    <li class="list-group-item list-group-item-secondary">Paiement</li>
+                </ul>
+            </div>
+
+
+            <form class="d-flex justify-content-center" action="{{path('process_payment')}}" method="post">
                 <script
                     src="https://checkout.stripe.com/checkout.js"
                     class="stripe-button"
@@ -21,13 +30,6 @@
                 
                 </script>
             </form>
-
-            {# <pre>
-                {{ dump(app.session.get('adrLivraisonUserId')) }}
-                {{ dump(app.session.get('adrLivraisonUser')) }}
-                {{ dump(app.session.get('livreur')) }}
-                {{ dump(app.session.get('adrFacturationUser')) }}
-            </pre> #}
 
     {% endblock %}</main>
     {% include "_footer.html.twig" %}

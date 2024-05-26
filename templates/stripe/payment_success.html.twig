@@ -6,7 +6,7 @@
     {% include '_header.html.twig' %}
     <main class="container">{% block main %}
         <h1>Paiement accepté</h1>
-        <p class="text-center fst-italic mb-5">Un email de confirmation vous a été envoyé </p>
+        <p class="text-center fst-italic mb-5">La facture vous a été envoyée par mail</p>
 
         <h2 class="my-3">Récapitulatif de la commande</h2>
 
@@ -44,7 +44,7 @@
         <table class="table table-bordered my-3">
             <thead>
                 <tr>
-                    <th>Produit</th>
+                    {# <th>Produit</th> #}
                     <th class="myPrimary bg-light">Prix unitaire</th>
                     <th class="myPrimary bg-light">Quantité</th>
                     <th class="myPrimary bg-light">Total</th>
@@ -53,7 +53,7 @@
             <tbody>
                 {% for detailCommande in detailsCommandes %}
                 <tr>
-                    <td>{{ detailCommande.stock.titre }}</td>
+                    {# <td>{{ detailCommande.stock.titre }}</td> #}
                     <td>{{ detailCommande.prixUnitaire }} €</td>
                     <td>{{ detailCommande.quantiteCmd }}</td>
                     <td>{{ detailCommande.prixUnitaire * detailCommande.quantiteCmd }} €</td>
@@ -61,7 +61,7 @@
                 {% endfor %}
             </tbody>
         </table>
-        <h3 class="h3 my-3">Montant total de la commande : {{ montantTotalCommande / 100 }} €</h3>
+        <h3 class="h3 mt-3 mb-5">Montant total de la commande : {{ montantTotalCommande / 100 }} €</h3>
 
         <h3 class="h3 my-3">Mon adresse de livraison</h3>
         <table class="table table-bordered">
@@ -92,21 +92,9 @@
                 </tr>
             </tbody>
         </table>
-    </body>
-</html>
 
+        <a class="btn bg-secondary text-white mb-5" href="{{ path('home') }}">Retour à l'accueil</a>
 
-
-
-
-
-            
-            {# Récapitulatif de la commande
-            - le panier va se transformer en objet en BDD. Le panier, c'est la commande, chaque ligne du panier, ce sont des détails de la commande. L'objet commande passe à la vue avec plusieurs lignes : 
-            - commande.montant
-            - foreach de commande.detailscommande
-            - Envoi d'un email pour dire que le paiement a été accepté.
-            #}
 
     {% endblock %}</main>
     {% include "_footer.html.twig" %}

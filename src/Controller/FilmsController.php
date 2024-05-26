@@ -91,13 +91,9 @@ class FilmsController extends AbstractController
         //Providers
         $providers = $data['results']['FR'] ?? "";
 
-        if ($providers === null){
-                
-        }else{
-            $rent = $providers['rent'] ?? "";
-            $buy = $providers['buy'] ?? "";
-            $flatrate = $providers['flatrate'] ?? "";
-        }
+        $rent = $providers['rent'] ?? "";
+        $buy = $providers['buy'] ?? "";
+        $flatrate = $providers['flatrate'] ?? "";
 
         return $this->render('films/show.html.twig', [
             'filmsShow' => $filmsShow,

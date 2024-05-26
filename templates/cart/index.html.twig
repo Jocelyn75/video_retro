@@ -5,26 +5,29 @@
 {% block body %}
     {% include '_header.html.twig' %}
 
-    {# Fil d'Ariane #}
-    {% if cartDetails is not empty %}
-        <nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
-            <ol class="breadcrumb">
-                <li class="breadcrumb-item ms-3"><a class="aBreadCrumb" href="{{path('home')}}">Accueil</a></li>
-                <li class="breadcrumb-item"><a class="aBreadCrumb" href="{{ path('app_search', {'search[keyword]':'oppenheimer'}) }}">Résultats de la recherche</a></li>
-                <li class="breadcrumb-item"><a class="aBreadCrumb" href="{{ app.session.get('previous_url') }}">Dernier film ajouté</a></li>
-                <li class="breadcrumb-item active" aria-current="page">Mon panier</li>
-            </ol>
-        </nav>
-    {% endif %}
 
     <main class="container">{% block main %}
 
         <h1 class="text-center fs-1 fst-italic">Mon panier</h1>
+
+        {# Etapes #}
+        {% if cartDetails is not empty %}
+            <div class="d-flex justify-content-center mb-5">
+                <ul class="list-group list-group-horizontal">
+                    <li class="list-group-item list-group-item-secondary">Panier</li>
+                    <li class="list-group-item list-group-item-light">Commande</li>
+                    <li class="list-group-item list-group-item-light">Paiement</li>
+                </ul>
+            </div>
+        {% endif %}
+
+
             {% if app.user %}
             
                 {% if cartDetails is empty %}
                     <h2 class="text-center mb-5 pb-5">Votre panier est vide</h2>
                 {% else %}
+                {# Message flash en cas de stock insuffisant pour une hausse de quantité dans le panier #}
                 {% for message in app.flashes("error")%}
                     <div class="text-center alert alert-danger" role="alert">
                         <p class="p-bold text-center">{{message}}</p>

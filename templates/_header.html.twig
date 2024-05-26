@@ -48,7 +48,7 @@
         <div class="searchBar-container d-flex justify-content-center align-items-center">
             {# On rend la méthode GetSearchBar du controller SearchController. Les :: permettent d'appeler getSearchBar de manière statique. Les \\ sont une convention, cela ne fonctionne pas avec un seul \ #}
             {{ render(controller("App\\Controller\\SearchController::getSearchBar")) }}      
-            <a href="{{ path('app_cart') }}" class="text-decoration-none text-white">
+            <a href="{{ path('app_cart') }}" class="text-decoration-none text-white" aria-label="Bouton d'accès à mon panier">
                 <div class="d-flex align-items-center">
                     <span class="ps-4"><i class="fa-solid fa-cart-shopping text-white" data-toggle="tooltip" title="Accéder à mon panier"></i></span>
                     {% if app.user %}

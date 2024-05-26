@@ -53,15 +53,6 @@ class StripeController extends AbstractController
      */
     public function getMontantTotal(): float
     {
-        //Méthode à utiliser s'il n'y a pas de frais de livraison.
-        // $montant = 0;
-        // $cart = $this->session->get('cart', []);
-
-        // foreach($cart as $idStock => $quantite){
-        //     $stock = $this->stockRepository->find($idStock);
-        //     $montant += ($stock->getPrixReventeDefaut() * 100) * $quantite;
-        // }
-        
         //Uniquement besoin de ce return pour récupérer le montant total de la commande dans le panier.  
         // Si la clé n'est pas trouvée dans la session, la méthode renverra 0
         return $this->session->get('montantTotalCommande', 0) *100;
@@ -128,7 +119,6 @@ class StripeController extends AbstractController
     #[Route('/payment-success', name: 'payment_success')]    
     public function payment_success(Request $request, EntityManagerInterface $em, SessionInterface $session, StockRepository $stockRepository, TMDBService $tmdbService, CommandeRefGeneratorService $commandeRef, AdrLivraisonUserRepository $adrLivraisonUserRepository, AdrLivraisonUser $adrLivraisonUser, AdrFacturationCmd $adrFacturationCmd, AdrFacturationUser $adrFacturationUser, AdrLivraisonCmd $adrLivraisonCmd, MailerInterface $mailer):Response
     {
-
             $user = $this->getUser();
             $cart = $session->get('cart', []);
             $montantTotalCommande = $this->getMontantTotal();
@@ -204,20 +194,8 @@ class StripeController extends AbstractController
 
             $em->flush();
             $session->remove('cart');
-            // ---------------
-            // Persist et flush à faire à la validation de la commande par l'utilisateur pour ne pas injecter les données de la commande en BDD tant que la commande n'est pas validée. 
-            // Avec persist on crée les requêtes.
-            // $em->persist($commande);
-            // // Avec flush, on les exécutes
-            // $em->flush();
-            // $session->remove('cart');
-            // ---------------            
-            
-        //new Commande, new DetailsCommande
-        //Soustraire les stocks (flush)
-        //vider le panier
-
-
+        
+        // PDF de facture
         $pdfOptions = new Options();
         $pdfOptions->set('defaultFont', 'Arial');
         $pdfOptions->setIsHtml5ParserEnabled(true);
